@@ -35,18 +35,19 @@ Rails.application.routes.draw do
     sessions: 'farmer/sessions'
   }
 
-  scope module: :farmer do
+  namespace :farmer do
     get 'about', to: "homes#about"
 
-    resources :items,   only: [:new, :show, :edit, :update, :destroy] do
+    resources :items,   only: [:new, :show, :edit, :update, :destroy, :create] do
       resources :comments,   only: [:create, :destroy]
     end
-
-    get   'farmers/information/edit', to: "farmers#edit"
-    patch 'farmers/information',      to: "farmers#update"
-    get   'farmers/unsubscribe',      to: "farmers#unsubscribe"
-    patch 'farmers/withdraw',         to: "farmers#withdraw"   
-    delete 'reservations/:id',        to: "farmers#cancel_reservations"
+    
+    get    'farmers/mypage',           to: "farmers#show"
+    get    'farmers/information/edit', to: "farmers#edit"
+    patch  'farmers/information',      to: "farmers#update"
+    get    'farmers/unsubscribe',      to: "farmers#unsubscribe"
+    patch  'farmers/withdraw',         to: "farmers#withdraw"   
+    delete 'farmers/reservations/:id',        to: "farmers#cancel_reservations"
     
     resources :dm_rooms,   only: [:show] do
       resources :dm_messages, only: [:create, :destroy]
