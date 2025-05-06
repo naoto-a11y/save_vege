@@ -1,2 +1,11 @@
-<h1>Farmer::Farmers#show</h1>
-<p>Find me in app/views/farmer/farmers/show.html.erb</p>
+<h1>農家 マイページ</h1>
+<%= render 'share/info', farmer: @farmer %>
+<%= link_to "野菜を追加する", new_farmer_item_path, class: "btn btn-outline-brown " %>
+
+<div class="row">
+  <% @items.each do |item| %>
+    <div class="col-md-4">
+      <%= render 'farmer/items/item', item: item %>
+    </div>
+  <% end %>
+</div>

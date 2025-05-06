@@ -3,6 +3,8 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  
+  has_one_attached :image
 
   has_many :follows, dependent: :destroy
   has_many :followed_farmers, through: :follows, source: :farmer
@@ -11,4 +13,12 @@ class Customer < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :comments, as: :sender, dependent: :destroy
   has_many :dm_messages, as: :sender, dependent: :destroy
+
+  def get_profile_image
+    if self.profile_image.attached?
+      self.profile_image
+    else
+      'no_image.jpg'
+    end
+  end
 end

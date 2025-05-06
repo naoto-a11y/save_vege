@@ -1,0 +1,16 @@
+<div class="">
+  <%= link_to farmer_item_path(item.id) do %>
+    <%= image_tag item.get_image %>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title"><%= item.name %></h5>
+    <p class="card-text">¥<%= number_with_delimiter(item.price) %></p>
+
+    <p class="mb-1">
+      ❤️ <%= item.favorites.count %>　
+      💬 <%= item.comments.count %>
+    </p>
+
+    <%= link_to "詳細を見る", farmer_item_path(item.id), class: "btn btn-outline-primary btn-sm w-100" %>
+  </div>
+</div>

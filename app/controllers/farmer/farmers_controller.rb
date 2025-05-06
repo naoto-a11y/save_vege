@@ -1,5 +1,7 @@
 class Farmer::FarmersController < ApplicationController
   def show
+    @farmer = current_farmer
+    @items = current_farmer.items
   end
 
   def edit
