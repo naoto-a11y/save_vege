@@ -2,6 +2,7 @@ class Farmer::FarmersController < ApplicationController
   def show
     @farmer = current_farmer
     @items = current_farmer.items
+    @reservations = current_farmer.reservations
   end
 
   def edit
