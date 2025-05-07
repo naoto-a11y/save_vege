@@ -4,9 +4,10 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
   root to: 'homes#top'
+  get 'about', to: "homes#about"
   scope module: :public do
     
-    get 'about', to: "homes#about"
+    
 
     resources :items, only: [:index, :show] do
       resources :comments,   only: [:create, :destroy]
@@ -19,10 +20,11 @@ Rails.application.routes.draw do
     patch  'customers/withdraw',         to: "customers#withdraw"
     delete 'customers/reservations/:id', to: "customers#cancel_reservations"
 
-    resources :reservations, only: [:create]
+    resources :reservations, only: [:create, :index]
     post 'reservations/confirm',          to: "reservations#confirm"
     get  'reservations/thanks',           to: "reservations#thanks"
 
+    resources :tags,       only: [:index]
     resources :follows,    only: [:index, :create, :destroy]
     resources :favorites,  only: [:create, :destroy]
     resources :dm_rooms,   only: [:show] do
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
     resources :items,   only: [:new, :show, :edit, :update, :destroy, :create] do
       resources :comments,   only: [:create, :destroy]
     end
+    resources :reservations, only: [:index]
     
     get    'farmers/mypage',           to: "farmers#show"
     get    'farmers/information/edit', to: "farmers#edit"

@@ -7,13 +7,61 @@
         </a>
       </div>
       <% if admin_signed_in? %> 
-         
+          <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "消費者一覧", admin_customers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "農家一覧", admin_farmers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
       <% elsif customer_signed_in?  %>
-        
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", root_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
       <% elsif farmer_signed_in?  %>
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", farmer_farmers_mypage_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
         
       <% else %>
-        
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to "About", about_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", root_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "農家ログイン", new_farmer_session_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "消費者ログイン", new_customer_session_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
       <% end %>
     </div>
   </nav>

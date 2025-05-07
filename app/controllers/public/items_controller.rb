@@ -3,5 +3,8 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
+    @customer = current_customer
+    @item = Item.find(params[:id])
+    @comments = @item.comments
   end
 end

@@ -11,6 +11,8 @@ class Item < ApplicationRecord
 
   attr_accessor :tag_names
 
+
+
   def save_tags(tag_names)
     tag_names.each do |new_name|
       tag = Tag.find_or_create_by(tag_name: new_name)

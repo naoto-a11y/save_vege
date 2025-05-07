@@ -26,7 +26,7 @@
   <table class="w-100">
     <tr class="py-5">
       <th class="border-top py-3">name</th>
-      <td class="border-top py-3"><%= customer.name %></td>
+      <td class="border-top py-3"><%= customer.last_name %></td>
     </tr>
     <tr>
       <th class="border-top py-3">introduction</th>
@@ -34,11 +34,11 @@
     </tr>
     <tr>
       <th class="border-top py-3">follows</th>
-      <td class="border-top py-3"><%= customer.followed_farmers %></td>
+      <td class="border-top py-3"><%= customer.followed_farmers.count %></td>
     </tr>
   </table>
 
-  <%= link_to  customers_information_edit, class: "btn btn-outline-dark mt-5 mb-3 w-100" do %>
-    <i class="fa-solid fa-user-gear"></i>
+  <%= link_to customers_information_edit_path, class: "btn btn-outline-dark mt-5 mb-3 w-100" do %>
+    編集する
   <% end %>
 <% end %>
