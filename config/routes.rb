@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get  'reservations/thanks',           to: "reservations#thanks"
 
     resources :tags,       only: [:index]
-    resources :follows,    only: [:index, :create, :destroy]
+    resources :follows,    only: [:index, :create, :destroy, :show]
     resources :favorites,  only: [:create, :destroy]
     resources :dm_rooms,   only: [:show] do
       resources :dm_messages, only: [:create, :destroy]
