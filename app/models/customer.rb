@@ -21,4 +21,8 @@ class Customer < ApplicationRecord
       'no_image.jpg'
     end
   end
+
+  def following?(farmer)
+    follows.exists?(farmer_id: farmer.id)
+  end
 end
