@@ -25,4 +25,12 @@ class Customer < ApplicationRecord
   def following?(farmer)
     follows.exists?(farmer_id: farmer.id)
   end
+  #予約されているかどうか
+  def reserved_item?(item)
+    reservations.exists?(item_id: item.id)
+  end
+  #予約されているreservationを取得
+  def reservation_for(item)
+    reservations.find_by(item_id: item.id)
+  end
 end

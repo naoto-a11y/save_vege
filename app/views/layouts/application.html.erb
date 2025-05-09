@@ -12,6 +12,17 @@
 
   <body>
     <%= render 'layouts/header' %>
+    <% if notice %>
+      <div class="alert alert-success text-center">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-danger text-center">
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

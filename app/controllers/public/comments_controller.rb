@@ -4,9 +4,17 @@ class Public::CommentsController < ApplicationController
     @comment = @item.comments.new(comment_params)
     @comment.sender = current_customer || current_farmer
     if @comment.save
-      redirect_to item_path(@item)
+      if current_customer
+        redirect_to item_path(@item), notice: "コメントを投稿しました"
+      else
+        redirect_to farmer_item_path(@item), notice: "コメントを投稿しました"
+      end
     else
-      redirect_to item_path(@item)
+      if current_customer
+        redirect_to item_path(@item), alert: "コメント投稿に失敗しました"
+      else
+        redirect_to farmer_item_path(@item), alert: "コメント投稿に失敗しました"
+      end
     end
   end
 

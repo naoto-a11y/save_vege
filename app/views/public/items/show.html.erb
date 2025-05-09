@@ -22,7 +22,18 @@
           <h2><%= @item.name %></h2>
           <p class="my-4"><%= @item.introduction %></p>
           <p class="my-4 h4">￥<%= number_to_currency(@item.price) %>（税込）</p>
-          <%= link_to "予約する", root_path, class: "btn btn-outline-dark" %><br>
+          
+          <% if current_customer.reserved_item?(@item) %>
+            <%= link_to "DMする",dm_room_path(@reservation.dm_room.id), class: "btn btn-outline-primary" %><br>
+          <% else %>
+            <%= form_with model: @reservation, url: item_reservations_path(@item), method: :post, local: true do |f| %>
+              <div class="mb-3">
+                <%= f.label :reserved_date, "予約日を選択してください" %>
+                <%= f.date_field :reserved_date, class: "form-control" %>
+              </div>
+              <%= f.submit "予約する", class: "btn btn-outline-dark" %>
+            <% end %>
+          <% end %>
           生産者：<%= link_to farmer_path(@item.farmer) do %>
             <%= @item.farmer.last_name %>
           <% end %>さん
