@@ -6,5 +6,7 @@ class Public::ItemsController < ApplicationController
     @customer = current_customer
     @item = Item.find(params[:id])
     @comments = @item.comments
+    @tags = Tag.all
+    @comment = Comment.new
   end
 end

@@ -1,0 +1,16 @@
+<h2>User info</h2>
+  <%= image_tag farmer.get_profile_image %>
+  <table class="w-100">
+    <tr class="py-5">
+      <th class="border-top py-3">name</th>
+      <td class="border-top py-3"><%= farmer.last_name %></td>
+    </tr>
+    <tr>
+      <th class="border-top py-3">introduction</th>
+      <td class="border-top py-3"><%= farmer.introduction %></td>
+    </tr>
+    <tr>
+      <th class="border-top py-3">Sales Address</th>
+      <td class="border-top py-3"><%= farmer.seller_address %></td>
+    </tr>
+  </table>

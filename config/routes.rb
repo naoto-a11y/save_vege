@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
+ 
   devise_for :customers,skip: [:password], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
   root to: 'homes#top'
   get 'about', to: "homes#about"
+
+
   scope module: :public do
     
-    
-
     resources :items, only: [:index, :show] do
       resources :comments,   only: [:create, :destroy]
     end
@@ -24,8 +25,10 @@ Rails.application.routes.draw do
     post 'reservations/confirm',          to: "reservations#confirm"
     get  'reservations/thanks',           to: "reservations#thanks"
 
+    resources :farmers,    only: [:show] do
+      resource :follow,    only: [:create, :destroy, :show]
+    end
     resources :tags,       only: [:index]
-    resources :follows,    only: [:index, :create, :destroy, :show]
     resources :favorites,  only: [:create, :destroy]
     resources :dm_rooms,   only: [:show] do
       resources :dm_messages, only: [:create, :destroy]
