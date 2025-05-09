@@ -12,7 +12,11 @@ Rails.application.routes.draw do
     
     resources :items, only: [:index, :show] do
       resources :comments,   only: [:create, :destroy]
+      resources :reservations, only: [:create, :index]
+      
     end
+    post 'reservations/confirm',          to: "reservations#confirm"
+    get  'reservations/thanks',           to: "reservations#thanks"
 
     get    'customers/my_page',          to: "customers#show"
     get    'customers/information/edit', to: "customers#edit"
@@ -25,7 +29,7 @@ Rails.application.routes.draw do
     post 'reservations/confirm',          to: "reservations#confirm"
     get  'reservations/thanks',           to: "reservations#thanks"
 
-    resources :farmers,    only: [:show] do
+    resources :farmers, path: "customer_farmers", only: [:show] do
       resource :follow,    only: [:create, :destroy, :show]
     end
     resources :tags,       only: [:index]

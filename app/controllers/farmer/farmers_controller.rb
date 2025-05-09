@@ -3,6 +3,7 @@ class Farmer::FarmersController < ApplicationController
     @farmer = current_farmer
     @items = current_farmer.items
     @reservations = current_farmer.reservations
+    @reservation_count = current_farmer.reservations.count
   end
 
   def edit

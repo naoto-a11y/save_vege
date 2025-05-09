@@ -17,6 +17,12 @@ class Farmer::ItemsController < ApplicationController
   end
 
   def show
+    @farmer = current_farmer
+    @tags = Tag.all
+    @item = Item.find(params[:id])
+    @comments = @item.comments
+    @comment = Comment.new
+    @reservation_count = current_farmer.reservations.count
   end
 
   def edit
