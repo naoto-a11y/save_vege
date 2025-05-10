@@ -20,4 +20,6 @@ class Farmer::FarmersController < ApplicationController
 
   def cancel_reservation
   end
+
+  
 end

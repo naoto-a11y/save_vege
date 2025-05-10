@@ -4,4 +4,5 @@ class Public::FarmersController < ApplicationController
     @farmer = Farmer.find(params[:id])
     @items = @farmer.items
   end
+
 end

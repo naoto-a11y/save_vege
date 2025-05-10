@@ -3,7 +3,7 @@
   <h2 class="mb-4 text-center">DMルーム</h2>
 
   <div class="shadow p-4">
-    <div class="overflow-auto" style="max-height: 400px;">
+    <div class="overflow-auto" style="max-height: 600px;">
       <% @dm_messages.each do |message| %>
         <div class="mb-3">
           <% if message.sender == current_customer || message.sender == current_farmer %>
@@ -18,8 +18,8 @@
           <% else %>
             <div class="text-right">
               <div class=""><%= image_tag message.sender.get_profile_image, class: "rounded-circle", size: "40x40" %>
-              <span class="badge badge-success"><%= message.sender.last_name %></span>
-              <div class="d-inline-block bg-white rounded-pill px-3 py-2 mt-1">
+              <span class="badge badge-secondary"><%= message.sender.last_name %></span>
+              <div class="d-inline-block bg-white rounded-pill border px-3 py-2 mt-1">
                 <%= message.message %>
               </div>
               <small class="text-muted d-block mt-1"><%= message.created_at.strftime('%Y/%m/%d %H:%M') %></small>
