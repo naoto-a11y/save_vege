@@ -3,9 +3,9 @@
     <!-- サイドバー：左 -->
     <div class="col-3">
       <%= render 'share/info', farmer: @farmer %>
-    <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-      予約一覧（<%= @reservation_count %>）
-    <% end %>
+      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+        予約一覧（<%= @reservation_count %>）
+      <% end %>
     </div>
     
 
