@@ -15,8 +15,10 @@ Rails.application.routes.draw do
     
     resources :items, only: [:index, :show] do
       resources :comments,   only: [:create, :destroy]
-      resources :reservations, only: [:create, :index]
+      resources :reservations, only: [:create]
     end
+
+    resources :reservations, only: [:index, :destroy]
 
     post 'reservations/confirm',          to: "reservations#confirm"
     get  'reservations/thanks',           to: "reservations#thanks"
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
     patch  'customers/information',      to: "customers#update"
     get    'customers/unsubscribe',      to: "customers#unsubscribe"
     patch  'customers/withdraw',         to: "customers#withdraw"
-    delete 'customers/reservations/:id', to: "customers#cancel_reservations"
+    
 
 
     resources :farmers, path: "customer_farmers", only: [:show] do
