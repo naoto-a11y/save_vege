@@ -1,2 +1,75 @@
-<h1>Public::Customers#edit</h1>
-<p>Find me in app/views/public/customers/edit.html.erb</p>
+<div class="container white-bg p-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h4 class="text-center mb-4">ユーザー情報編集</h4>
+
+      <%= form_with model: @customer, url: customers_information_path, local: true, method: :patch, html: { multipart: true } do |f| %>
+        <%= render "public/shared/error_messages", resource: @customer %>
+
+        <table class="table table-borderless">
+          <!-- 現在のプロフィール画像 -->
+          <tr>
+            <td class="align-middle">現在の画像</td>
+            <td>
+              <% if @customer.profile_image.attached? %>
+                <%= image_tag @customer.profile_image, width: 100, height: 100, class: "rounded-circle mb-2" %>
+              <% else %>
+                <p>画像は登録されていません</p>
+              <% end %>
+            </td>
+          </tr>
+
+          <!-- プロフィール画像アップロード -->
+          <tr>
+            <td class="align-middle">画像を変更</td>
+            <td>
+              <%= f.file_field :profile_image, class: "form-control-file" %>
+            </td>
+          </tr>
+
+          <!-- 氏名 -->
+          <tr>
+            <td class="align-middle">名前（姓）</td>
+            <td><%= f.text_field :last_name, class: "form-control", placeholder: "山田" %></td>
+          </tr>
+          <tr>
+            <td class="align-middle">名前（名）</td>
+            <td><%= f.text_field :first_name, class: "form-control", placeholder: "太郎" %></td>
+          </tr>
+
+          <!-- フリガナ -->
+          <tr>
+            <td class="align-middle">フリガナ（セイ）</td>
+            <td><%= f.text_field :last_name_kana, class: "form-control", placeholder: "ヤマダ" %></td>
+          </tr>
+          <tr>
+            <td class="align-middle">フリガナ（メイ）</td>
+            <td><%= f.text_field :first_name_kana, class: "form-control", placeholder: "タロウ" %></td>
+          </tr>
+
+          <!-- 電話番号 -->
+          <tr>
+            <td class="align-middle">電話番号</td>
+            <td><%= f.telephone_field :telephone_number, class: "form-control" %></td>
+          </tr>
+
+          <!-- 自己紹介 -->
+          <tr>
+            <td class="align-middle">自己紹介</td>
+            <td><%= f.text_area :introduction, rows: 4, class: "form-control", placeholder: "迅速な返信を心がけます" %></td>
+          </tr>
+        </table>
+
+        <div class="text-center mt-4">
+          <%= f.submit "更新する", class: "btn btn-success px-5" %>
+        </div>
+      <% end %>
+
+      <!-- メール・パスワード変更と退会 -->
+      <div class="text-center mt-5">
+        <%= link_to "メールアドレス / パスワードを変更する", edit_customer_registration_path, class: "btn btn-outline-primary mb-3" %><br>
+        <%= link_to "退会する", customers_unsubscribe_path, method: :get, class: "btn btn-outline-danger" %>
+      </div>
+    </div>
+  </div>
+</div>

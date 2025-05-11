@@ -4,7 +4,9 @@
     <div class="col-3">
       <% if customer_signed_in? %>
         <%= render 'share/info', customer: @customer %>
-        <%= link_to "予約一覧", item_reservations_path(@item.reservations), class: "btn btn-outline-dark w-100 my-2" %>
+        <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+          予約一覧(<%= @customer.reservations.count %>)
+        <% end %>
       <% end %>
       <%= render 'public/tags/tag', tags: @tags %>
     </div>
@@ -47,32 +49,7 @@
         </div>
       </div>
 
-      <!-- コメント一覧 -->
-      <div class="mt-5 ml-5">
-        <h4>コメント一覧</h4>
-        <% @comments.each do |comment| %>
-          <div class="ml-5 mt-4">
-            <%= image_tag comment.sender.get_profile_image, size: "40x40", class: "rounded-circle me-2" %>
-            <% if comment.sender_type == "Customer" %>
-              <strong><%= comment.sender.last_name %>（消費者）</strong>
-            <% elsif comment.sender_type == "Farmer" %>
-              <strong><%= comment.sender.last_name %>（農家）</strong>
-            <% end %>
-            <div class="d-flex justify-content-between align-items-center mb-3 mr-5">
-              <p class="mb-0"><%= comment.comment %></p>
-              <%= link_to "削除する", item_comment_path(@item, comment), method: :delete, class: "btn btn-outline-dark mr-5" %>
-            </div>
-          </div>
-        <% end %>
-        <div class="mr-5 pr-5">
-          <%= form_with model: [@item, @comment], method: :post do |f| %>
-            <div class="mb-3">
-              <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
-            </div>
-            <%= f.submit "投稿", class: "btn btn-outline-dark" %>
-          <% end %>
-        </div>
-      </div>
+      <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
     </div>
   </div>
 </div>

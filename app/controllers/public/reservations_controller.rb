@@ -1,4 +1,10 @@
 class Public::ReservationsController < ApplicationController
+
+  def index
+    @customer = current_customer
+    @reservations = @customer.reservations
+  end
+
   def confirm
   end
 
@@ -16,6 +22,16 @@ class Public::ReservationsController < ApplicationController
       
     else
       redirect_to item_path(params[:item_id]), alert: "予約に失敗しました"
+    end
+  end
+
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    if @reservation.destroy
+      redirect_to reservations_path, notice: "予約をキャンセルしました。"
+    else
+      flash[:notice] = "キャンセルできませんでした"
+      redirect_to reservations_path
     end
   end
 

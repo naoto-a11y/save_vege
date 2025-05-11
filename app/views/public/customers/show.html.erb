@@ -2,21 +2,22 @@
   <div class="row mx-5 px-5">
     <div class="col-md-2 mr-5">
       <%= render 'share/info', customer: @customer %>
-      <%= link_to "予約一覧", item_reservations_path(@item.reservations), class: "btn btn-outline-brown " %>
+      <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+        予約一覧（<%= @reservations.count %>）
+      <% end %>
     </div>
 
     <div class="col-md-9 px-5">
       <div class="col-md-9 px-5">
       <h2>いいねをつけた野菜</h2>
       <div class="row">
-        <% @items.each do |item| %>
+        <% @favorite_items.each do |item| %>
           <div class="col-md-4">
             <%= render 'customer/items/item', item: item %>
           </div>
         <% end %>
       </div>
     </div>
-    
   </div>
 </div>
 
