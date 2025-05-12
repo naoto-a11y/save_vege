@@ -1,24 +1,18 @@
 <%= form_with url: tags_path, method: :get, local: true do %>
-  <table class="table table-borderless genre-box">
-    <tr class="text-center" style="height: 25px; font-size: 1.4rem;">
-      <th class="py-0" style="height: 25px;">タグ検索</th>
-    </tr>
+  <div class="mb-3">
+    <h5 class="text-center mb-3">タグ検索</h5>
 
-    <% tags.each do |tag| %>
-      <tr>
-        <td class="border-0 py-1">
-          <label class="btn btn-outline-dark px-3 py-1 w-100">
-            <%= check_box_tag "tag_ids[]", tag.id, params[:tag_ids]&.include?(tag.id.to_s), style: "margin-right: 8px;" %>
-            <%= tag.tag_name %>
-          </label>
-        </td>
-      </tr>
-    <% end %>
+    <div class="d-flex flex-wrap gap-2 justify-content-start">
+      <% tags.each do |tag| %>
+        <label class="btn btn-outline-dark mb-2 mr-1">
+          <%= check_box_tag "tag_ids[]", tag.id, params[:tag_ids]&.include?(tag.id.to_s), style: "margin-right: 6px;" %>
+          <%= tag.tag_name %>
+        </label>
+      <% end %>
+    </div>
 
-    <tr>
-      <td class="text-center pt-2">
-        <%= submit_tag "絞り込む", class: "btn btn-dark btn-sm" %>
-      </td>
-    </tr>
-  </table>
+    <div class="text-center mt-3">
+      <%= submit_tag "絞り込む", class: "btn btn-dark btn-sm" %>
+    </div>
+  </div>
 <% end %>
