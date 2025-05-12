@@ -26,12 +26,34 @@ class Farmer::ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find(params[:id])
   end
 
   def update
+    @item = current_farmer.items.find(params[:id])
+    if @item.update(item_params)
+      # 新しいタグが入力されていたら追加
+      if params[:item][:new_tag_names].present?
+        new_tag_names = params[:item][:new_tag_names].split(',').map(&:strip).reject(&:blank?)
+        new_tag_names.each do |name|
+          tag = Tag.find_or_create_by(tag_name: name)
+          unless @item.tags.include?(tag)
+            @item.tags << tag 
+          end
+        end
+      end
+      redirect_to farmer_item_path(@item), notice: "商品情報を更新しました。"
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @item = Item.find(params[:id])
+    if @item.destroy
+      flash[:notice] = "商品を削除しました。"
+      redirect_to farmer_farmers_mypage_path
+    end
   end
 
   private

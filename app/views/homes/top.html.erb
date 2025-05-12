@@ -1,10 +1,14 @@
-<div class="container-fluid px-5 mx-5 m-4">
-  <div class="row mx-5 px-5">
-    <div class="col-md-2 mr-5">
-     <%= render 'public/tags/tag', tags: @tags %>
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー：左 -->
+    <div class="col-3">
+      <%= render 'public/tags/tag', tags: @tags %>
     </div>
 
-    <div class="col-md-9 px-5">
+    <!-- メインコンテンツ：右 -->
+    <div class="col-9">
+      <div class="row">
+      <div class="col-md-9 px-5">
       <h2>商品一覧</h2>
       <div class="row">
         <% @items.each do |item| %>
@@ -14,6 +18,9 @@
         <% end %>
       </div>
     </div>
-    
+
+    </div>
   </div>
 </div>
+
+
