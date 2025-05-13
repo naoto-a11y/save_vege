@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
  
-  namespace :farmer do
-    get 'reservations/index'
-  end
   devise_for :customers,skip: [:password], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -52,7 +49,7 @@ Rails.application.routes.draw do
     resources :items,   only: [:new, :show, :edit, :update, :destroy, :create] do
       resources :comments,   only: [:create, :destroy]
     end
-    resources :reservations, only: [:index]
+    resources :reservations, only: [:index, :destroy]
 
     get    'farmers/mypage',           to: "farmers#show"
     get    'farmers/information/edit', to: "farmers#edit"

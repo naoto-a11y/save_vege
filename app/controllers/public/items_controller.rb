@@ -9,5 +9,6 @@ class Public::ItemsController < ApplicationController
     @tags = Tag.all
     @comment = Comment.new
     @reservation = @customer.reservation_for(@item)
+    @reservations = current_customer.reservations
   end
 end

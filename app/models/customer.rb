@@ -29,8 +29,16 @@ class Customer < ApplicationRecord
   def reserved_item?(item)
     reservations.exists?(item_id: item.id)
   end
-  #予約されているreservationを取得
+  #予約されているitemを取得
   def reservation_for(item)
     reservations.find_by(item_id: item.id)
+  end
+   # item をお気に入り済みか
+  def favorited?(item)
+    favorites.exists?(item_id: item.id)
+  end
+  #item に対して持つ Favorite レコード1件を取得
+  def favorite_for(item)
+    favorites.find_by(item_id: item.id)
   end
 end

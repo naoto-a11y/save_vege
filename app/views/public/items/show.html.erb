@@ -5,7 +5,7 @@
       <% if customer_signed_in? %>
         <%= render 'share/info', customer: @customer %>
         <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-          予約一覧(<%= @customer.reservations.count %>)
+          予約一覧(<%= @reservations.count %>)
         <% end %>
       <% end %>
       <%= render 'public/tags/tag', tags: @tags %>
