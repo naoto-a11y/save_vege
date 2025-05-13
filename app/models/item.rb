@@ -29,4 +29,6 @@ class Item < ApplicationRecord
       'no_image.jpg'
     end
   end
+
+  
 end
