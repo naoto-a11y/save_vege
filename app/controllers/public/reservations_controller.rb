@@ -3,7 +3,7 @@ class Public::ReservationsController < ApplicationController
 
   def index
     @customer = current_customer
-    @reservations = @customer.reservations
+    @reservations = @customer.reservations.joins(:item).where(items: { is_active: true })
   end
 
   def confirm

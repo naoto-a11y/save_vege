@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :farmers, path: "customer_farmers", only: [:show] do
       resource :follow,    only: [:create, :destroy, :show]
     end
+
     resources :follows,    only: [:index]
     resources :tags,       only: [:index]
     resources :favorites,  only: [:create, :destroy]
@@ -50,6 +51,8 @@ Rails.application.routes.draw do
     resources :items,   only: [:new, :show, :edit, :update, :destroy, :create] do
       resources :comments,   only: [:create, :destroy]
     end
+    patch 'items/:id/deactivate', to: "items#deactivate", as: 'deactivate_farmer_item'
+    patch 'items/:id/activate', to: "items#activate", as: 'activate_farmer_item'
     resources :reservations, only: [:index, :destroy]
 
     get    'farmers/mypage',           to: "farmers#show"

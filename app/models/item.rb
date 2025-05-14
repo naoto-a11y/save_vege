@@ -13,6 +13,8 @@ class Item < ApplicationRecord
   attr_accessor :tag_names
   accepts_nested_attributes_for :available_slots, allow_destroy: true
 
+  scope :active, -> { where(is_active: true) }
+
 
 
   def save_tags(tag_names)

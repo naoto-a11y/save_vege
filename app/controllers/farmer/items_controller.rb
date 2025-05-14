@@ -60,6 +60,26 @@ class Farmer::ItemsController < ApplicationController
     end
   end
 
+  def deactivate
+    @item = Item.find(params[:id])
+    if @item.update(is_active: false)
+      flash[:notice] = "商品を非公開にしました"
+    else
+      flash[:alert] = "非公開にできませんでした"
+    end
+    redirect_to farmer_item_path(@item)
+  end
+
+  def activate
+    @item = Item.find(params[:id])
+    if @item.update(is_active: true)
+      flash[:notice] = "商品を公開しました"
+    else
+      flash[:alert] = "商品を公開にできませんでした"
+    end
+    redirect_to farmer_item_path(@item)
+  end
+
   private
   def item_params
     params.require(:item).permit(

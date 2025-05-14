@@ -3,8 +3,8 @@ class Public::CustomersController < ApplicationController
 
   def show
     @customer = current_customer
-    @favorite_items = current_customer.favorite_items
-    @reservations = current_customer.reservations
+    @favorite_items = current_customer.favorite_items.active
+    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
   end
 
   def edit
