@@ -31,10 +31,19 @@
           <%= f.number_field :price, class: "form-control", min: 0 %>
         </div>
 
-        <div class="mb-4">
-          <%= f.label :available_date, "受け取り可能日", class: "form-label" %>
-          <%= f.date_field :available_date, class: "form-control" %>
-        </div>
+        <% 3.times do |i| %>
+          <% slot = @item.available_slots[i] %>
+          <%= f.fields_for :available_slots, slot do |slot_form| %>
+            <%= slot_form.label :available_date, "受け取り可能日#{i + 1}", class: "form-label" %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="d-flex gap-2">
+                  <%= slot_form.date_select :available_date, use_month_numbers: true, order: [:year, :month, :day],prompt: { year: '年', month: '月', day: '日' }, class: "form-select" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
 
         <div class="mb-4">
           <%= f.label :harvest_date, "収穫日", class: "form-label" %>

@@ -8,7 +8,9 @@ class Public::ItemsController < ApplicationController
     @comments = @item.comments
     @tags = Tag.all
     @comment = Comment.new
-    @reservation = @customer.reservation_for(@item)
-    @reservations = current_customer.reservations
+    if customer_signed_in?
+      @reservation = current_customer.reservation_for(@item)
+      @reservations = current_customer.reservations
+    end
   end
 end

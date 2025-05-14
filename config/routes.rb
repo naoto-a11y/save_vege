@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :farmers, path: "customer_farmers", only: [:show] do
       resource :follow,    only: [:create, :destroy, :show]
     end
+    resources :follows,    only: [:index]
     resources :tags,       only: [:index]
     resources :favorites,  only: [:create, :destroy]
     resources :dm_rooms,   only: [:show] do

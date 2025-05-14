@@ -1,6 +1,9 @@
 class Farmer::ItemsController < ApplicationController
+  before_action :authenticate_farmer!
+
   def new
     @item = Item.new
+    3.times { @item.available_slots.build }
   end
 
   def create
@@ -27,6 +30,7 @@ class Farmer::ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    (3 - @item.available_slots.size).times { @item.available_slots.build }
   end
 
   def update
@@ -58,6 +62,9 @@ class Farmer::ItemsController < ApplicationController
 
   private
   def item_params
-    params.require(:item).permit(:name, :image, :price, :introduction, :available_date, :harvest_date, :tag_names)
+    params.require(:item).permit(
+    :name, :image, :price, :introduction, :harvest_date, :tag_names,
+    available_slots_attributes: [:available_date, :id, :_destroy]
+  )
   end
 end

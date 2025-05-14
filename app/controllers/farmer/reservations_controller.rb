@@ -1,4 +1,5 @@
 class Farmer::ReservationsController < ApplicationController
+  before_action :authenticate_farmer!
 
   def index
     @farmer = current_farmer

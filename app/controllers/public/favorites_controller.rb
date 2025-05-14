@@ -1,4 +1,5 @@
 class Public::FavoritesController < ApplicationController
+  before_action :authenticate_customer!
   def create
     favorite = current_customer.favorites.new(item_id: params[:item_id])
     favorite.save

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_05_05_145032) do
+ActiveRecord::Schema.define(version: 2025_05_13_183328) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 2025_05_05_145032) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "available_slots", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "available_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_available_slots_on_item_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -151,7 +159,6 @@ ActiveRecord::Schema.define(version: 2025_05_05_145032) do
     t.integer "farmer_id", null: false
     t.string "name", null: false
     t.text "introduction"
-    t.date "available_date", null: false
     t.date "harvest_date", null: false
     t.integer "price", null: false
     t.boolean "is_active", default: true, null: false
@@ -178,6 +185,7 @@ ActiveRecord::Schema.define(version: 2025_05_05_145032) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "available_slots", "items"
   add_foreign_key "comments", "items"
   add_foreign_key "dm_messages", "dm_rooms"
   add_foreign_key "dm_rooms", "reservations"

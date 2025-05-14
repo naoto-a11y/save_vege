@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item: one
+  start_time: 2025-05-13 16:59:07
+  end_time: 2025-05-13 16:59:07
+
+two:
+  item: two
+  start_time: 2025-05-13 16:59:07
+  end_time: 2025-05-13 16:59:07
