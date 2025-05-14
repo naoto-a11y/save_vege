@@ -8,8 +8,10 @@ class Item < ApplicationRecord
   has_many :favorited_customers, through: :favorites, source: :customers
   has_many :comments, dependent: :destroy
   has_many :reservations, dependent: :destroy
+  has_many :available_slots, dependent: :destroy
 
   attr_accessor :tag_names
+  accepts_nested_attributes_for :available_slots, allow_destroy: true
 
 
 

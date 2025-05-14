@@ -12,45 +12,70 @@
     </div>
 
     <!-- メインコンテンツ：右 -->
-    <div class="col-9">
-      <div class="row">
-        <!-- 左：画像 -->
-        <div class="col-5">
-          <%= image_tag @item.get_image, class: "img-fluid" %>
-        </div>
+    <div class="col-8 px-5 mx-3">
+      <div class="card shadow-sm p-4 mb-4 w-100">
+        <div class="d-flex justify-content-between">
+          <!-- 左：画像 -->
+          <div class="ml-5 pl-5">
+            <%= image_tag @item.get_image, class: "img-fluid rounded mb-3", style: "width: 450px; height: 350px; object-fit: cover;" %>
+          </div>
 
-        <!-- 右：商品情報 -->
-        <div class="col-7">
-          <h2><%= @item.name %></h2>
-          <p class="my-4"><%= @item.introduction %></p>
-          <p class="my-4 h4">￥<%= number_to_currency(@item.price) %>（税込）</p>
-          
-          <% if current_customer.reserved_item?(@item) %>
-            <%= link_to "DMする",dm_room_path(@reservation.dm_room.id), class: "btn btn-outline-primary" %><br>
-          <% else %>
-            <%= form_with model: @reservation, url: item_reservations_path(@item), method: :post, local: true do |f| %>
-              <div class="mb-3">
-                <%= f.label :reserved_date, "予約日を選択してください" %>
-                <%= f.date_field :reserved_date, class: "form-control" %>
-              </div>
-              <%= f.submit "予約する", class: "btn btn-outline-dark" %>
+          <!-- 右：商品情報 -->
+          <!-- 右端に商品情報 -->
+          <div class="mr-5 pr-5">
+            <h1 class="mb-3 fw-bold"><%= @item.name %></h1>
+            <p class="fs-5 mb-3"><%= @item.introduction %></p>
+            <p class="h4 text-success mb-3">￥<%= number_with_delimiter(@item.price) %>（税込）</p>
+            <p class="fs-5 text-danger mb-3">
+              <% if customer_signed_in? %>
+                <% if current_customer.favorited?(@item) %>
+                  <% favorite = current_customer.favorite_for(@item) %>
+                  <%= link_to "❤️ #{@item.favorites.count}", favorite_path(@item.id), method: :delete %>
+                <% else %>
+                  <%= link_to "♡ #{@item.favorites.count}", favorites_path(item_id: @item.id), method: :post %>
+                <% end %>
+              <% else %>
+                ❤️<%= @item.favorites.count %>
+              <% end %>
+            </p>
+            <p>
+              <% @item.tags.each do |tag| %>
+                🔖<%= tag.tag_name %>
+              <% end %>
+            </p><br>
+            <% if customer_signed_in? %>
+              <% if current_customer.reserved_item?(@item) %>
+                <%= link_to "DMする",dm_room_path(@reservation.dm_room.id), class: "btn btn-outline-primary" %><br>
+              <% else %>
+                <%= form_with model: @reservation, url: item_reservations_path(@item), method: :post, local: true do |f| %>
+                  <div class="mb-3">
+                  <%= f.label :reserved_date, "予約日を選択してください", class: "form-label" %>
+                  <%= f.select :reserved_date, 
+                        @item.available_slots.map { |date| [date.available_date.strftime('%Y/%m/%d'), date.available_date] },
+                        { prompt: "選択してください" },
+                        class: "form-select" %>
+                  </div>
+                  <%= f.submit "予約する", class: "btn btn-outline-dark" %>
+                <% end %>
+              <% end %>
             <% end %>
-          <% end %>
-          生産者：<%= link_to farmer_path(@item.farmer) do %>
-            <%= @item.farmer.last_name %>
-          <% end %>さん
-          
-
-          <% unless current_customer.following?(@item.farmer) %>
-            <%= link_to "フォローする", farmer_follow_path(@item.farmer.id), method: :post, class: "btn btn-outline-dark ml-3" %>
-          <% else %>
-            <%= link_to "フォロー解除", farmer_follow_path(@item.farmer.id,), method: :delete, class: "btn btn-outline-dark ml-3" %>
-          <% end %>
+            生産者：<%= link_to farmer_path(@item.farmer) do %>
+              <%= @item.farmer.last_name %>
+            <% end %>さん
+            
+            <% if customer_signed_in? %>
+              <% unless current_customer.following?(@item.farmer) %>
+                <%= link_to "フォローする", farmer_follow_path(@item.farmer.id), method: :post, class: "btn btn-outline-dark ml-3" %>
+              <% else %>
+                <%= link_to "フォロー解除", farmer_follow_path(@item.farmer.id,), method: :delete, class: "btn btn-outline-dark ml-3" %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
-
       <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
     </div>
   </div>
 </div>
+
 

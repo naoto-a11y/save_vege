@@ -39,7 +39,9 @@
     </p>
     <p>
       <strong>フォロー中の農家：</strong><br>
-      <%= current_customer.followed_farmers.count %>件
+      <%= link_to follows_path do %>
+        <%= current_customer.followed_farmers.count %>
+      <% end %>
     </p>
     <%= link_to "プロフィールを編集", customers_information_edit_path, class: "btn btn-outline-dark w-100 mt-3" %>
   <% end %>

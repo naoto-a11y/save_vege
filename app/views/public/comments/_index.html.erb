@@ -17,7 +17,10 @@
             <small class="text-muted">
               <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>
             </small><br>
-            <%= link_to "削除する", item_comment_path(item, comment), method: :delete, class: "btn btn-outline-dark btn-sm mt-1" %>
+            <% if (customer_signed_in? && comment.sender == current_customer) || 
+                (farmer_signed_in? && current_farmer == item.farmer) %>
+              <%= link_to "削除する", item_comment_path(item, comment), method: :delete, class: "btn btn-outline-dark btn-sm mt-1" %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -32,11 +35,17 @@
   <% end %>
 
   <div class="mr-5  mt-4">
-    <%= form_with model: [item, comment], method: :post do |f| %>
-      <div class="mb-3">
-        <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
+    <% if customer_signed_in? || farmer_signed_in? %>
+      <%= form_with model: [item, comment], method: :post do |f| %>
+        <div class="mb-3">
+          <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
+        </div>
+        <%= f.submit "投稿", class: "btn btn-outline-dark" %>
+      <% end %>
+    <% else %>
+      <div class="text-center mt-3">
+        <%= link_to "ログインしてコメントする", new_customer_session_path, class: "btn btn-primary" %>
       </div>
-      <%= f.submit "投稿", class: "btn btn-outline-dark" %>
     <% end %>
   </div>
 </div>

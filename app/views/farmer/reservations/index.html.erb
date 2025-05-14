@@ -30,7 +30,7 @@
                   <td><%= reservation.item.name %></td>
                   <td><%= reservation.customer.last_name %> さん</td>
                   <td style="width: 250px;">
-                    <%= link_to "DMする", dm_room_path(reservation.dm_room), class: "btn btn-outline-primary btn-sm" %>
+                    <%= link_to "DMする", farmer_dm_room_path(reservation.dm_room), class: "btn btn-outline-primary btn-sm" %>
                     <%= link_to "予約キャンセル", farmer_reservation_path(reservation.id), class: "btn btn-outline-primary btn-sm" %>
                   </td>
                 </tr>

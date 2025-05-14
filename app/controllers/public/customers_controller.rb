@@ -1,4 +1,6 @@
 class Public::CustomersController < ApplicationController
+  before_action :authenticate_customer!, only: [:create, :edit, :update, :withdraw, :unsubscribe]
+
   def show
     @customer = current_customer
     @favorite_items = current_customer.favorite_items
@@ -23,9 +25,10 @@ class Public::CustomersController < ApplicationController
   end
 
   def withdraw
-  end
-
-  def cancel_reservation
+    current_customer.update(status: false)
+    reset_session
+    flash[:notice] = "退会手続きが完了しました。またのご利用を心よりお待ちしております。"
+    redirect_to root_path
   end
 
   private
