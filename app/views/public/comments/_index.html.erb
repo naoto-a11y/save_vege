@@ -1,0 +1,51 @@
+<!-- コメント一覧 -->
+<div class="mt-5 ml-5">
+  <h4>コメント一覧</h4>
+
+  <div id="comments-list">
+    <% comments.order(created_at: :desc).each_with_index do |comment, index| %>
+      <div class="ml-5  comment-entry <%= 'd-none' if index >= 3 %>">
+        <%= image_tag comment.sender.get_profile_image, size: "40x40", class: "rounded-circle me-2" %>
+        <% if comment.sender_type == "Customer" %>
+          <strong><%= comment.sender.last_name %>（消費者）</strong>
+        <% elsif comment.sender_type == "Farmer" %>
+          <strong><%= comment.sender.last_name %>（農家）</strong>
+        <% end %>
+       <div class="d-flex justify-content-between align-items-center mr-5">
+          <p class="mb-0"><%= comment.comment %></p>
+          <div class="text-right">
+            <small class="text-muted">
+              <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>
+            </small><br>
+            <% if (customer_signed_in? && comment.sender == current_customer) || 
+                (farmer_signed_in? && current_farmer == item.farmer) %>
+              <%= link_to "削除する", item_comment_path(item, comment), method: :delete, class: "btn btn-outline-dark btn-sm mt-1" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if comments.count > 3 %>
+    <div class="text-center">
+      <button id="show-more-comments" class="btn btn-outline-secondary">もっと見る</button>
+      <button id="hide-comments" class="btn btn-outline-secondary d-none">閉じる</button>
+    </div>
+  <% end %>
+
+  <div class="mr-5  mt-4">
+    <% if customer_signed_in? || farmer_signed_in? %>
+      <%= form_with model: [item, comment], method: :post do |f| %>
+        <div class="mb-3">
+          <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
+        </div>
+        <%= f.submit "投稿", class: "btn btn-outline-dark" %>
+      <% end %>
+    <% else %>
+      <div class="text-center mt-3">
+        <%= link_to "ログインしてコメントする", new_customer_session_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,44 +1,48 @@
-<% if farmer_signed_in? %>
-  <h2>User info</h2>
-  <%= image_tag farmer.get_profile_image %>
-  <table class="w-100">
-    <tr class="py-5">
-      <th class="border-top py-3">name</th>
-      <td class="border-top py-3"><%= farmer.last_name %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">introduction</th>
-      <td class="border-top py-3"><%= farmer.introduction %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">Sales Address</th>
-      <td class="border-top py-3"><%= farmer.seller_address %></td>
-    </tr>
-  </table>
+<div class="card shadow-sm p-4 mb-4 bg-white rounded">
+  <div class="text-center mb-3">
+    <% if farmer_signed_in? %>
+      <%= image_tag(current_farmer.get_profile_image, class: "rounded-circle", size: "100x100") %>
+      <h5 class="mt-3 mb-1"><%= current_farmer.last_name %></h5>
+      <small class="text-muted">農家</small>
+    <% elsif customer_signed_in? %>
+      <%= image_tag(current_customer.get_profile_image, class: "rounded-circle", size: "100x100") %>
+      <h5 class="mt-3 mb-1"><%= current_customer.last_name %></h5>
+      <small class="text-muted">消費者</small>
+    <% end %>
+  </div>
 
-  <%= link_to farmer_farmers_information_edit_path, class: "btn btn-outline-dark mt-5 mb-3 w-100" do %>
-    編集する
+  <hr>
+
+  <% if farmer_signed_in? %>
+    <p>
+      <strong>自己紹介：</strong><br>
+      <% if current_farmer.introduction.present? %> 
+        <%= current_farmer.introduction %>
+      <% else %>
+        <%= "未登録" %>
+      <% end %>
+    </p>
+    <p>
+      <strong>販売先住所：</strong><br>
+      <%= current_farmer.seller_address %>
+    </p>
+    <%= link_to "プロフィールを編集", farmer_farmers_information_edit_path, class: "btn btn-outline-dark w-100 mt-3" %>
+  
+  <% elsif customer_signed_in? %>
+   <p>
+      <strong>自己紹介：</strong><br>
+      <% if current_customer.introduction.present? %> 
+        <%= current_customer.introduction %>
+      <% else %>
+        <%= "未登録" %>
+      <% end %>
+    </p>
+    <p>
+      <strong>フォロー中の農家：</strong><br>
+      <%= link_to follows_path do %>
+        <%= current_customer.followed_farmers.count %>
+      <% end %>
+    </p>
+    <%= link_to "プロフィールを編集", customers_information_edit_path, class: "btn btn-outline-dark w-100 mt-3" %>
   <% end %>
-<% elsif customer_signed_in? %>
-
-  <h2>User info</h2>
-  <%= image_tag customer.get_profile_image %>
-  <table class="w-100">
-    <tr class="py-5">
-      <th class="border-top py-3">name</th>
-      <td class="border-top py-3"><%= customer.last_name %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">introduction</th>
-      <td class="border-top py-3"><%= customer.introduction %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">follows</th>
-      <td class="border-top py-3"><%= customer.followed_farmers.count %></td>
-    </tr>
-  </table>
-
-  <%= link_to customers_information_edit_path, class: "btn btn-outline-dark mt-5 mb-3 w-100" do %>
-    編集する
-  <% end %>
-<% end %>
+</div>

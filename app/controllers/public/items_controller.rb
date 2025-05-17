@@ -8,6 +8,9 @@ class Public::ItemsController < ApplicationController
     @comments = @item.comments
     @tags = Tag.all
     @comment = Comment.new
-    @reservation = @customer.reservation_for(@item)
+    if customer_signed_in?
+      @reservation = current_customer.reservation_for(@item)
+      @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
+    end
   end
 end

@@ -1,2 +1,73 @@
-<h1>Farmer::Items#edit</h1>
-<p>Find me in app/views/farmer/items/edit.html.erb</p>
+<div class="container white-bg p-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h2 class="text-center mb-4">商品情報を編集</h2>
+
+      <%= form_with model: @item, url: farmer_item_path(@item), method: :patch, local: true, html: { multipart: true } do |f| %>
+        <%= render "public/shared/error_messages", resource: @item %>
+
+        <div class="mb-4">
+          <%= f.label :name, "商品名", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "例：朝採れトマト 1kg" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :image, "商品画像", class: "form-label" %><br>
+          <% if @item.image.attached? %>
+            <div class="mb-2">
+              <%= image_tag @item.get_image, style: "width: 450px; height: 350px;" %><br>
+            </div>
+          <% end %>
+          <%= f.file_field :image, class: "form-control-file" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :introduction, "紹介文", class: "form-label" %>
+          <%= f.text_area :introduction, rows: 4, class: "form-control", placeholder: "商品についての説明を入力してください" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :price, "価格（円）", class: "form-label" %>
+          <%= f.number_field :price, class: "form-control", min: 0 %>
+        </div>
+
+        <% 3.times do |i| %>
+          <% slot = @item.available_slots[i] %>
+          <%= f.fields_for :available_slots, slot do |slot_form| %>
+            <%= slot_form.label :available_date, "受け取り可能日#{i + 1}", class: "form-label" %>
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="d-flex gap-2">
+                  <%= slot_form.date_select :available_date, use_month_numbers: true, order: [:year, :month, :day],prompt: { year: '年', month: '月', day: '日' }, class: "form-select" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <div class="mb-4">
+          <%= f.label :harvest_date, "収穫日", class: "form-label" %>
+          <%= f.date_field :harvest_date, class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <strong>タグ</strong><br>
+          <% Tag.all.each do |tag| %>
+            <label class="btn btn-outline-dark btn-sm m-1">
+              <%= check_box_tag "item[tag_ids][]", tag.id, @item.tags.include?(tag), style: "margin-right: 6px;" %>
+              <%= tag.tag_name %>
+            </label>
+          <% end %>
+
+          <div class="mt-3">
+            <%= label_tag :new_tag_names, "新しいタグ（カンマ区切り）", class: "form-label" %>
+            <%= text_field_tag "item[new_tag_names]", "", class: "form-control", placeholder: "例：春野菜,有機栽培" %>
+          </div>
+        </div>
+
+        <div class="text-center mt-5">
+          <%= f.submit "更新する", class: "btn btn-success px-5" %>
+          <%= link_to "戻る", farmer_item_path(@item), class: "btn btn-secondary px-4 ms-3" %>
+        </div>
+      <% end %>
+    </div>

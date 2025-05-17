@@ -5,13 +5,9 @@ class Public::TagsController < ApplicationController
     if params[:tag_ids].present?
       tag_ids = params[:tag_ids].map(&:to_i)
 
-      @items = Item.joins(:tags)
-                   .where(tags: { id: tag_ids })
-                   .group("items.id")
-                   .having("COUNT(DISTINCT tags.id) = ?", tag_ids.size)
+      @items = Item.joins(:tags).where(tags: { id: tag_ids }).group("items.id").having("COUNT(DISTINCT tags.id) = ?", tag_ids.size).active
     else
-      @items = Item.all
-      render "homes/top"
+      @items = Item.active
     end
   end
 end

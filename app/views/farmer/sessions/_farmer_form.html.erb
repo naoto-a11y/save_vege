@@ -1,0 +1,42 @@
+<div class="container white-bg p-5">  
+  <h4 class="customers-table mb-5">農家ログイン</h4>
+  <div class="row">
+    <%= form_with model: farmer, url: farmer_session_path, local: true do |f| %>
+      <%= render "public/shared/error_messages", resource: resource %>
+      <table class="table table-borderless w-100">
+        <!-- メールアドレスの欄 -->
+        <tr>
+          <td class="align-middle">メールアドレス</td>
+          <td >
+            <div class="align-middle">
+              <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+            </div>
+          </td>
+        </tr>
+
+        <!--パスワードの欄 -->
+        <tr>
+          <td class="align-middle">パスワード</td>
+          <td>
+            <div class="align-middle">
+              <% if @minimum_password_length %>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+            </div>
+          </td>
+        </tr>
+        <!-- 新規登録ボタン -->
+        <tfoot>
+          <tr>
+            <td></td>
+            <td>
+              <div  class="align-middle">
+                <%= f.submit "ログイン", class: "btn btn-success w-100" %>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    <% end %>
+  </div>
+</div>

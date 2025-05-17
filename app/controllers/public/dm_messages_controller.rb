@@ -1,5 +1,5 @@
 class Public::DmMessagesController < ApplicationController
-
+  before_action :authenticate_customer!
   def create
     @dm_room = DmRoom.find(params[:dm_room_id])
     @dm_message = @dm_room.dm_messages.new(dm_message_params)

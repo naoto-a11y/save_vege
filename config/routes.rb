@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
  
-  namespace :farmer do
-    get 'reservations/index'
-  end
   devise_for :customers,skip: [:password], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -15,8 +12,10 @@ Rails.application.routes.draw do
     
     resources :items, only: [:index, :show] do
       resources :comments,   only: [:create, :destroy]
-      resources :reservations, only: [:create, :index]
+      resources :reservations, only: [:create]
     end
+
+    resources :reservations, only: [:index, :destroy]
 
     post 'reservations/confirm',          to: "reservations#confirm"
     get  'reservations/thanks',           to: "reservations#thanks"
@@ -26,12 +25,14 @@ Rails.application.routes.draw do
     patch  'customers/information',      to: "customers#update"
     get    'customers/unsubscribe',      to: "customers#unsubscribe"
     patch  'customers/withdraw',         to: "customers#withdraw"
-    delete 'customers/reservations/:id', to: "customers#cancel_reservations"
+    
 
 
     resources :farmers, path: "customer_farmers", only: [:show] do
       resource :follow,    only: [:create, :destroy, :show]
     end
+
+    resources :follows,    only: [:index]
     resources :tags,       only: [:index]
     resources :favorites,  only: [:create, :destroy]
     resources :dm_rooms,   only: [:show] do
@@ -50,7 +51,9 @@ Rails.application.routes.draw do
     resources :items,   only: [:new, :show, :edit, :update, :destroy, :create] do
       resources :comments,   only: [:create, :destroy]
     end
-    resources :reservations, only: [:index]
+    patch 'items/:id/deactivate', to: "items#deactivate", as: 'deactivate_farmer_item'
+    patch 'items/:id/activate', to: "items#activate", as: 'activate_farmer_item'
+    resources :reservations, only: [:index, :destroy]
 
     get    'farmers/mypage',           to: "farmers#show"
     get    'farmers/information/edit', to: "farmers#edit"

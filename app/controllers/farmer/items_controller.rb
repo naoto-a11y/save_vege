@@ -1,6 +1,9 @@
 class Farmer::ItemsController < ApplicationController
+  before_action :authenticate_farmer!
+
   def new
     @item = Item.new
+    3.times { @item.available_slots.build }
   end
 
   def create
@@ -26,16 +29,62 @@ class Farmer::ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find(params[:id])
+    (3 - @item.available_slots.size).times { @item.available_slots.build }
   end
 
   def update
+    @item = current_farmer.items.find(params[:id])
+    if @item.update(item_params)
+      # 新しいタグが入力されていたら追加
+      if params[:item][:new_tag_names].present?
+        new_tag_names = params[:item][:new_tag_names].split(',').map(&:strip).reject(&:blank?)
+        new_tag_names.each do |name|
+          tag = Tag.find_or_create_by(tag_name: name)
+          unless @item.tags.include?(tag)
+            @item.tags << tag 
+          end
+        end
+      end
+      redirect_to farmer_item_path(@item), notice: "商品情報を更新しました。"
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @item = Item.find(params[:id])
+    if @item.destroy
+      flash[:notice] = "商品を削除しました。"
+      redirect_to farmer_farmers_mypage_path
+    end
+  end
+
+  def deactivate
+    @item = Item.find(params[:id])
+    if @item.update(is_active: false)
+      flash[:notice] = "商品を非公開にしました"
+    else
+      flash[:alert] = "非公開にできませんでした"
+    end
+    redirect_to farmer_item_path(@item)
+  end
+
+  def activate
+    @item = Item.find(params[:id])
+    if @item.update(is_active: true)
+      flash[:notice] = "商品を公開しました"
+    else
+      flash[:alert] = "商品を公開にできませんでした"
+    end
+    redirect_to farmer_item_path(@item)
   end
 
   private
   def item_params
-    params.require(:item).permit(:name, :image, :price, :introduction, :available_date, :harvest_date, :tag_names)
+    params.require(:item).permit(
+    :name, :image, :price, :introduction, :harvest_date, :tag_names,
+    available_slots_attributes: [:available_date, :id, :_destroy]
+  )
   end
 end
