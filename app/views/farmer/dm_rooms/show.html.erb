@@ -1,0 +1,57 @@
+<div class="container my-5">
+  <h2 class="mb-4 text-center">DMルーム</h2>
+
+  <!-- 商品情報と予約日 -->
+  <div class="mb-4 p-3 bg-light rounded shadow-sm">
+    <div class="row align-items-center">
+      <div class="col-md-2 text-center">
+        <%= image_tag @dm_room.reservation.item.get_image, class: "img-fluid rounded", alt: "商品画像" %>
+      </div>
+      <div class="col-md-10">
+        <h5 class="mb-2">🛒 商品：<%= @dm_room.reservation.item.name %></h5>
+        <p class="mb-0">📅 予約日：<%= @dm_room.reservation.reserved_date.strftime("%Y/%m/%d") %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- メッセージ表示エリア -->
+  <div class="shadow p-4">
+    <div class="overflow-auto" style="max-height: 600px;">
+      <% @dm_messages.each do |message| %>
+        <div class="mb-3">
+          <% if message.sender == current_customer || message.sender == current_farmer %>
+            <div class="text-left">
+              <%= image_tag message.sender.get_profile_image, class: "rounded-circle", size: "40x40" %>
+              <span class="badge badge-secondary"><%= message.sender.last_name %></span>
+              <div class="d-inline-block bg-success text-white rounded-pill px-3 py-2 mt-1">
+                <%= message.message %>
+              </div>
+              <small class="text-muted d-block mt-1"><%= message.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+            </div>
+          <% else %>
+            <div class="text-right">
+              <%= image_tag message.sender.get_profile_image, class: "rounded-circle", size: "40x40" %>
+              <span class="badge badge-secondary"><%= message.sender.last_name %></span>
+              <div class="d-inline-block bg-white rounded-pill border px-3 py-2 mt-1">
+                <%= message.message %>
+              </div>
+              <small class="text-muted d-block mt-1"><%= message.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <!-- メッセージ送信フォーム -->
+    <%= form_with model: [@dm_room, DmMessage.new], url: dm_room_dm_messages_path(@dm_room), local: true do |f| %>
+      <div class="form-group">
+        <%= f.text_area :message, class: "form-control", placeholder: "メッセージを入力", rows: 3 %>
+      </div>
+      <div class="text-right">
+        <%= f.submit "送信", class: "btn btn-outline-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>

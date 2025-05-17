@@ -1,0 +1,50 @@
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー：左 -->
+    <div class="col-3">
+      <%= render 'share/info', farmer: @farmer %>
+      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+        予約一覧（<%= @reservation_count %>）
+      <% end %>
+    </div>
+
+
+      <!-- メインコンテンツ：右 -->
+    <div class="col-8 px-5 mx-3">
+      <div class="card shadow-sm p-4 mb-4 w-100">
+        <div class="d-flex justify-content-between">
+          <!-- 左端に画像 -->
+          <div class="mx-5 px-5">
+           <%= image_tag @item.get_image, class: "img-fluid rounded mb-3", style: "width: 450px; height: 350px; object-fit: cover;" %>
+          </div>
+      
+          <!-- 右端に商品情報 -->
+          <div class="ml-5 mr-5 pr-5">
+            <h1 class="mb-3 fw-bold"><%= @item.name %></h1>
+            <p class="text-muted fs-5 mb-2">生産者：<strong><%= @item.farmer.last_name %>さん</strong></p>
+            <p class="fs-5 mb-3"><%= @item.introduction %></p>
+            <p class="h4 text-success mb-3">￥<%= number_with_delimiter(@item.price) %>（税込）</p>
+            <p class="fs-5 text-danger mb-3">❤️ <%= @item.favorites.count %> いいね</p>
+            <p>
+              <% @item.tags.each do |tag| %>
+                🔖<%= tag.tag_name %>
+              <% end %>
+            </p><br>
+            <%= link_to "商品情報を編集", edit_farmer_item_path(@item), class: "btn btn-outline-primary mt-2" %>
+            <%= link_to "商品を削除", farmer_item_path(@item), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger mt-2" %>
+            <% if @item.is_active == true %>
+              <%= link_to "商品情報を非公開にする", farmer_deactivate_farmer_item_path(@item),
+              method: :patch, data: { confirm: "本当にこの商品を非公開にしますか？" }, class: "btn btn-outline-dark mt-2" %>
+            <% else %>
+              <%= link_to "商品情報を公開する", farmer_activate_farmer_item_path(@item),
+              method: :patch, data: { confirm: "本当にこの商品を公開しますか？" }, class: "btn btn-outline-success mt-2" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- コメント -->
+      <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
+    </div>
+  </div>
+</div>
+

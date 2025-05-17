@@ -1,0 +1,29 @@
+
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー：左 -->
+    <div class="col-3">
+      <%= render 'share/info', customer: @customer %>
+      <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+        予約一覧（<%= @reservations.count %>）
+      <% end %>
+    </div>
+    
+
+    <!-- メインコンテンツ：右 -->
+    <div class="col-9">
+      <div class="row">
+        <div class="col-md-11 px-5">
+          <h2>いいねをつけた野菜</h2>
+          <div class="row">
+            <% @favorite_items.each do |item| %>
+              <div class="col-md-4">
+                <%= render 'public/items/item', item: item %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

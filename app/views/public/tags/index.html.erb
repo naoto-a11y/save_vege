@@ -1,0 +1,26 @@
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー -->
+    <div class="col-md-3">
+      <%= render 'public/tags/tag', tags: @tags %>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="col-md-9">
+      <h2>タグ検索結果</h2>
+      <div class="row">
+        <% if @items.present? %>
+          <% @items.each do |item| %>
+            <div class="col-md-4 mb-4">
+              <%= render 'public/items/item', item: item %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="col-12 d-flex justify-content-center mt-5">
+            <h5>該当する商品がありません</h5>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

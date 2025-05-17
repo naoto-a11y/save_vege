@@ -1,0 +1,54 @@
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー：左 -->
+    <div class="col-3">
+      <%= render 'share/info', farmer: @farmer %>
+      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
+        予約一覧（<%= @reservation_count %>）
+      <% end %>
+    </div>
+
+    <!-- メインコンテンツ：右 -->
+    <div class="col-8 ">
+      <h3 class="mb-4">予約一覧</h3>
+      
+      <div class="mr-5 pr-5">
+        <% if @reservations.any? %>
+          <table class="table table-bordered ">
+            <thead class="thead-light">
+              <tr>
+                <th>予約日</th>
+                <th>商品名</th>
+                <th>予約者</th>
+                <th>販売ステータス</th>
+                <th></th>
+              </tr>
+            </thead>
+
+              <% @reservations.each do |reservation| %>
+                <tr>
+                  <td><%= reservation.reserved_date.strftime('%Y/%m/%d') %></td>
+                  <td><%= reservation.item.name %></td>
+                  <td><%= reservation.customer.last_name %> さん</td>
+                  <td>
+                    <% if reservation.item.is_active == false %>
+                      <span class="text-dark">●非公開中</span>
+                    <% else %>
+                      <span class="text-success">●公開中</span>
+                    <% end %>
+                  </td>
+                  <td style="width: 250px;">
+                    <%= link_to "DMする", farmer_dm_room_path(reservation.dm_room), class: "btn btn-outline-primary btn-sm" %>
+                    <%= link_to "予約キャンセル", farmer_reservation_path(reservation.id), class: "btn btn-outline-primary btn-sm" %>
+                  </td>
+                </tr>
+              <% end %>
+          </table>
+        <% else %>
+          <p>現在、予約はありません。</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

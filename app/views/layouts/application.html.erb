@@ -8,9 +8,23 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
+    <div class="social"></div>
+    <%= render 'layouts/header' %>
+    <% if notice %>
+      <div class="alert alert-success text-center">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-danger text-center">
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

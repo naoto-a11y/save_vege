@@ -1,0 +1,29 @@
+<div class="card h-100 text-center">
+  <%= link_to item_path(item.id) do %>
+    <%= image_tag item.get_image, size: "300x300", class: "card-img-top" %>
+  <% end %>
+
+  <div class="card-body">
+    <h5 class="card-title"><%= item.name %></h5>
+    <p class="card-text">¥<%= number_with_delimiter(item.price) %></p>
+
+    <p class="mb-2">
+      <% if customer_signed_in? %>
+        <% if current_customer.favorited?(item) %>
+          <% favorite = current_customer.favorite_for(item) %>
+          <%= link_to "❤️ #{item.favorites.count}", favorite_path(favorite), method: :delete %>
+        <% else %>
+          <%= link_to "♡ #{item.favorites.count}", favorites_path(item_id: item.id), method: :post %>
+        <% end %>
+      <% else %>
+        ❤️<%= item.favorites.count %>
+      <% end %>
+      💬 <%= item.comments.count %><br>
+      <% item.tags.each do |tag| %>
+        🔖<%= tag.tag_name %>
+      <% end %>
+    </p>
+
+    <%= link_to "詳細を見る", item_path(item.id), class: "btn btn-outline-primary btn-sm w-100" %>
+  </div>
+</div>

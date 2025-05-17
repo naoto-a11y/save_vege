@@ -1,0 +1,18 @@
+<%= form_with url: tags_path, method: :get, local: true do %>
+  <div class="mb-3">
+    <h5 class="text-center mb-3">タグ検索</h5>
+
+    <div class="d-flex flex-wrap gap-2 justify-content-start">
+      <% tags.each do |tag| %>
+        <label class="btn btn-outline-dark mb-2 mr-1">
+          <%= check_box_tag "tag_ids[]", tag.id, params[:tag_ids]&.include?(tag.id.to_s), style: "margin-right: 6px;" %>
+          <%= tag.tag_name %>
+        </label>
+      <% end %>
+    </div>
+
+    <div class="text-center mt-3">
+      <%= submit_tag "絞り込む", class: "btn btn-dark btn-sm" %>
+    </div>
+  </div>
+<% end %>

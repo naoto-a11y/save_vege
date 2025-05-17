@@ -1,0 +1,30 @@
+<div class="container-fluid px-5 mx-5 my-4">
+  <div class="row">
+    <!-- サイドバー：左 -->
+    <div class="col-3">
+      <%= render 'share/info', customer: @customer %>
+    </div>
+
+    <!-- メインコンテンツ：右 -->
+    <div class="col-8">
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <% @follows.each_with_index do |follow, index| %>
+            <tr class="<%= 'border-bottom' unless index == @follows.size - 1 %>">
+              <td>
+                <%= image_tag follow.get_profile_image, size: "60x60", class: "rounded-circle" %>
+              </td>
+              <td>
+                <%= follow.last_name %> さん
+              </td>
+              <td class="text-end">
+                <%= link_to "詳細へ", farmer_path(follow) %>
+                <%= link_to "フォロー解除", farmer_follow_path(follow), method: :delete, data: { confirm: "本当に解除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

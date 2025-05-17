@@ -1,0 +1,81 @@
+<header class="custom-header">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: ">
+    <div class="container-fluid">
+      <div class="ml-5 pl-5">
+        <% if customer_signed_in? %>
+          <a class="navbar-brand ml-5 pl-5" href="/">
+            <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
+          </a>
+        <% elsif admin_signed_in? %>
+          <a class="navbar-brand ml-5 pl-5" href="/">
+            <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
+          </a>
+        <% elsif farmer_signed_in? %>
+          <a class="navbar-brand ml-5 pl-5" href="/farmer/farmers/mypage">
+            <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
+          </a>
+        <% else %>
+          <a class="navbar-brand ml-5 pl-5" href="/">
+            <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
+          </a>
+        <% end %>
+
+      </div>
+      <% if admin_signed_in? %> 
+          <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "消費者一覧", admin_customers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "農家一覧", admin_farmers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
+      <% elsif customer_signed_in?  %>
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", root_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "マイページ", customers_my_page_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
+      <% elsif farmer_signed_in?  %>
+        
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", farmer_farmers_mypage_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
+        
+      <% else %>
+        <ul class="list-unstyled">
+            <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to "About", about_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5 ">
+                <%= link_to "商品一覧", root_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "ログイン", new_customer_session_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+              <li class="mr-5">
+                <%= link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
+          </ul>
+      <% end %>
+    </div>
+  </nav>
+</header>
