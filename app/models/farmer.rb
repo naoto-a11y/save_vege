@@ -11,6 +11,9 @@ class Farmer < ApplicationRecord
   has_many :comments, as: :sender, dependent: :destroy
   has_many :dm_messages, as: :sender, dependent: :destroy
 
+  geocoded_by :seller_address
+  after_validation :geocode, if: :will_save_change_to_address?
+
   def get_profile_image
     if self.profile_image.attached?
       self.profile_image

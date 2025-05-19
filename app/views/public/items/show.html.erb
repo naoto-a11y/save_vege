@@ -18,6 +18,29 @@
           <!-- 左：画像 -->
           <div class="ml-5 pl-5">
             <%= image_tag @item.get_image, class: "img-fluid rounded mb-3", style: "width: 450px; height: 350px; object-fit: cover;" %>
+            <h5 class="mt-4">販売先</h5>
+            <!-- 地図表示 -->
+            <% if @item.farmer.latitude && @item.farmer.longitude %>
+              <div id="map" style="width: 400px; height: 400px;" class="mt-3"></div>
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  const lat = <%= @item.farmer.latitude %>;
+                  const lng = <%= @item.farmer.longitude %>;
+
+                  const map = L.map('map').setView([lat, lng], 15);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                  }).addTo(map);
+
+                  L.marker([lat, lng]).addTo(map)
+                    .bindPopup("<%= j @item.farmer.address %>")  // ←住所もfarmerのものを表示
+                    .openPopup();
+                });
+              </script>
+            <% else %>
+              <p class="text-muted">※地図情報が登録されていません</p>
+              <p>販売先住所：<%= @item.farmer.seller_address %></p>
+            <% end %>
           </div>
 
           <!-- 右：商品情報 -->
