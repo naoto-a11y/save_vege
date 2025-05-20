@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
  
+  namespace :admin do
+    get 'tags/index'
+  end
   devise_for :customers,skip: [:password], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -72,8 +75,11 @@ Rails.application.routes.draw do
     sessions: "admin/sessions"
   }
   namespace :admin do
-    resources :customers, only: [:index, :show, :update]
-    resources :farmers,   only: [:index, :show, :update]
+    resources :tags,      only: [:index, :destroy]
+    resources :customers, only: [:index, :update, :edit, :show]
+    resources :farmers, only: [:index, :show, :update, :edit] do
+      resources :items, only: [:index, :destroy, :update], module: :farmers
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

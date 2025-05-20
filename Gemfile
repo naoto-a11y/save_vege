@@ -68,3 +68,4 @@ gem "net-imap"
 
 gem 'geocoder'
 
+gem 'kaminari'
