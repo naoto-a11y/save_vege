@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <div class="w-100 mx-auto" style="max-width: 650px;">
+    <h2 class="mb-4 text-center">タグ一覧</h2>
+
+
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>タグ名</th>
+          <th ></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tags.each do |tag| %>
+          <tr>
+            <td><%= tag.tag_name %></td>
+            <td class="text-center">
+              <%= link_to "削除", admin_tag_path(tag), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    <div class="d-flex justify-content-center">
+      <%= paginate @tags %>
+    </div>
+  </div>
+</div>

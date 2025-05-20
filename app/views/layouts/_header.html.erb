@@ -7,9 +7,9 @@
             <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
           </a>
         <% elsif admin_signed_in? %>
-          <a class="navbar-brand ml-5 pl-5" href="/">
+          <%= link_to admin_customers_path, class: "navbar-brand ml-5 pl-5" do %>
             <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
-          </a>
+          <% end %>
         <% elsif farmer_signed_in? %>
           <a class="navbar-brand ml-5 pl-5" href="/farmer/farmers/mypage">
             <img src="/assets/logo.png" alt="SAVE_VEGE Logo" height="100">
@@ -25,10 +25,10 @@
           <ul class="list-unstyled">
             <div class="d-flex ">
               <li class="mr-5 ">
-                <%= link_to "消費者一覧", admin_customers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+                <%= link_to "ユーザー一覧", admin_customers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
               </li>
               <li class="mr-5">
-                <%= link_to "農家一覧", admin_farmers_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+                <%= link_to "タグ一覧", admin_tags_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
               </li>
               <li class="mr-5">
                 <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>

@@ -1,2 +1,96 @@
-<h1>Admin::Customers#index</h1>
-<p>Find me in app/views/admin/customers/index.html.erb</p>
+<div class="container white-bg p-5">
+  <h4 class="customers-table text-center mb-5">ユーザー一覧</h4>
+
+  <!-- タブ見出し -->
+  <ul class="nav nav-tabs" id="registrationTabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab">消費者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="farmer-tab" data-toggle="tab" href="#farmer" role="tab">農家</a>
+    </li>
+  </ul>
+
+  <!-- タブの中身 -->
+  <div class="tab-content pt-4" id="registrationTabsContent">
+    <!-- 消費者タブ -->
+    <div class="tab-pane fade show active" id="customer" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col">
+          <!-- 消費者一覧 -->
+          <div class="tab-pane fade show active" id="customers" role="tabpanel">
+            <table class="table table-bordered">
+              <thead class="thead-light">
+                <tr>
+                  <th>ID</th>
+                  <th>名前</th>
+                  <th>メールアドレス</th>
+                  <th>ステータス</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @customers.each do |customer| %>
+                  <tr>
+                    <td><%= customer.id %></td>
+                    <td><%= "#{customer.last_name} #{customer.first_name}" %></td>
+                    <td><%= customer.email %></td>
+                    <td><%= customer.status ? "有効" : "退会" %></td>
+                    <td class="text-center">
+                      <%= link_to "プロフィール編集", edit_admin_customer_path(customer), class: "btn btn-outline-primary btn-sm me-2" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <!-- ページネーション -->
+            <div class="d-flex justify-content-center mt-3">
+              <%= paginate @customers, param_name: :customer_page  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 農家タブ -->
+    <div class="tab-pane fade" id="farmer" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col">
+          <!-- 消費者一覧 -->
+          <div class="tab-pane fade show active" id="farmers" role="tabpanel">
+            <table class="table table-bordered">
+              <thead class="thead-light">
+                <tr>
+                  <th>ID</th>
+                  <th>名前</th>
+                  <th>メールアドレス</th>
+                  <th>ステータス</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @farmers.each do |farmer| %>
+                  <tr>
+                    <td><%= farmer.id %></td>
+                    <td><%= "#{farmer.last_name} #{farmer.first_name}" %></td>
+                    <td><%= farmer.email %></td>
+                    <td><%= farmer.status ? "有効" : "退会" %></td>
+                    <td class="text-center">
+                      <%= link_to "プロフィール編集", edit_admin_farmer_path(farmer), class: "btn btn-outline-primary btn-sm me-2" %>
+                      <%= link_to "投稿一覧", admin_farmer_items_path(farmer) , class: "btn btn-outline-secondary btn-sm" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <!-- ページネーション -->
+            <div class="d-flex justify-content-center mt-3">
+              <%= paginate @farmers, param_name: :farmer_page %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
