@@ -96,6 +96,7 @@ GEM
     ffi (1.17.2)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
+    flatpickr (4.6.13.1)
     geocoder (1.8.5)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
@@ -266,6 +267,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise
   dotenv-rails
+  flatpickr (~> 4.6, >= 4.6.13)
   geocoder
   jbuilder (~> 2.7)
   listen (~> 3.3)

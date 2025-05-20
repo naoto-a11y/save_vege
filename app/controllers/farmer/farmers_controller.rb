@@ -12,6 +12,14 @@ class Farmer::FarmersController < ApplicationController
   end
 
   def update
+    @farmer = current_farmer
+    if @farmer.update(farmer_params)
+      flash[:notice] = "プロフィールを更新しました。"
+      redirect_to farmer_farmers_mypage_path
+    else
+      flash.now[:alert] = "更新に失敗しました。"
+      render :show
+    end
   end
 
   def unsubscribe
@@ -22,6 +30,12 @@ class Farmer::FarmersController < ApplicationController
     reset_session
     flash[:notice] = "退会手続きが完了しました。またのご利用を心よりお待ちしております。"
     redirect_to root_path
+  end
+
+  private
+
+  def farmer_params
+    params.require(:farmer).permit(:email, :first_name, :last_name, :first_name_kana, :last_name_kana, :seller_address, :postal_code )
   end
   
 end
