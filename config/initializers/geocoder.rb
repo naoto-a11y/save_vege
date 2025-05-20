@@ -1,0 +1,1 @@
+Geocoder.configure(lookup: :google, api_key: ENV['GOOGLE_MAP_API_KEY'], use_https: true, units: :km)
