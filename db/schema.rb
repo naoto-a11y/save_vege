@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_05_19_230644) do
+ActiveRecord::Schema.define(version: 2025_05_21_074636) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -58,6 +58,12 @@ ActiveRecord::Schema.define(version: 2025_05_19_230644) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["item_id"], name: "index_available_slots_on_item_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -126,6 +132,7 @@ ActiveRecord::Schema.define(version: 2025_05_19_230644) do
     t.text "introduction"
     t.float "latitude"
     t.float "longitude"
+    t.string "prefecture"
     t.index ["email"], name: "index_farmers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_farmers_on_reset_password_token", unique: true
   end
@@ -166,6 +173,7 @@ ActiveRecord::Schema.define(version: 2025_05_19_230644) do
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "category_id"
     t.index ["farmer_id"], name: "index_items_on_farmer_id"
   end
 

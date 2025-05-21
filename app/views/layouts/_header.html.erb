@@ -37,6 +37,9 @@
       <% elsif customer_signed_in?  %>
         <ul class="list-unstyled">
             <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to "About", about_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
               <li class="mr-5 ">
                 <%= link_to "商品一覧", root_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
               </li>
@@ -47,10 +50,14 @@
                 <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
               </li>
           </ul>
+        
       <% elsif farmer_signed_in?  %>
         
         <ul class="list-unstyled">
             <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to "About", about_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
+              </li>
               <li class="mr-5 ">
                 <%= link_to "商品一覧", farmer_farmers_mypage_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>
               </li>
@@ -60,7 +67,7 @@
           </ul>
         
       <% else %>
-        <ul class="list-unstyled">
+        <ul class="list-unstyled mr-5 pr-5">
             <div class="d-flex ">
               <li class="mr-5">
                 <%= link_to "About", about_path, class: "btn btn-outline-brown  w-100 px-3 py-2" %>

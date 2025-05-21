@@ -103,7 +103,12 @@
       <div class="bg-light text-center" style="width: 250px"> 
         <h4 class="mb-4">既に登録済みの方</h4>
       </div>
-      <%= render "public/shared/links" %>からログインしてください。
+      <p class="d-flex align-items-center">
+        <span class="me-2">
+          <%= link_to "ログイン", new_customer_session_path, class: "text-primary text-decoration-none" %>
+        </span>
+        <span>からご利用ください。</span>
+      </p>
     </div>
   </div>
 </div>

@@ -84,7 +84,7 @@ class Farmer::ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(
     :name, :image, :price, :introduction, :harvest_date, :tag_names,
-    available_slots_attributes: [:available_date, :id, :_destroy]
+    available_slots_attributes: [:available_date, :id, :_destroy], :category_id
   )
   end
 end
