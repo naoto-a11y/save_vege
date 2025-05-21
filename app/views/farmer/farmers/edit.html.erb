@@ -53,6 +53,18 @@
             <td><%= f.text_field :postal_code, class: "form-control" %></td>
           </tr>
 
+          <tr>
+            <td class="align-middle">都道府県</td>
+            <td>
+              <div class="form-group">
+                <%= f.select :prefecture,
+                      Farmer::PREFECTURES,
+                      { prompt: "都道府県を選択" },
+                      { class: "form-control" } %>
+              </div>
+            </td>
+          </tr>
+
           <!-- 販売先住所 -->
           <tr>
             <td class="align-middle">販売先住所</td>
