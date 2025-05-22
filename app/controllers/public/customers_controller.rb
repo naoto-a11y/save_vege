@@ -3,8 +3,10 @@ class Public::CustomersController < ApplicationController
 
   def show
     @customer = current_customer
-    @favorite_items = current_customer.favorite_items.active
+    @items = current_customer.favorite_items.active
     @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
+    @following_farmers = current_customer.followed_farmers
+    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct)
   end
 
   def edit
@@ -31,6 +33,13 @@ class Public::CustomersController < ApplicationController
     redirect_to root_path
   end
 
+  def recent_commented_items
+    @customer = current_customer
+    @items = current_customer.favorite_items.active
+    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
+    @following_farmers = current_customer.followed_farmers
+    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct)
+  end
   private
 
   def customer_params

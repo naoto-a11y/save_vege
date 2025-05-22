@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      
+    <%= render 'public/customers/info', customer: @customer, reservations: @reservations, 
+    following_farmers: @following_farmers, items: @items, 
+    recent_items: @recent_items %>
+      
+  
+      <!-- いいね商品一覧 -->
+      <h2 class="mb-4">💭最近コメントした商品</h2>
+      <div class="row">
+        <% @recent_items.each do |item| %>
+          <div class="col-md-3 mb-4">
+            <%= render 'public/items/item', item: item %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       resources :reservations, only: [:create]
     end
 
+    get 'recent_commented_items', to: 'customers#recent_commented_items'
+    
     resources :reservations, only: [:index, :destroy]
 
     post 'reservations/confirm',          to: "reservations#confirm"
