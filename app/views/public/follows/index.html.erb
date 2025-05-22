@@ -1,30 +1,44 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'share/info', customer: @customer %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-8">
-      <div class="table-responsive">
-        <table class="table align-middle">
-          <% @follows.each_with_index do |follow, index| %>
-            <tr class="<%= 'border-bottom' unless index == @follows.size - 1 %>">
-              <td>
-                <%= image_tag follow.get_profile_image, size: "60x60", class: "rounded-circle" %>
-              </td>
-              <td>
-                <%= follow.last_name %> さん
-              </td>
-              <td class="text-end">
-                <%= link_to "詳細へ", farmer_path(follow) %>
-                <%= link_to "フォロー解除", farmer_follow_path(follow), method: :delete, data: { confirm: "本当に解除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
-              </td>
-            </tr>
-          <% end %>
-        </table>
+    <div class="col">
+      <%= render 'public/customers/info', customer: @customer, reservations: @reservations, 
+                                          following_farmers: @following_farmers, items: @items, 
+                                          recent_items: @recent_items %>
+      
+      <div class="col">
+        <% @following_farmers.each do |follow| %>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm p-3">
+              <div class="d-flex align-items-start ">
+                
+                <!-- 左：プロフィール画像 -->
+                <div class="flex-shrink-0">
+                  <%= image_tag follow.get_profile_image, class: "rounded-circle", size: "80x80" %>
+                </div>
+            
+                <!-- 右：名前・都道府県・自己紹介 -->
+                <div class="flex-grow-1">
+                  <h5 class="mb-1"><%= follow.last_name %> さん</h5>
+                  <p class="text-muted mb-1"><%= follow.prefecture %></p>
+                  <p class="small text-muted text-truncate" style="max-width: 100%;">
+                    <%= follow.introduction.presence || "自己紹介は未登録です" %>
+                  </p>
+                </div>
+              </div>
+            
+              <!-- 下：操作ボタン -->
+              <div class="d-flex justify-content-end mt-3">
+                <%= link_to "詳細", farmer_path(follow), class: "btn btn-outline-primary btn-sm" %>
+                <%= link_to "解除", farmer_follow_path(follow),
+                            method: :delete,
+                            data: { confirm: "本当にフォローを解除しますか？" },
+                            class: "btn btn-outline-danger btn-sm" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
+

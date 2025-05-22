@@ -1,17 +1,15 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'share/info', customer: @customer %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-8 ">
-      <h3 class="mb-4">予約一覧</h3>
+    <div class="col">
       
-      <div class="mr-5 pr-5">
+    <%= render 'public/customers/info', customer: @customer, reservations: @reservations, 
+                                        following_farmers: @following_farmers, items: @items, 
+                                        recent_items: @recent_items %>
+      
+      <div class="col ">
+        <h3 class="mb-4">予約一覧</h3>
         <% if @reservations.any? %>
-          <table class="table table-bordered ">
+          <table class="table table-bordered">
             <thead class="thead-light">
               <tr>
                 <th>予約日</th>
@@ -40,4 +38,5 @@
     </div>
   </div>
 </div>
+
 

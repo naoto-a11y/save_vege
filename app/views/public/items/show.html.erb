@@ -1,18 +1,6 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <% if customer_signed_in? %>
-        <%= render 'share/info', customer: @customer %>
-        <%= link_to reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-          予約一覧(<%= @reservations.count %>)
-        <% end %>
-      <% end %>
-      <%= render 'public/tags/tag', tags: @tags %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-8 px-5 mx-3">
+    <div class="col">
       <div class="card shadow-sm p-4 mb-4 w-100">
         <div class="container">
           <div class="row">
