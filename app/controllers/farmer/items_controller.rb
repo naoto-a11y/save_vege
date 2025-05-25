@@ -2,6 +2,7 @@ class Farmer::ItemsController < ApplicationController
   before_action :authenticate_farmer!
 
   def new
+    Category.ensure_defaults
     @item = Item.new
     3.times { @item.available_slots.build }
   end
