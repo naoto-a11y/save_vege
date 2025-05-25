@@ -67,6 +67,17 @@
               </div>
             </td>
           </tr>
+          <tr>
+            <td class="align-middle">都道府県</td>
+            <td>
+              <div class="form-group">
+                <%= f.select :prefecture,
+                      Farmer::PREFECTURES,
+                      { prompt: "都道府県を選択" },
+                      { class: "form-control" } %>
+              </div>
+            </td>
+          </tr>
           <!-- 住所の欄 -->
           <tr>
             <td class="align-middle">販売先住所</td>
@@ -111,7 +122,13 @@
       <% end %>
      <div class="bg-light text-center" style="width: 250px"> 
         <h4 class="mb-4">既に登録済みの方</h4>
-     </div>からログインしてください。
+     </div>
+     <p class="d-flex align-items-center">
+        <span class="me-2">
+          <%= link_to "ログイン", new_customer_session_path, class: "text-primary text-decoration-none" %>
+        </span>
+        <span>からご利用ください。</span>
+      </p>
     </div>
   </div>
 </div>

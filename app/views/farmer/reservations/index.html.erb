@@ -1,20 +1,15 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'share/info', farmer: @farmer %>
-      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-        予約一覧（<%= @reservation_count %>）
-      <% end %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-8 ">
-      <h3 class="mb-4">予約一覧</h3>
+    <div class="col">
       
-      <div class="mr-5 pr-5">
+    <%= render 'farmer/farmers/info', farmer: @farmer, reservations: @reservations,
+                                        items: @items, items_count: @items_count, items_upcoming_slots_count: @items_upcoming_slots_count,
+                                        recent_items_count: @recent_items_count, favorites_items_count: @favorites_items_count %>
+      
+      <div class="col ">
+        <h3 class="mb-4">予約一覧</h3>
         <% if @reservations.any? %>
-          <table class="table table-bordered ">
+          <table class="table table-bordered">
             <thead class="thead-light">
               <tr>
                 <th>予約日</th>

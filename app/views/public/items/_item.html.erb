@@ -1,29 +1,51 @@
-<div class="card h-100 text-center">
+<div class="card h-100 shadow-sm text-center">
   <%= link_to item_path(item.id) do %>
-    <%= image_tag item.get_image, size: "300x300", class: "card-img-top" %>
+    <%= image_tag item.get_image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
   <% end %>
 
   <div class="card-body">
-    <h5 class="card-title"><%= item.name %></h5>
-    <p class="card-text">¥<%= number_with_delimiter(item.price) %></p>
+    <div class="mb-2">
+      <div>
+        <h5 class="text-center mb-1" style="font-size: 1.4rem; font-weight: bold;"><%= item.name %></h5>
+      </div>
+      <div class="text-right">
+        <p class="mb-0 text-muted" style="font-size: 1.2rem;">¥<%= number_with_delimiter(item.price) %></p>
+      </div>
+    </div>
 
-    <p class="mb-2">
-      <% if customer_signed_in? %>
-        <% if current_customer.favorited?(item) %>
-          <% favorite = current_customer.favorite_for(item) %>
-          <%= link_to "❤️ #{item.favorites.count}", favorite_path(favorite), method: :delete %>
+    <div class="mb-2 small text-muted d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-3">
+        <% if customer_signed_in? %>
+          <% if current_customer.favorited?(item) %>
+            <% favorite = current_customer.favorite_for(item) %>
+            <%= link_to favorite_path(favorite), method: :delete, class: "text-danger" do %>
+              ❤️ <%= item.favorites.count %>
+            <% end %>
+          <% else %>
+            <%= link_to favorites_path(item_id: item.id), method: :post, class: "text-muted" do %>
+              ♡ <%= item.favorites.count %>
+            <% end %>
+          <% end %>
         <% else %>
-          <%= link_to "♡ #{item.favorites.count}", favorites_path(item_id: item.id), method: :post %>
+          ❤️ <%= item.favorites.count %>
+        <% end %>
+        💬 <%= item.comments.count %>
+      </div>
+      <div>
+        <%= link_to "🔍", item_path(item.id), class: "btn btn-outline-primary btn-sm" %>
+      </div>
+    </div>
+
+    <div class="mb-2">
+    <% item.tags.each do |tag| %>
+      <% unless farmer_signed_in? %>
+        <%= link_to items_path(tag_ids: [tag.id]), class: "badge badge-light border text-decoration-none" do %>
+          #<%= tag.tag_name %>
         <% end %>
       <% else %>
-        ❤️<%= item.favorites.count %>
+        <span class="badge badge-light border">#<%= tag.tag_name %></span>
       <% end %>
-      💬 <%= item.comments.count %><br>
-      <% item.tags.each do |tag| %>
-        🔖<%= tag.tag_name %>
-      <% end %>
-    </p>
-
-    <%= link_to "詳細を見る", item_path(item.id), class: "btn btn-outline-primary btn-sm w-100" %>
+    <% end %>
+    </div>
   </div>
 </div>

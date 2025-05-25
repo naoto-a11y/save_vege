@@ -1,16 +1,49 @@
-<h2>User info</h2>
-  <%= image_tag farmer.get_profile_image %>
-  <table class="w-100">
-    <tr class="py-5">
-      <th class="border-top py-3">name</th>
-      <td class="border-top py-3"><%= farmer.last_name %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">introduction</th>
-      <td class="border-top py-3"><%= farmer.introduction %></td>
-    </tr>
-    <tr>
-      <th class="border-top py-3">Sales Address</th>
-      <td class="border-top py-3"><%= farmer.seller_address %></td>
-    </tr>
-  </table>
+<div class="w-100 py-3 px-2 " style="border-top: 1px solid #ccc;">
+<!-- 上段：画像＋名前 -->
+<div class="d-flex  align-items-start ml-5">
+  <!-- プロフィール画像 -->
+  <% if farmer.profile_image.attached? %>
+    <%= image_tag url_for(farmer.profile_image), class: "rounded-circle", style: "width: 150px; height: 150px; object-fit: cover;" %>
+  <% else %>
+    <%= image_tag "no_image.jpg", class: "rounded-circle", style: "width: 150px; height: 150px;" %>
+  <% end %>
+
+  <!-- 名前＋区分 -->
+  <div class="d-flex flex-column justify-content-center mt-3 ml-4">
+    <div style="font-weight: bold; font-size: 20px;">
+      <%= farmer.last_name %> <%= farmer.first_name %>
+    </div>
+    <small class="text-muted  mb-4">
+      <%= farmer.is_a?(Farmer) ? "農家" : "消費者" %>
+    </small>
+    <%= simple_format(farmer.introduction.presence || "自己紹介は未設定です") %>
+  </div>
+
+  <!-- 地図 -->
+  <div class="d-flex ml-auto">
+    <div class="d-flex flex-column align-items-center mt-1">
+  
+    </div>
+  </div>
+</div>
+
+<!-- 下段：自己紹介（左寄せ・画像の下） -->
+<div class="mt-3  text-start" style="max-width: 100%;">
+  <div class="w-100 py-3 px-2 mb-5" style="border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; border-left: none; border-right: none;">
+    <div class="d-flex justify-content-around text-center fw-bold">
+      <div>
+        フォロワー：
+        <%= followers_count %> 
+      </div>
+      <div>
+        投稿した商品：
+        <%= link_to items_count, farmer_path(farmer), class: "text-decoration-none" %> 
+      </div>
+      <div>
+        最近コメントした商品：
+        <%= link_to comment_items_count, farmer_path(farmer, filter: :commented), class: "text-decoration-none" %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

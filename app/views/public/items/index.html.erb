@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <!-- メインコンテンツ -->
+    <div class="col">
+
+      <%= render 'layouts/search' %>
+
+      <h2 class="mt-4 mb-4">検索結果 <%= @items.count %>件</h2>
+      <div class="row">
+        <% @items.each do |item| %>
+          <div class="col-md-3 mb-4">
+            <%= render 'public/items/item', item: item %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

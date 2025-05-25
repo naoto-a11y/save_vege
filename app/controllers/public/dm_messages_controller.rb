@@ -15,6 +15,15 @@ class Public::DmMessagesController < ApplicationController
   end
 
   def destroy
+    @dm_message = DmMessage.find(params[:id])
+    @dm_room = @dm_message.dm_room
+  
+    if @dm_message.sender == current_customer
+      @dm_message.destroy
+      redirect_to dm_room_path(@dm_room), notice: "メッセージを削除しました"
+    else
+      redirect_to dm_room_path(@dm_room), alert: "削除権限がありません"
+    end
   end
 
   private

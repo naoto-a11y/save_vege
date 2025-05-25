@@ -8,12 +8,12 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js" %>
   </head>
 
-  <body>
-    <div class="social"></div>
+  <body class="d-flex flex-column vh-100">
     <%= render 'layouts/header' %>
     <% if notice %>
       <div class="alert alert-success text-center">
@@ -26,6 +26,9 @@
         <%= alert %>
       </div>
     <% end %>
-    <%= yield %>
+    <main class="mb-auto">
+      <%= yield %>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

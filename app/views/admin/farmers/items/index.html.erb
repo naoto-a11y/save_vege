@@ -1,0 +1,60 @@
+<div class="container my-5">
+  <h4 class="mb-4 text-center"><%= @farmer.last_name %> <%= @farmer.first_name %> さんの商品一覧</h4>
+
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>ID</th>
+        <th>商品名</th>
+        <th>価格</th>
+        <th>受取可能日</th>
+        <th>販売ステータス</th>
+        <th class="text-center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td class="p-2 align-middle"><%= item.id %></td>
+          <td class="p-2 align-middle">
+            <div class="d-flex align-items-center gap-2 w-100">
+              <% if item.image.attached? %>
+                <%= image_tag url_for(item.image), style: "width: 40px; height: 40px; object-fit: cover;" %>
+              <% end %>
+              <span class="flex-grow-1"><%= item.name %></span>
+            </div>
+          </td>
+          <td class="p-2 align-middle">￥<%= item.price %></td>
+          <td>
+            <% item.available_slots.each do |slot| %>
+              <% if slot.available_date.present? %>
+                <%= slot.available_date.strftime("%Y年%m月%d日") %><br>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle" style="width: 150px;" >
+            <% if item.is_active? %>
+              <span class="badge badge-success">公開中</span>
+            <% else %>
+              <span class="badge badge-danger">非公開</span>
+            <% end %>
+          </td>
+          <td class="text-center align-middle">
+            <%= button_to "削除", admin_farmer_item_path(@farmer, item), method: :delete,
+                data: { confirm: "この商品を削除しますか？" },
+                class: "btn btn-outline-danger btn-sm mb-2" %>
+
+            <% if item.is_active? %>
+              <%= button_to "非表示にする", admin_farmer_item_path(@farmer, item), method: :patch, data: { confirm: "この商品を非表示にしますか？" }, class: "btn btn-outline-warning btn-sm" %>
+            <% else %>
+              <%= button_to "公開する", admin_farmer_item_path(@farmer, item), method: :patch, data: { confirm: "この商品を公開しますか？" }, class: "btn btn-outline-success btn-sm" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+    <div class="d-flex justify-content-center mt-4">
+    <%= paginate @items %>
+  </div>
+</div>

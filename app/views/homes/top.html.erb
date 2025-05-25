@@ -1,26 +1,23 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'public/tags/tag', tags: @tags %>
-    </div>
+    <!-- メインコンテンツ -->
+    <div class="col">
 
-    <!-- メインコンテンツ：右 -->
-    <div class="col-9">
+      <%= render 'layouts/search' %>
+
+      <h2 class="mt-5 mb-4">商品一覧</h2>
       <div class="row">
-        <div class="col-md-11 px-5">
-          <h2>商品一覧</h2>
-          <div class="row">
-            <% @items.each do |item| %>
-              <div class="col-md-4">
-                <%= render 'public/items/item', item: item %>
-              </div>
-            <% end %>
+        <% @items.each do |item| %>
+          <div class="col-md-3 mb-4">
+            <%= render 'public/items/item', item: item %>
           </div>
-        </div>
+        <% end %>
       </div>
-    </div>
-  <div>
-</div>
 
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <%= paginate @items %>
+  </div>
+</div>
 

@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   belongs_to :farmer
+  belongs_to :category, optional: true
   has_many :item_tags, dependent: :destroy
   has_many :tags, through: :item_tags
   has_many :favorites, dependent: :destroy
