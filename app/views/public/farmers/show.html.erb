@@ -1,23 +1,34 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'public/farmers/public_farmer', farmer: @farmer %>
-      <%= render 'public/tags/tag', tags: @tags %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-9">
-    <h2>商品一覧</h2>
-    <div class="row">
-      <% @items.each do |item| %>
-        <div class="col-md-4">
-          <%= render 'public/items/item', item: item %>
+    <div class="col">
+      
+     <%= render 'public/farmers/public_farmer', farmer: @farmer, followers_count: @followers_count, items_count: @items_count, 
+                                         comment_items_count: @comment_items_count %>
+      
+  
+      <% if @recent_items.present? %>
+        <h2 class="mb-4">最近コメントした商品</h2>
+        <div class="row">
+          <% @recent_items.each do |item| %>
+            <div class="col-md-3 mb-4">
+              <%= render 'public/items/item', item: item %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <h2 class="mb-4">投稿した商品</h2>
+        <div class="row">
+          <% @items.each do |item| %>
+            <div class="col-md-3 mb-4">
+              <%= render 'public/items/item', item: item %>
+            </div>
+          <% end %>
         </div>
       <% end %>
-    </div>
-      
+
     </div>
   </div>
+  <div class="row d-flex justify-content-center">
+        <%= paginate @items %>
+  </div>
 </div>
-

@@ -2,14 +2,15 @@
   <h2 class="mb-4 text-center">DMルーム</h2>
 
   <!-- 商品情報と予約日 -->
-  <div class="mb-4 p-3 bg-light rounded shadow-sm">
+  <div class="mb-4 p-3 rounded shadow-sm" style="background-color: #e6f4ea;">
     <div class="row align-items-center">
       <div class="col-md-2 text-center">
         <%= image_tag @dm_room.reservation.item.get_image, class: "img-fluid rounded", alt: "商品画像" %>
       </div>
       <div class="col-md-10">
-        <h5 class="mb-2">🛒 商品：<%= @dm_room.reservation.item.name %></h5>
-        <p class="mb-0">📅 予約日：<%= @dm_room.reservation.reserved_date.strftime("%Y/%m/%d") %></p>
+        <h5 class="mb-2">商品：<%= @dm_room.reservation.item.name %></h5>
+        <p class="mb-0">予約日：<%= @dm_room.reservation.reserved_date.strftime("%Y/%m/%d") %></p>
+        <p class="mb-0 mt-1">値段：￥<%= number_with_delimiter(@dm_room.reservation.item.price) %></p>
       </div>
     </div>
   </div>
@@ -26,6 +27,13 @@
               <div class="d-inline-block bg-success text-white rounded-pill px-3 py-2 mt-1">
                 <%= message.message %>
               </div>
+              <% if message.sender == current_farmer %>
+                <%= link_to "削除", 
+                              farmer_dm_room_dm_message_path(@dm_room, message), 
+                              method: :delete,
+                              data: { confirm: "本当に削除しますか？" },
+                              class: "small text-danger "%>
+              <% end %>
               <small class="text-muted d-block mt-1"><%= message.created_at.in_time_zone('Tokyo').strftime('%Y/%m/%d %H:%M') %></small>
             </div>
           <% else %>
@@ -45,7 +53,7 @@
     <hr>
 
     <!-- メッセージ送信フォーム -->
-    <%= form_with model: [@dm_room, DmMessage.new], url: dm_room_dm_messages_path(@dm_room), local: true do |f| %>
+    <%= form_with model: [@dm_room, DmMessage.new], url: farmer_dm_room_dm_messages_path(@dm_room), local: true do |f| %>
       <div class="form-group">
         <%= f.text_area :message, class: "form-control", placeholder: "メッセージを入力", rows: 3 %>
       </div>
