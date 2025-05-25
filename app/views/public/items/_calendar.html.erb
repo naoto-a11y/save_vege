@@ -1,0 +1,16 @@
+<h2>month</h2>
+<%= month_calendar(attribute: :available_date, events: item.available_slots) do |date, available_slots| %>
+  <% classes = [] %>
+  <% classes << "available-day" if available_slots.any? %>
+  <% classes << "harvest-day" if item.harvest_date == date %>
+
+  <div class="<%= classes.join(" ") %>">
+    <%= date.day %><br>
+    <% available_slots.each do |available_slot| %>
+      <%= "受け取り可能日" %>
+    <% end %>
+    <% if item.harvest_date == date %>
+      <%= "収穫日" %>
+    <% end %>
+  </div>
+<% end %>

@@ -3,10 +3,11 @@ class Public::CustomersController < ApplicationController
 
   def show
     @customer = current_customer
-    @items = current_customer.favorite_items.active
-    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
+    @items_count = current_customer.favorite_items.active.count
+    @items = current_customer.favorite_items.active.page(params[:page]).per(8)
+    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true }).page(params[:page]).per(8)
     @following_farmers = current_customer.followed_farmers
-    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct)
+    @recent_items_count = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).count
   end
 
   def edit
@@ -35,10 +36,12 @@ class Public::CustomersController < ApplicationController
 
   def recent_commented_items
     @customer = current_customer
+    @items_count = current_customer.favorite_items.active.count
     @items = current_customer.favorite_items.active
     @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
     @following_farmers = current_customer.followed_farmers
-    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct)
+    @recent_items_count = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).count
+    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).page(params[:page]).per(8)
   end
   private
 

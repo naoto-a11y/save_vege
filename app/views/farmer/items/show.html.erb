@@ -1,129 +1,71 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container mt-5">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'share/info', farmer: @farmer %>
-      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-        予約一覧（<%= @reservation_count %>）
-      <% end %>
-    </div>
-
-    <!-- メインコンテンツ：右 -->
-    <div class="col-8 px-5 mx-3">
-      <div class="card shadow-sm p-4 mb-4 w-100">
-        <div class="container">
-          <div class="row">
-            <!-- 左上：画像 -->
-            <div class="col-6 d-flex justify-content-center align-items-center mb-4">
-              <%= image_tag @item.get_image, class: "img-fluid rounded", style: "width: 400px; height: 400px; object-fit: cover;" %>
+    <div class="col">
+        <!-- 画像と商品情報 -->
+        <div class="row mb-4">
+          <!-- 商品画像 -->
+          <div class="col d-flex">
+            <%= image_tag @item.get_image, class: "img-fluid rounded", style: "width: 400px; height: 400px; object-fit: cover;" %>
+            <div class="ml-5">
+              <%= render 'farmer/items/item_info', item: @item %>
             </div>
-      
-            <!-- 右上：商品情報 -->
-            <div class="col-6 d-flex justify-content-center align-items-center mb-4">
-              <div>
-                <h1 class="mb-3 fw-bold"><%= @item.name %></h1>
-                <p class="text-muted fs-5 mb-2">生産者：<strong><%= @item.farmer.last_name %>さん</strong></p>
-                <p class="fs-5 mb-3"><%= @item.introduction %></p>
-                <p class="h4 text-success mb-3">￥<%= number_with_delimiter(@item.price) %>（税込）</p>
-                <p class="fs-5 text-danger mb-3">❤️ <%= @item.favorites.count %> いいね</p>
-                <p>
-                  <% @item.tags.each do |tag| %>
-                    🔖<%= tag.tag_name %>
-                  <% end %>
-                </p><br>
-                <%= link_to "商品情報を編集", edit_farmer_item_path(@item), class: "btn btn-outline-primary mt-2" %>
-                <%= link_to "商品を削除", farmer_item_path(@item), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger mt-2" %>
-                <% if @item.is_active %>
-                  <%= link_to "商品情報を非公開にする", farmer_deactivate_farmer_item_path(@item), method: :patch, data: { confirm: "本当にこの商品を非公開にしますか？" }, class: "btn btn-outline-dark mt-2" %>
-                <% else %>
-                  <%= link_to "商品情報を公開する", farmer_activate_farmer_item_path(@item), method: :patch, data: { confirm: "本当にこの商品を公開しますか？" }, class: "btn btn-outline-success mt-2" %>
-                <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div id="accordion" class="w-100">
+              <div class="d-flex justify-content-between w-100">
+                <!-- アコーディオン1 -->
+                <div class=" flex-fill " style="width: calc(50% - 4px); margin-right: 4px;">
+                  <div class="" id="headingOne" style="border-bottom: 2px solid #FFA07A;">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link text-dark" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        販売先
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <% if @item.farmer.latitude && @item.farmer.longitude %>
+                          <div id="map" class="border border-secondary rounded shadow-sm" style="width: 500px; height: 400px;"></div>
+                          <%= render 'share/google_map_script', item: @item %>
+                          <p class="text-left small">受取先：<%= @item.farmer.seller_address %></p>
+                        <% else %>
+                          <p class="text-muted">※地図情報が登録されていません</p>
+                          <p>販売先住所：<%= @item.farmer.seller_address %></p>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+                <!-- アコーディオン2 -->
+                <div class="flex-fill " style=" width: calc(50% - 4px); margin-left: 4px;">
+                  <div class="" id="headingTwo" style=" border-bottom: 2px solid #FFA07A;">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed text-dark" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        受取可能日
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                    <div class="card-body">
+                      <div id="calendar">
+                        <%= render 'public/items/calendar', item: @item %>
+                      </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-    
-        <div class="row">
-          <!-- 左下：地図 -->
-          <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-            <% if @item.farmer.latitude && @item.farmer.longitude %>
-              <h5 class="mb-3">販売先</h5>
-          
-              <div id="map" class="border border-secondary rounded shadow-sm" style="width: 500px; height: 400px;"></div>
-          
-              <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
-              <script>
-                function initMap() {
-                  const location = { lat: <%= @item.farmer.latitude %>, lng: <%= @item.farmer.longitude %> };
-                  const map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 15,
-                    center: location,
-                  });
-                  new google.maps.Marker({
-                    position: location,
-                    map: map,
-                    title: "<%= j @item.farmer.seller_address %>"
-                  });
-                }
-              </script>
-            <% else %>
-              <h5 class="mb-2">販売先</h5>
-              <p class="text-muted">※地図情報が登録されていません</p>
-              <p>販売先住所：<%= @item.farmer.seller_address %></p>
-            <% end %>
-          </div>
-    
-          <!-- 右下：カレンダー -->
-          <div class="col-6 d-flex justify-content-center align-items-center">
-            <div class="w-100">
-              <h5 class="text-center mb-3">受取可能日</h5>
-              <div id="calendar" class="border rounded shadow-sm p-2" style="max-width: 500px;"></div>
-            </div>
-          </div>
 
-          <!-- FullCalendar CDN 読み込み -->
-          <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js" %>
-          <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" %>
+          <div class="col mb-3">
+            <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
+          </div>
         </div>
-      </div>
-      <!-- コメント -->
-      <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
     </div>
   </div>
 </div>
 
-<script>
-  document.addEventListener("turbolinks:load", function () {
-    const calendarEl = document.getElementById("calendar");
-
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      height: 400,
-      events: [
-        <% events = [] %>
-
-        <% if @item.harvest_date.present? %>
-          <% events << {
-            title: "収穫日",
-            start: @item.harvest_date.strftime('%Y-%m-%d'),
-            color: "#198754"
-          } %>
-        <% end %>
-
-        <% @item.available_slots.each do |slot| %>
-          <% if slot.available_date.present? %>
-            <% events << {
-              title: "受取可能日",
-              start: slot.available_date.strftime('%Y-%m-%d'),
-              color: "#0dcaf0"
-            } %>
-          <% end %>
-        <% end %>
-
-        <%= raw events.map { |event| event.to_json }.join(",\n") %>
-      ]
-    });
-
-    calendar.render();
-  });
-</script>

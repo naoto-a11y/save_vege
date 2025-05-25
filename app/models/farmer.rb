@@ -12,6 +12,8 @@ class Farmer < ApplicationRecord
   has_many :reservations, through: :items
   has_many :comments, as: :sender, dependent: :destroy
   has_many :dm_messages, as: :sender, dependent: :destroy
+  has_many :follows, dependent: :destroy
+  has_many :followers, through: :follows, source: :customer
 
   geocoded_by :seller_address
   after_validation :geocode, if: :will_save_change_to_seller_address?

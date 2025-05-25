@@ -3,8 +3,8 @@
     <div class="col">
       
     <%= render 'public/customers/info', customer: @customer, reservations: @reservations, 
-    following_farmers: @following_farmers, items: @items, 
-    recent_items: @recent_items %>
+    following_farmers: @following_farmers, items: @items, items_count: @items_count,
+    recent_items: @recent_items, recent_items_count: @recent_items_count %>
       
   
       <!-- いいね商品一覧 -->
@@ -15,6 +15,9 @@
             <%= render 'public/items/item', item: item %>
           </div>
         <% end %>
+      </div>
+      <div class="d-flex justify-content-center">
+        <%= paginate @recent_items %>
       </div>
     </div>
   </div>

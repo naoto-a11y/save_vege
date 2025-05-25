@@ -3,10 +3,10 @@ class Public::FollowsController < ApplicationController
 
   def index
     @customer = current_customer
-    @following_farmers = @customer.followed_farmers
-    @items = current_customer.favorite_items.active
+    @following_farmers = @customer.followed_farmers.page(params[:page]).per(9)
+    @items_count = current_customer.favorite_items.active.count
     @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true })
-    @recent_items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct)
+    @recent_items_count = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).count
   end
 
   def create

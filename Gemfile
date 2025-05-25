@@ -69,3 +69,5 @@ gem "net-imap"
 gem 'geocoder'
 
 gem 'kaminari'
+
+gem 'simple_calendar'

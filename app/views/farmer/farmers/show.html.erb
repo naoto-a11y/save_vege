@@ -1,34 +1,36 @@
-<div class="container-fluid px-5 mx-5 my-4">
+<div class="container">
   <div class="row">
-    <!-- サイドバー：左 -->
-    <div class="col-3">
-      <%= render 'share/info', farmer: @farmer %>
-      <%= link_to farmer_reservations_path, class: "btn btn-outline-dark w-100 my-2" do %>
-        予約一覧（<%= @reservation_count %>）
+    <div class="col">
+      
+     <%= render 'farmer/farmers/info', farmer: @farmer, reservations: @reservations, items_upcoming_slots_count: @items_upcoming_slots_count,
+                                         items: @items, items_count: @items_count, recent_items_count: @recent_items_count, favorites_items_count: @favorites_items_count %>
+      
+      <div class="d-flex justify-content-end mb-4 mr-5">
+        <%= link_to new_farmer_item_path, class: "btn btn-outline-success px-4 py-2 shadow-sm d-flex align-items-center" do %>
+          商品を追加する
+        <% end %>
+      </div>
+      <% if params[:filter] == "upcoming" %>
+        <h2 class="mb-4">まもなく最終受取日の商品</h2>
+      <% elsif params[:filter] == "commented" %>
+        <h2 class="mb-4">最近コメントされた商品</h2>
+      <% elsif params[:filter] == "liked"  %>
+        <h2 class="mb-4">いいねされた商品</h2>
+      <% else %>
+        <h2 class="mb-4">投稿した商品</h2>
       <% end %>
-    </div>
-    
 
-    <!-- メインコンテンツ：右 -->
-    <div class="col-9">
       <div class="row">
-        <div class="col-md-11 px-5">
-          <h2 class="mb-3">商品一覧（全 <%= @items_count %> 件）</h2>
-          <div class="d-flex justify-content-end mb-4 mr-5">
-            <%= link_to new_farmer_item_path, class: "btn btn-outline-success px-4 py-2 shadow-sm d-flex align-items-center" do %>
-              野菜を追加する
-            <% end %>
+        <% @filtered_items.each do |item| %>
+          <div class="col-md-3 mb-4">
+            <%= render 'farmer/items/item', item: item %>
           </div>
-          <div class="row">
-            <% @items.each do |item| %>
-              <div class="col-4 mb-4">
-                <%= render 'farmer/items/item', item: item %>
-              </div>
-            <% end %>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <%= paginate @items %>
   </div>
 </div>
 

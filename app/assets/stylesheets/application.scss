@@ -1,0 +1,77 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+/* 背景色の設定 */
+body {
+  background-color: #eff1d8 !important;
+}
+
+.navbar {
+  background-color: #aadaa6;
+  color: white;
+}
+
+.navbar a {
+  color: white;
+}
+
+.navbar a:hover {
+  color: #ffd700;
+}
+
+.footer-custom {
+  background-color: #d7f3d5; 
+  color: white;
+}
+
+
+/* タブの基本スタイル */
+.nav-tabs .nav-link {
+  background-color: #b4eaee !important;
+  color: #333;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+
+/* ホバー時のスタイル */
+.nav-tabs .nav-link:hover {
+  background-color: #2380cc !important;
+  color: black;
+}
+
+
+.about-page {
+  background-image: image-url("main.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 3rem ;
+  color: rgb(240, 239, 232);
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  border-bottom: 2px solid #33d35b;
+  transition: border-color 0.3s;
+}
+
+.nav-link:hover {
+  border-bottom: 2px solid #ffd700; // 任意の茶色（例: brown系）
+}
+
+@import "./simple_calendar.scss";
