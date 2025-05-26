@@ -51,11 +51,11 @@
       </div>
       <div>
         いいねした商品：
-        <%= link_to items_count, customers_my_page_path, class: "text-decoration-none" %> 
+        <%= link_to items_count, customers_my_page_path(filter: :liked), class: "text-decoration-none" %> 
       </div>
       <div>
         最近コメントした商品：
-        <%= link_to recent_items_count, recent_commented_items_path, class: "text-decoration-none" %>
+        <%= link_to recent_items_count, customers_my_page_path(filter: :commented), class: "text-decoration-none" %>
       </div>
     </div>
   </div>

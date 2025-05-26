@@ -35,5 +35,15 @@ class Item < ApplicationRecord
     end
   end
 
+  def deactivate_if_expired
+    latest_end_date = available_slots.maximum(:available_date)
+  
+    if latest_end_date.present? && latest_end_date < Time.current
+      if is_active == true
+        update(is_active: false)
+      end
+    end
+  end
+
   
 end
