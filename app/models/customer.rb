@@ -41,4 +41,18 @@ class Customer < ApplicationRecord
   def favorite_for(item)
     favorites.find_by(item_id: item.id)
   end
+
+   # ログイン可能か判定
+   def active_for_authentication?
+    super && status 
+   end
+
+  # ログイン拒否時のメッセージ
+  def inactive_message
+    if status
+      super
+    else
+      :deleted_account
+    end
+  end
 end

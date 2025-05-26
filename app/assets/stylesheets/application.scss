@@ -74,4 +74,28 @@ body {
   border-bottom: 2px solid #ffd700; // 任意の茶色（例: brown系）
 }
 
+.pagination {
+  font-size: 0.95rem;
+
+  .page-item {
+    margin: 0 4px;
+
+    .page-link {
+      border-radius: 0.4rem;
+      border: 1px solid #ccc;
+      color: #343a40;
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+  }
+
+  .page-item.disabled .page-link {
+    color: #999;
+  }
+}
+
 @import "./simple_calendar.scss";
