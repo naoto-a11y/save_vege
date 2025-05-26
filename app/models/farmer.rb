@@ -26,6 +26,20 @@ class Farmer < ApplicationRecord
     end
   end
 
+  # ログイン可能か判定
+  def active_for_authentication?
+    super && status 
+   end
+
+  # ログイン拒否時のメッセージ
+  def inactive_message
+    if status
+      super
+    else
+      :deleted_account
+    end
+  end
+
   PREFECTURES = [
   "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
   "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",

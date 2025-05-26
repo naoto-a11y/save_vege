@@ -8,10 +8,13 @@ class Farmer::FarmersController < ApplicationController
     @items_upcoming_slots_count = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).length
     @recent_items_count = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.count
     @favorites_items_count = @items.joins(:favorites).distinct.count
+    @expire_items_count = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', Time.current).length
 
     @filtered_items = case params[:filter]
     when "upcoming"
       @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).page(params[:page]).per(8)
+    when "expire"
+      @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', Time.current).page(params[:page]).per(8)
     when "commented"
       @items = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.page(params[:page]).per(8)
     when "liked"
