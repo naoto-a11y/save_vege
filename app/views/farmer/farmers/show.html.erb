@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       
-     <%= render 'farmer/farmers/info', farmer: @farmer, reservations: @reservations, items_upcoming_slots_count: @items_upcoming_slots_count,
+     <%= render 'farmer/farmers/info', farmer: @farmer, reservations: @reservations, items_upcoming_slots_count: @items_upcoming_slots_count, expire_items_count: @expire_items_count,
                                          items: @items, items_count: @items_count, recent_items_count: @recent_items_count, favorites_items_count: @favorites_items_count %>
       
       <div class="d-flex justify-content-end mb-4 mr-5">
@@ -12,6 +12,8 @@
       </div>
       <% if params[:filter] == "upcoming" %>
         <h2 class="mb-4">まもなく最終受取日の商品</h2>
+      <% elsif params[:filter] == "expire" %>
+        <h2 class="mb-4">受取可能日超過の商品（非表示中）</h2>
       <% elsif params[:filter] == "commented" %>
         <h2 class="mb-4">最近コメントされた商品</h2>
       <% elsif params[:filter] == "liked"  %>
