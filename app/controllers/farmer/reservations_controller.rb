@@ -2,6 +2,8 @@ class Farmer::ReservationsController < ApplicationController
   before_action :authenticate_farmer!
 
   def index
+    #受取日が過ぎていたら販売ステータスをfalseに
+    current_farmer.items.each { |item| item.deactivate_if_expired }
     @items = current_farmer.items
     @items_count = current_farmer.items.count
     @farmer = current_farmer

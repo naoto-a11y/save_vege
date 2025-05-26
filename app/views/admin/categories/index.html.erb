@@ -1,0 +1,60 @@
+<div class="container my-5">
+  <div class="w-100 mx-auto" style="max-width: 650px;">
+    <h2 class="mb-4 text-center">カテゴリ一覧</h2>
+
+    <div class="d-flex justify-content-center mb-4">
+      <%= form_with model: @new_category, url: admin_categories_path, local: true do |f| %>
+        <div class="d-flex align-items-center ">
+          <%= f.label :name, "カテゴリ名", class: "mb-0 mr-2" %>
+          <%= f.text_field :name, class: "form-control w-auto mr-2 " %>
+          <%= f.submit "登録する", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>カテゴリー名</th>
+          <th ></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td class="text-center">
+              <!-- 編集ボタン -->
+              <button class="btn btn-outline-warning btn-sm" type="button" data-toggle="collapse" data-target="#edit-category-<%= category.id %>">
+                編集
+              </button>
+        
+              <!-- 削除ボタン -->
+              <%= link_to "削除", admin_category_path(category), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger btn-sm ml-2" %>
+            </td>
+          </tr>
+        
+          <!-- アコーディオンフォーム（編集） -->
+          <tr class="collapse" id="edit-category-<%= category.id %>">
+            <td colspan="2">
+              <div class="d-flex justify-content-center">
+                <%= form_with model: category, url: admin_category_path(category), method: :patch, local: true do |f| %>
+                  <div class="d-flex align-items-center">
+                    <%= f.label :name, "カテゴリ名", class: "mb-0 mr-2" %>
+                    <%= f.text_field :name, class: "form-control w-auto mr-2" %>
+                    <%= f.submit "更新", class: "btn btn-primary btn-sm" %>
+                  </div>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    <div class="d-flex justify-content-center">
+      <%= paginate @categories %>
+    </div>
+  </div>
+</div>

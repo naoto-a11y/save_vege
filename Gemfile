@@ -72,5 +72,4 @@ gem 'kaminari'
 
 gem 'simple_calendar'
 
-gem 'whenever', require: false
 gem "rails-i18n", "~> 7.0"
