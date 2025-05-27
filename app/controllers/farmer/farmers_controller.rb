@@ -37,8 +37,8 @@ class Farmer::FarmersController < ApplicationController
       flash[:notice] = "プロフィールを更新しました。"
       redirect_to farmer_farmers_mypage_path
     else
-      flash.now[:alert] = "更新に失敗しました。"
-      render :show
+      flash[:alert] = @farmer.errors.full_messages.join("、")
+      redirect_to farmer_farmers_information_edit_path(@farmer)
     end
   end
 
@@ -55,7 +55,7 @@ class Farmer::FarmersController < ApplicationController
   private
 
   def farmer_params
-    params.require(:farmer).permit(:email, :first_name, :last_name, :first_name_kana, :last_name_kana, :seller_address, :postal_code, :prefecture )
+    params.require(:farmer).permit(:email, :first_name, :last_name, :first_name_kana, :last_name_kana, :seller_address, :postal_code, :prefecture, :introduction)
   end
   
 end

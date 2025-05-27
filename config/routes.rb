@@ -1,6 +1,28 @@
 Rails.application.routes.draw do
  
   namespace :admin do
+    namespace :farmers do
+      namespace :items do
+        get 'comments/destroy'
+      end
+    end
+  end
+  namespace :admin do
+    namespace :farmers do
+      namespace :items do
+        get 'comments/index'
+        get 'comments/destroy'
+      end
+    end
+  end
+  namespace :admin do
+    namespace :farmers do
+      get 'comments/index'
+      get 'comments/destroy'
+    end
+  end
+  get 'index/destroy'
+  namespace :admin do
     get 'categories/index'
     get 'categories/new'
     get 'categories/edit'
@@ -82,11 +104,14 @@ Rails.application.routes.draw do
     sessions: "admin/sessions"
   }
   namespace :admin do
-    resources :categories,  only: [:index, :update, :destroy, :create]
-    resources :tags,        only: [:index, :destroy]
-    resources :customers,   only: [:index, :update, :edit, :show]
-    resources :farmers,     only: [:index, :show, :update, :edit] do
-      resources :items,     only: [:index, :destroy, :update], module: :farmers
+    get 'top', to: "homes#top"
+    resources :categories,   only: [:index, :update, :destroy, :create]
+    resources :tags,         only: [:index, :destroy]
+    resources :customers,    only: [:index, :update, :edit, :show]
+    resources :farmers,      only: [:index, :show, :update, :edit] do
+      resources :items,      only: [:index, :destroy, :update, :show, :edit], module: :farmers do
+        resources :comments,   only: [:destroy]
+      end
     end
   end
 

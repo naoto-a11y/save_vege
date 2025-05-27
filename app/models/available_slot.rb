@@ -2,6 +2,7 @@ class AvailableSlot < ApplicationRecord
   belongs_to :item
 
   validate :available_date_within_one_month
+  validates :available_date, presence: true
 
   private
 

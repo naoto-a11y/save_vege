@@ -18,6 +18,15 @@ class Farmer < ApplicationRecord
   geocoded_by :seller_address
   after_validation :geocode, if: :will_save_change_to_seller_address?
 
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name_kana, presence: true
+  validates :first_name_kana, presence: true
+  validates :postal_code, presence: true
+  validates :prefecture, presence: true
+  validates :seller_address, presence: true
+  validates :introduction, length: { maximum: 200 }
+  
   def get_profile_image
     if self.profile_image.attached?
       self.profile_image

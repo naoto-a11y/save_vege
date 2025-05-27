@@ -7,7 +7,7 @@
             <%= image_tag 'ロゴ.png', alt: 'SAVE_VEGE Logo', height: 150 %>
           <% end %>
         <% elsif admin_signed_in? %>
-          <%= link_to admin_customers_path, class: "navbar-brand ml-5 pl-5" do %>
+          <%= link_to admin_top_path, class: "navbar-brand ml-5 pl-5" do %>
             <%= image_tag 'ロゴ.png', alt: 'SAVE_VEGE Logo', height: 150 %>
           <% end %>
         <% elsif farmer_signed_in? %>
