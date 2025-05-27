@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+        <!-- 画像と商品情報 -->
+        <div class="row mb-4">
+          <!-- 商品画像 -->
+          <div class="col d-flex" >
+            <%= image_tag @item.get_image, class: "img-fluid rounded", style: "width: 200px; height: 200px; object-fit: cover;" %>
+            <div class="ml-5">
+              <%= render 'admin/farmers/items/item_info', item: @item, farmer: @farmer %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div id="accordion" class="w-100">
+              <div class="d-flex justify-content-between w-100">
+                <!-- アコーディオン1 -->
+                <div class=" flex-fill " style="width: calc(50% - 4px); margin-right: 4px;">
+                  <div class="" id="headingOne" style="border-bottom: 2px solid #FFA07A;">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link text-dark" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        販売先
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <% if @item.farmer.latitude && @item.farmer.longitude %>
+                          <div id="map" class="border border-secondary rounded shadow-sm" style="width: 500px; height: 400px;"></div>
+                          <%= render 'share/google_map_script', item: @item %>
+                          <p class="text-left small">受取先：<%= @item.farmer.seller_address %></p>
+                        <% else %>
+                          <p class="text-muted">※地図情報が登録されていません</p>
+                          <p>販売先住所：<%= @item.farmer.seller_address %></p>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+                <!-- アコーディオン2 -->
+                <div class="flex-fill " style=" width: calc(50% - 4px); margin-left: 4px;">
+                  <div class="" id="headingTwo" style=" border-bottom: 2px solid #FFA07A;">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed text-dark" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        受取可能日
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                    <div class="card-body">
+                      <div id="calendar">
+                        <%= render 'public/items/calendar', item: @item %>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col mb-3">
+            <%= render 'admin/farmers/items/comments', comments: @comments, item: @item, comment: @comment %>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,43 @@
+ja:
+  activerecord:
+    models:
+      available_slot: 受取可能日
+      item:        商品
+      farmer:      農家
+      customer:    消費者
+      comment:     コメント
+      dm_message:  メッセージ
+      reservation: 予約
+    attributes:
+      item:
+        name:             商品名
+        price:            値段
+        introduction:     紹介文
+        category_id:      カテゴリ
+      available_slot:
+        available_date:   受取可能日
+      farmer:
+        last_name:        姓
+        first_name:       名
+        last_name_kana:   姓（カナ）
+        first_name_kana:  名（カナ）
+        seller_address:   販売先住所
+        postal_code:      郵便番号
+        introduction:     紹介文
+      customer:
+        last_name:        姓
+        first_name:       名
+        last_name_kana:   姓（カナ）
+        first_name_kana:  名（カナ）
+        telephone_number: 電話番号
+        introduction:     紹介文
+      comment:
+        comment: コメント内容
+      dm_message:
+        message: メッセージ内容
+      reservation:
+        reserved_date: 受取日
+  errors:
+    messages:
+      blank: "を入力してください"
+      too_long: "は%{count}文字以内で入力してください（現在は長すぎます）"

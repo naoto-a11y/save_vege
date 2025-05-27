@@ -14,6 +14,13 @@ class Customer < ApplicationRecord
   has_many :comments, as: :sender, dependent: :destroy
   has_many :dm_messages, as: :sender, dependent: :destroy
 
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name_kana, presence: true
+  validates :first_name_kana, presence: true
+  validates :telephone_number, presence: true
+  validates :introduction, length: { maximum: 200 }
+
   def get_profile_image
     if self.profile_image.attached?
       self.profile_image

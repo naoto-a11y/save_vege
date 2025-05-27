@@ -17,6 +17,11 @@ class Item < ApplicationRecord
   scope :active, -> { where(is_active: true) }
 
 
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :category_id, presence: true
+  validates :introduction, length: { maximum: 200 }
+
 
   def save_tags(tag_names)
     tag_names.each do |new_name|

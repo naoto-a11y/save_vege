@@ -14,7 +14,8 @@ class Farmer::ItemsController < ApplicationController
       @item.save_tags(tag_list)
       redirect_to farmer_farmers_mypage_path
     else
-      render :new
+      flash[:alert] = @item.errors.full_messages.join("、")
+      redirect_to new_farmer_item_path
     end
       
   end
@@ -53,7 +54,8 @@ class Farmer::ItemsController < ApplicationController
       @item.save_tags(tag_names)
       redirect_to farmer_item_path(@item), notice: "商品情報を更新しました。"
     else
-      render :edit
+      flash[:alert] = @item.errors.full_messages.join("、")
+      redirect_to edit_farmer_item_path(@item)
     end
   end
 

@@ -8,9 +8,8 @@ class Public::DmMessagesController < ApplicationController
     if @dm_message.save
       redirect_to dm_room_path(@dm_room), notice: "メッセージを送信しました"
     else
-      @dm_messages = @dm_room.dm_messages.includes(:sender).order(:created_at)
-      flash.now[:alert] = "メッセージの送信に失敗しました"
-      render "public/dm_rooms/show"
+      flash[:alert] = @dm_message.errors.full_messages.join("、")
+      redirect_to dm_room_path(@dm_room)
     end
   end
 

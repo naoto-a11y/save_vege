@@ -5,20 +5,13 @@ class Public::CommentsController < ApplicationController
     @item = Item.find(params[:item_id])
     @comment = @item.comments.new(comment_params)
     @comment.sender = current_customer
-    if @comment.save
-      if current_customer
-        redirect_to item_path(@item), notice: "コメントを投稿しました"
-      else
-        redirect_to farmer_item_path(@item), notice: "コメントを投稿しました"
-      end
-    else
-      if current_customer
-        redirect_to item_path(@item), alert: "コメント投稿に失敗しました"
-      else
-        redirect_to farmer_item_path(@item), alert: "コメント投稿に失敗しました"
-      end
-    end
 
+    if @comment.save
+      redirect_to item_path(@item), notice: "コメントを投稿しました"
+    else
+      flash[:alert] = @comment.errors.full_messages.join("、")
+      redirect_to item_path(@item)
+    end
   end
 
   def destroy
