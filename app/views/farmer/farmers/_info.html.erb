@@ -16,9 +16,12 @@
     <small class="text-muted  mb-4">
       <%= farmer.is_a?(Farmer) ? "農家" : "消費者" %>
     </small>
-    <%= simple_format(farmer.introduction.presence || "自己紹介は未設定です") %>
+    <% if farmer.introduction.present?  %>
+      <span class="text-muted  mb-4 text-wrap" style="word-break: break-all; max-width: 600px;"><%= farmer.introduction %></span>
+    <% else %>
+      自己紹介は未設定です
+    <% end %>
   </div>
-
   <!-- ボタンエリア全体を右寄せする -->
   <div class="d-flex ml-auto">
     <div class="d-flex flex-column align-items-center mt-1">
@@ -56,7 +59,7 @@
           class: "btn btn-outline-danger d-flex flex-column justify-content-center align-items-center text-center",
           style: "width: 120px; height: 80px;" do %>
         <i class="bi bi-calendar-check fs-3 mb-2"></i>
-        <span class="small">受取可能日<br>超過(非表示中)(<%= @expire_items_count %>)</span>
+        <span class="small">受取可能日<br>超過(<%= @expire_items_count %>)</span>
       <% end %>
 
       

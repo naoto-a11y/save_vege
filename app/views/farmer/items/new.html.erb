@@ -2,44 +2,34 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
 
-      <h3 class="text-center mb-3">野菜を追加</h3>
-
-      <% if @item.errors.any? %>
-        <div class="alert alert-danger py-2 px-3 mb-3">
-          <ul class="mb-0">
-            <% @item.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <h3 class="text-center mb-3">商品を追加</h3>
 
       <%= form_with model: @item, url: farmer_items_path, local: true, html: { multipart: true } do |f| %>
-        <%# 名前 %>
+     
         <div class="form-group row mb-2">
-          <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :name, "野菜名" %></label>
+          <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :name, "商品名" %></label>
           <div class="col-sm-9"><%= f.text_field :name, class: "form-control form-control-sm" %></div>
         </div>
 
-        <%# 画像 %>
+     
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :image, "画像" %></label>
           <div class="col-sm-9"><%= f.file_field :image, class: "form-control form-control-sm" %></div>
         </div>
 
-        <%# 値段 %>
+       
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :price, "値段（円）" %></label>
           <div class="col-sm-9"><%= f.number_field :price, class: "form-control form-control-sm", min: 0 %></div>
         </div>
 
-        <%# 紹介文 %>
+    
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :introduction, "紹介文" %></label>
           <div class="col-sm-9"><%= f.text_area :introduction, class: "form-control form-control-sm", rows: 3 %></div>
         </div>
 
-        <%# 受け取り可能日（3回分） %>
+       
         <% 3.times do |i| %>
           <% slot = @item.available_slots[i] %>
           <div class="form-group row mb-2">
@@ -60,13 +50,13 @@
           </div>
         <% end %>
 
-        <%# 収穫日 %>
+   
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :harvest_date, "収穫日" %></label>
           <div class="col-sm-9"><%= f.date_field :harvest_date, class: "form-control form-control-sm" %></div>
         </div>
 
-        <%# カテゴリー %>
+     
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :category_id, "カテゴリ" %></label>
           <div class="col-sm-9">
@@ -74,7 +64,7 @@
           </div>
         </div>
 
-        <%# タグ %>
+      
         <div class="form-group row mb-3">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :tag_names, "タグ" %></label>
           <div class="col-sm-9">
@@ -82,7 +72,7 @@
           </div>
         </div>
 
-        <%# ボタン %>
+   
         <div class="text-center">
           <%= f.submit "投稿する", class: "btn btn-success btn-sm px-4" %>
         </div>

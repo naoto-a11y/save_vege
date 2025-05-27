@@ -1,9 +1,12 @@
 class Farmer::FarmersController < ApplicationController
   before_action :authenticate_farmer!
+
   def show
+    #受取日が過ぎていたら販売ステータスをfalseに
+    current_farmer.items.each { |item| item.deactivate_if_expired }
     @farmer = current_farmer
     @items = current_farmer.items
-    @items_count = current_farmer.items.count
+    @items_count = @items.count
     @reservations = current_farmer.reservations
     @items_upcoming_slots_count = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).length
     @recent_items_count = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.count
@@ -34,8 +37,8 @@ class Farmer::FarmersController < ApplicationController
       flash[:notice] = "プロフィールを更新しました。"
       redirect_to farmer_farmers_mypage_path
     else
-      flash.now[:alert] = "更新に失敗しました。"
-      render :show
+      flash[:alert] = @farmer.errors.full_messages.join("、")
+      redirect_to farmer_farmers_information_edit_path(@farmer)
     end
   end
 
@@ -52,7 +55,7 @@ class Farmer::FarmersController < ApplicationController
   private
 
   def farmer_params
-    params.require(:farmer).permit(:email, :first_name, :last_name, :first_name_kana, :last_name_kana, :seller_address, :postal_code, :prefecture )
+    params.require(:farmer).permit(:email, :first_name, :last_name, :first_name_kana, :last_name_kana, :seller_address, :postal_code, :prefecture, :introduction)
   end
   
 end

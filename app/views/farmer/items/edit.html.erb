@@ -4,7 +4,6 @@
       <h2 class="text-center mb-4">商品情報を編集</h2>
 
       <%= form_with model: @item, url: farmer_item_path(@item), method: :patch, local: true, html: { multipart: true } do |f| %>
-        <%= render "public/shared/error_messages", resource: @item %>
 
         <div class="mb-4">
           <%= f.label :name, "商品名", class: "form-label" %>
@@ -38,7 +37,8 @@
             <div class="card mb-3">
               <div class="card-body">
                 <div class="d-flex gap-2">
-                  <%= slot_form.date_select :available_date, use_month_numbers: true, order: [:year, :month, :day],prompt: { year: '年', month: '月', day: '日' }, class: "form-select" %>
+                  <%= slot_form.date_select :available_date, use_month_numbers: true, order: [:year, :month, :day],prompt: { year: '年', month: '月', day: '日' },
+                  start_year: Date.today.year, end_year: Date.today.year + 1, class: "form-select" %>
                 </div>
               </div>
             </div>
@@ -48,6 +48,12 @@
         <div class="mb-4">
           <%= f.label :harvest_date, "収穫日", class: "form-label" %>
           <%= f.date_field :harvest_date, class: "form-control" %>
+        </div>
+
+      
+        <div class="mb-4">
+          <%= f.label :category_id, "カテゴリ" %><br>
+          <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "カテゴリを選択", class: "form-control form-control-sm" %>
         </div>
 
         <div class="mb-4">

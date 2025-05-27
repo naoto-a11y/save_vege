@@ -37,19 +37,20 @@ body {
 }
 
 
-/* タブの基本スタイル */
+.nav-tabs .nav-link.active {
+  background-color: #10d45b !important;
+  color: #ffffff !important;
+}
+
 .nav-tabs .nav-link {
-  background-color: #b4eaee !important;
-  color: #333;
-  border: 1px solid #ccc;
-  margin-right: 5px;
-  border-radius: 5px 5px 0 0;
+  background-color: #aee2bf !important;
+  color: #ffffff !important;
 }
 
 
 /* ホバー時のスタイル */
 .nav-tabs .nav-link:hover {
-  background-color: #2380cc !important;
+  background-color: #10d45b !important;
   color: black;
 }
 

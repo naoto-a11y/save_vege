@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_05_25_065443) do
+ActiveRecord::Schema.define(version: 2025_05_27_141847) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 2025_05_25_065443) do
     t.integer "farmer_id", null: false
     t.string "name", null: false
     t.text "introduction"
-    t.date "harvest_date", null: false
+    t.date "harvest_date"
     t.integer "price", null: false
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false

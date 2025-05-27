@@ -17,6 +17,11 @@ class Item < ApplicationRecord
   scope :active, -> { where(is_active: true) }
 
 
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :category_id, presence: true
+  validates :introduction, length: { maximum: 200 }
+
 
   def save_tags(tag_names)
     tag_names.each do |new_name|
@@ -32,6 +37,16 @@ class Item < ApplicationRecord
       self.image
     else
       'no_image.jpg'
+    end
+  end
+
+  def deactivate_if_expired
+    latest_end_date = available_slots.maximum(:available_date)
+  
+    if latest_end_date.present? && latest_end_date < Time.current
+      if is_active == true
+        update(is_active: false)
+      end
     end
   end
 

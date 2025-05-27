@@ -1,6 +1,35 @@
 Rails.application.routes.draw do
  
   namespace :admin do
+    namespace :farmers do
+      namespace :items do
+        get 'comments/destroy'
+      end
+    end
+  end
+  namespace :admin do
+    namespace :farmers do
+      namespace :items do
+        get 'comments/index'
+        get 'comments/destroy'
+      end
+    end
+  end
+  namespace :admin do
+    namespace :farmers do
+      get 'comments/index'
+      get 'comments/destroy'
+    end
+  end
+  get 'index/destroy'
+  namespace :admin do
+    get 'categories/index'
+    get 'categories/new'
+    get 'categories/edit'
+    get 'categories/update'
+    get 'categories/destroy'
+  end
+  namespace :admin do
     get 'tags/index'
   end
   devise_for :customers,skip: [:password], controllers: {
@@ -17,8 +46,6 @@ Rails.application.routes.draw do
       resources :comments,   only: [:create, :destroy]
       resources :reservations, only: [:create]
     end
-
-    get 'recent_commented_items', to: 'customers#recent_commented_items'
     
     resources :reservations, only: [:index, :destroy]
 
@@ -77,10 +104,14 @@ Rails.application.routes.draw do
     sessions: "admin/sessions"
   }
   namespace :admin do
-    resources :tags,      only: [:index, :destroy]
-    resources :customers, only: [:index, :update, :edit, :show]
-    resources :farmers, only: [:index, :show, :update, :edit] do
-      resources :items, only: [:index, :destroy, :update], module: :farmers
+    get 'top', to: "homes#top"
+    resources :categories,   only: [:index, :update, :destroy, :create]
+    resources :tags,         only: [:index, :destroy]
+    resources :customers,    only: [:index, :update, :edit, :show]
+    resources :farmers,      only: [:index, :show, :update, :edit] do
+      resources :items,      only: [:index, :destroy, :update, :show, :edit], module: :farmers do
+        resources :comments,   only: [:destroy]
+      end
     end
   end
 
