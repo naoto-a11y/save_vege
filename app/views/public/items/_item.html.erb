@@ -32,7 +32,9 @@
         💬 <%= item.comments.count %>
       </div>
       <div>
-        <%= link_to "🔍", item_path(item.id), class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to  item_path(item.id), class: "btn btn-outline-primary btn-sm" do %>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        <% end %>
       </div>
     </div>
 

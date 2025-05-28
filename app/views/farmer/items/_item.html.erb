@@ -14,12 +14,14 @@
     </div>
 
     <div class="mb-2 small text-muted d-flex justify-content-between align-items-center">
-      <div class="d-flex gap-3">
+      <div class="d-flex ">
           ❤️ <%= item.favorites.count %>
           💬 <%= item.comments.count %>
       </div>
       <div>
-        <%= link_to "🔍", farmer_item_path(item.id), class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to farmer_item_path(item.id), class: "btn btn-outline-primary btn-sm" do %>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        <% end %>
       </div>
     </div>
 
