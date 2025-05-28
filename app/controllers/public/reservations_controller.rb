@@ -22,6 +22,7 @@ class Public::ReservationsController < ApplicationController
       reserved_date: params[:reserved_date]
     )
     if @reservation.save
+      DmRoom.create(reservation: @reservation)
       redirect_to item_path(@item), notice: "予約が完了しました"
     else 
       flash[:alert] = @reservation.errors.full_messages.join("、")
@@ -38,5 +39,4 @@ class Public::ReservationsController < ApplicationController
       redirect_to reservations_path
     end
   end
-
 end
