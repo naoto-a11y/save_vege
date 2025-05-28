@@ -25,14 +25,14 @@
     <% if current_customer.favorited?(@item) %>
       <% favorite = current_customer.favorite_for(item) %>
       <%= link_to "❤️ #{item.favorites.count}", favorite_path(@item.id), method: :delete %>
-      💬<%= item.comments.count %>
+      <i class="fa-solid fa-comment"></i><%= item.comments.count %>
     <% else %>
       <%= link_to "♡ #{item.favorites.count}", favorites_path(item_id: item.id), method: :post %>
-      💬<%= @item.comments.count %>
+      <i class="fa-solid fa-comment"></i><%= @item.comments.count %>
     <% end %>
   <% else %>
     ❤️<%= item.favorites.count %>
-    💬<%= @item.comments.count %>
+    <i class="fa-solid fa-comment"></i><%= @item.comments.count %>
   <% end %>
 </p>
 <p>

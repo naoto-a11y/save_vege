@@ -3,9 +3,10 @@
     <div class="container-fluid">
       <div class="ml-5 pl-5">
         <% if customer_signed_in? %>
-          <%= link_to root_path, class: "navbar-brand ml-5 pl-5" do %>
+          <%= link_to root_path, class: "navbar-brand ml-5 pl-5 " do %>
             <%= image_tag 'ロゴ.png', alt: 'SAVE_VEGE Logo', height: 150 %>
           <% end %>
+          
         <% elsif admin_signed_in? %>
           <%= link_to admin_top_path, class: "navbar-brand ml-5 pl-5" do %>
             <%= image_tag 'ロゴ.png', alt: 'SAVE_VEGE Logo', height: 150 %>
@@ -25,65 +26,110 @@
             <ul class="list-unstyled">
               <div class="d-flex ">
                 <li class="mr-5 ">
-                  <%= link_to "カテゴリ一覧", admin_categories_path, class: " nav-link w-100 px-3 py-2" %>
+                  <%= link_to admin_categories_path, class: " nav-link w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-icons mr-1"></i>カテゴリ
+                  <% end %>
                 </li>
                 <li class="mr-5 ">
-                  <%= link_to "ユーザー一覧", admin_customers_path, class: " nav-link w-100 px-3 py-2" %>
+                  <%= link_to admin_customers_path, class: " nav-link w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-users mr-1"></i>ユーザー一覧
+                  <% end %>
                 </li>
                 <li class="mr-5">
-                  <%= link_to "タグ一覧", admin_tags_path, class: "nav-link  w-100 px-3 py-2" %>
+                  <%= link_to admin_tags_path, class: "nav-link  w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-tags"></i>タグ一覧
+                  <% end %>
                 </li>
                 <li class="mr-5">
-                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: " nav-link w-100 px-3 py-2" %>
+                  <%= link_to destroy_admin_session_path, method: :delete, class: " nav-link w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-right-from-bracket"></i>ログアウト
+                  <% end %>
                 </li>
+              </div>
             </ul>
+            <div class="ml-5 mt-5">
+              <span class="badge badge-danger mr-3">管理者ログイン中</span>
+            </div>
+
+            
         <% elsif customer_signed_in?  %>
           <ul class="list-unstyled">
-              <div class="d-flex ">
-                <li class="mr-5">
-                  <%= link_to "About", about_path, class: "nav-link  w-100 px-3 py-2" %>
-                </li>
-                <li class="mr-5 ">
-                  <%= link_to "商品一覧", root_path, class: "nav-link  w-100 px-3 py-2" %>
-                </li>
-                <li class="mr-5">
-                  <%= link_to "マイページ", customers_my_page_path, class: "nav-link w-100 px-3 py-2" %>
-                </li>
-                <li class="mr-5">
-                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link w-100 px-3 py-2" %>
-                </li>
-            </ul>
+            <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to about_path, class: "nav-link  w-100 px-3 py-2" do %>
+                  <i class="fa-regular fa-file mr-1"></i>About
+                <% end %>
+              </li>
+              <li class="mr-5 ">
+                <%= link_to root_path, class: "nav-link  w-100 px-3 py-2" do %>
+                  <i class="fa-solid fa-image mr-1"></i>商品一覧
+                <% end %>
+              </li>
+              <li class="mr-5">
+                <%= link_to customers_my_page_path, class: "nav-link w-100 px-3 py-2" do %>
+                  <i class="fa-solid fa-user mr-1"></i>マイページ
+                <% end %>
+              </li>
+              <li class="mr-5">
+                <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link w-100 px-3 py-2" do %>
+                  <i class="fa-solid fa-right-from-bracket mr-1"></i>ログアウト
+                <% end %>
+              </li>
+            </div>
+          </ul>
+          <div class="ml-5 mt-5">
+            <span class="badge badge-primary mr-3">消費者ログイン中</span><%= current_customer.last_name %> さん
+          </div>
           
         <% elsif farmer_signed_in?  %>
           
           <ul class="list-unstyled">
-              <div class="d-flex ">
-                <li class="mr-5">
-                  <%= link_to "About", about_path, class: "nav-link  w-100 px-3 py-2" %>
-                </li>
-                <li class="mr-5 ">
-                  <%= link_to "商品一覧", farmer_farmers_mypage_path, class: "nav-link w-100 px-3 py-2" %>
-                </li>
-                <li class="mr-5">
-                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "nav-link w-100 px-3 py-2" %>
-                </li>
-            </ul>
+            <div class="d-flex ">
+              <li class="mr-5">
+                <%= link_to about_path, class: "nav-link  w-100 px-3 py-2" do %>
+                  <i class="fa-regular fa-file mr-1"></i>About
+                <% end %>
+              </li>
+              <li class="mr-5 ">
+                <%= link_to farmer_farmers_mypage_path, class: "nav-link w-100 px-3 py-2" do %>
+                  <i class="fa-solid fa-image mr-1"></i>商品一覧
+                <% end %>
+              </li>
+              <li class="mr-5">
+                <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link w-100 px-3 py-2" do %>
+                  <i class="fa-solid fa-right-from-bracket mr-1"></i>ログアウト
+                <% end %>
+              </li>
+            </div>
+          </ul>
+          <div class="ml-5 mt-5">
+            <span class="badge badge-primary mr-3">農家ログイン中</span><%= current_farmer.last_name %> さん
+          </div>
           
         <% else %>
           <ul class="list-unstyled mr-5 pr-5">
               <div class="d-flex ">
                 <li class="mr-5">
-                  <%= link_to "About", about_path, class: "nav-link  w-100 px-3 py-2" %>
+                  <%= link_to about_path, class: "nav-link  w-100 px-3 py-2" do %>
+                    <i class="fa-regular fa-file mr-1"></i>About
+                  <% end %>
                 </li>
                 <li class="mr-5 ">
-                  <%= link_to "商品一覧", root_path, class: "nav-link w-100 px-3 py-2" %>
+                  <%= link_to root_path, class: "nav-link w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-image mr-1"></i>商品一覧
+                  <% end %>
                 </li>
                 <li class="mr-5">
-                  <%= link_to "ログイン", new_customer_session_path, class: "nav-link  w-100 px-3 py-2" %>
+                  <%= link_to new_customer_session_path, class: "nav-link  w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i>ログイン
+                  <% end %>
                 </li>
                 <li class="mr-5">
-                  <%= link_to "新規登録", new_customer_registration_path, class: "nav-link w-100 px-3 py-2" %>
+                  <%= link_to new_customer_registration_path, class: "nav-link w-100 px-3 py-2" do %>
+                    <i class="fa-solid fa-user-plus mr-1"></i>新規登録
+                  <% end %>
                 </li>
+              </diV>
             </ul>
         <% end %>
       </div>
