@@ -8,7 +8,8 @@ class Farmer::CommentsController < ApplicationController
     if @comment.save
       redirect_to farmer_item_path(@item), notice: "コメントを投稿しました"
     else
-      redirect_to farmer_item_path(@item), alert: "コメント投稿に失敗しました"
+      flash[:alert] = @comment.errors.full_messages.join("、")
+      redirect_to farmer_item_path(@item)
     end
   end
 
