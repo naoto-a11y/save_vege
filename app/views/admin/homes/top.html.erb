@@ -1,23 +1,72 @@
 <div class="container my-5">
+  <!-- 今週の統計 -->
   <div class="row mb-5">
-    <div class="col">
-    <!-- 新着商品一覧 -->
-      <div>
-        <h4>🆕 新着商品（最新5件）</h4>
-        <% week = ["日", "月", "火", "水", "木", "金", "土"] %>
-        <ul class="list-group">
-          <% @recent_items.each do |item| %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <%= image_tag item.get_image, class: "rounded mr-3", style: "width: 40px; height: 40px; object-fit: cover;" %>
-                <strong class="mr-5"><%= item.name %></strong>
-                <small class="text-muted mr-5">投稿者：<%= item.farmer.last_name %>さん</small>
-                <small class="text-muted "><%= item.created_at.strftime("%Y/%m/%d") %>（<%= week[item.created_at.wday] %>）</small>
-              </div>
-              <%= link_to "詳細", admin_farmer_item_path(item.farmer, item), class: "btn btn-outline-primary btn-sm" %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="col-md-4">
+      <% week = %w[日 月 火 水 木 金 土] %>
+      <h4>📅 今週の日別投稿数（商品）</h4>
+      <ul class="list-group">
+        <% (0..6).reverse_each do |i| %>
+          <% date = i.days.ago.to_date %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
+            <span class="badge badge-primary badge-pill"><%= @item_counts_day[date.to_s] || 0 %> 件</span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+ 
+    <div class="col-md-4">
+      <h4>👤 今週の消費者登録数</h4>
+      <ul class="list-group">
+        <% (0..6).reverse_each do |i| %>
+          <% date = i.days.ago.to_date %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
+            <span class="badge badge-success badge-pill"><%= @customer_counts_day[date.to_s] || 0 %> 人</span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="col-md-4">
+      <h4>🧑‍🌾 今週の農家登録数</h4>
+      <ul class="list-group">
+        <% (0..6).reverse_each do |i| %>
+          <% date = i.days.ago.to_date %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
+            <span class="badge badge-warning badge-pill"><%= @farmer_counts_day[date.to_s] || 0 %> 人</span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 先月の合計 -->
+  <div class="mb-5">
+    <h4>📆 先月の合計</h4>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">🛒 投稿数：<strong><%= @last_month_item_total %></strong> 件</li>
+      <li class="list-group-item">👤 消費者登録：<strong><%= @last_month_customer_total %></strong> 人</li>
+      <li class="list-group-item">🧑‍🌾 農家登録：<strong><%= @last_month_farmer_total %></strong> 人</li>
+    </ul>
+  </div>
+
+  <!-- 新着商品一覧 -->
+  <div>
+    <h4>🆕 新着商品（最新5件）</h4>
+    <ul class="list-group">
+      <% @recent_items.each do |item| %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <%= image_tag item.get_image, class: "rounded mr-3", style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <strong class="mr-5"><%= item.name %></strong>
+            <small class="text-muted mr-5">投稿者：<%= item.farmer.last_name %>さん</small>
+            <small class="text-muted "><%= item.created_at.strftime("%Y/%m/%d") %>（<%= week[item.created_at.wday] %>）</small>
+          </div>
+          <%= link_to "詳細", admin_farmer_item_path(item.farmer, item), class: "btn btn-outline-primary btn-sm" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
