@@ -8,13 +8,13 @@ class Admin::HomesController < ApplicationController
     end_of_last_month = (today - 1.month).end_of_month
   
     #今週の日別投稿数
-    @item_counts_day = Item.where(created_at: start_of_week..end_of_week).group("DATE(created_at)").count
+    @item_counts_day = Item.where(created_at: start_of_week..end_of_week).group("DATE(created_at, '+9 hours')").count
   
     # 今週の日別ユーザー登録数　消費者
-    @customer_counts_day = Customer.where(created_at: start_of_week..end_of_week).group("DATE(created_at)").count
+    @customer_counts_day = Customer.where(created_at: start_of_week..end_of_week).group("DATE(created_at, '+9 hours')").count
   
     # 今週の日別ユーザー登録数　農家
-    @farmer_counts_day = Farmer.where(created_at: start_of_week..end_of_week).group("DATE(created_at)").count
+    @farmer_counts_day = Farmer.where(created_at: start_of_week..end_of_week).group("DATE(created_at, '+9 hours')").count
   
     # 先月の投稿数合計
     @last_month_item_total = Item.where(created_at: start_of_last_month..end_of_last_month).count

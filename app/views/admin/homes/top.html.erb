@@ -9,12 +9,12 @@
           <% date = i.days.ago.to_date %>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
-            <span class="badge badge-primary badge-pill"><%= @item_counts_day[date] || 0 %> 件</span>
+            <span class="badge badge-primary badge-pill"><%= @item_counts_day[date.to_s] || 0 %> 件</span>
           </li>
         <% end %>
       </ul>
     </div>
-
+ 
     <div class="col-md-4">
       <h4>👤 今週の消費者登録数</h4>
       <ul class="list-group">
@@ -22,7 +22,7 @@
           <% date = i.days.ago.to_date %>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
-            <span class="badge badge-success badge-pill"><%= @customer_counts_day[date] || 0 %> 人</span>
+            <span class="badge badge-success badge-pill"><%= @customer_counts_day[date.to_s] || 0 %> 人</span>
           </li>
         <% end %>
       </ul>
@@ -35,7 +35,7 @@
           <% date = i.days.ago.to_date %>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <%= date.strftime("%Y/%m/%d") %>（<%= week[date.wday] %>）
-            <span class="badge badge-warning badge-pill"><%= @farmer_counts_day[date] || 0 %> 人</span>
+            <span class="badge badge-warning badge-pill"><%= @farmer_counts_day[date.to_s] || 0 %> 人</span>
           </li>
         <% end %>
       </ul>
