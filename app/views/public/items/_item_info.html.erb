@@ -20,21 +20,18 @@
 </div>
 <p class="fs-5 mb-3"><%= item.introduction %></p>
 <p class="h4 text-right mb-3 mr-5">￥<%= number_with_delimiter(item.price) %></p>
-<p class="fs-5 text-danger mb-3 ml-3">
+<div class="d-flex">
   <% if customer_signed_in? %>
-    <% if current_customer.favorited?(@item) %>
-      <% favorite = current_customer.favorite_for(item) %>
-      <%= link_to "❤️ #{item.favorites.count}", favorite_path(@item.id), method: :delete %>
-      <i class="fa-solid fa-comment"></i><%= item.comments.count %>
-    <% else %>
-      <%= link_to "♡ #{item.favorites.count}", favorites_path(item_id: item.id), method: :post %>
-      <i class="fa-solid fa-comment"></i><%= @item.comments.count %>
-    <% end %>
+    <div id="favorite_btn_<%= item.id %>">
+      <%= render "share/favorite", item: item %>
+    </div>
   <% else %>
-    ❤️<%= item.favorites.count %>
-    <i class="fa-solid fa-comment"></i><%= @item.comments.count %>
+    <div class="text-danger">
+      ♥ <%= item.favorites.count %>
+    </div>
   <% end %>
-</p>
+  💬 <%= item.comments.count %>
+</div>
 <p>
   タグ：<% item.tags.each do |tag| %>
     <%= link_to items_path(tag_ids: [tag.id]), class: "badge badge-light border text-decoration-none" do %>

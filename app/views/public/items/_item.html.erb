@@ -14,20 +14,15 @@
     </div>
 
     <div class="mb-2 small text-muted d-flex justify-content-between align-items-center">
-      <div class="d-flex gap-3">
+      <div class="d-flex ">
         <% if customer_signed_in? %>
-          <% if current_customer.favorited?(item) %>
-            <% favorite = current_customer.favorite_for(item) %>
-            <%= link_to favorite_path(favorite), method: :delete, class: "text-danger" do %>
-              ❤️ <%= item.favorites.count %>
-            <% end %>
-          <% else %>
-            <%= link_to favorites_path(item_id: item.id), method: :post, class: "text-muted" do %>
-              ♡ <%= item.favorites.count %>
-            <% end %>
-          <% end %>
+          <div id="favorite_btn_<%= item.id %>">
+            <%= render "share/favorite", item: item %>
+          </div>
         <% else %>
-          ❤️ <%= item.favorites.count %>
+          <div class="text-danger">
+            ♥ <%= item.favorites.count %>
+          </div>
         <% end %>
         💬 <%= item.comments.count %>
       </div>
