@@ -1,0 +1,10 @@
+<% if current_customer.favorited?(item) %>
+  <% favorite = current_customer.favorite_for(item) %>
+  <%= link_to favorite_path(favorite), method: :delete, class: "text-danger", remote: true do %>
+    ♥ <%= item.favorites.count %>
+  <% end %>
+<% else %>
+  <%= link_to favorites_path(item_id: item.id), method: :post, remote: true do %>
+    ♡ <%= item.favorites.count %>
+  <% end %>
+<% end %>
