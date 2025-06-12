@@ -5,7 +5,7 @@ class Public::ItemsController < ApplicationController
     @areas = Farmer.distinct.pluck(:prefecture)
     @tags = Tag.all
   
-    @items = Item.includes(:farmer).distinct
+    @items = Item.includes(:farmer).distinct.page(params[:page]).per(8)
   
     # カテゴリ
     if params[:category_ids].present?
@@ -36,6 +36,7 @@ class Public::ItemsController < ApplicationController
     @comments = @item.comments
     @tags = Tag.all
     @comment = Comment.new
+    @reservation = Reservation.new
     if customer_signed_in?
       @reservation = current_customer.reservation_for(@item)
     end

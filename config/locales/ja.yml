@@ -14,7 +14,7 @@ ja:
         price:            値段
         introduction:     紹介文
         category_id:      カテゴリ
-      available_slot:
+      available_slots:
         available_date:   受取可能日
       farmer:
         last_name:        姓
@@ -36,7 +36,19 @@ ja:
       dm_message:
         message: メッセージ内容
       reservation:
-        reserved_date: 受取日
+        reserved_date: 予約可能日
+        cancellation_reason:
+          customer_change_of_mind: "別の商品の取引のため"
+          ordered_by_mistake: "間違えて注文した"
+          farmer_out_of_stock: "在庫切れ"
+          harvest_failure: "収穫不良"
+          logistics_issue: "配送トラブル"
+          schedule_conflict: "スケジュールの都合"
+          other: "その他"
+        status:
+          in_progress: "取引中"
+          completed: "取引完了"
+          canceled: "キャンセル済み"
   errors:
     messages:
       blank: "を入力してください"
