@@ -38,7 +38,7 @@ class Customer < ApplicationRecord
   end
   #予約されているitemを取得
   def reservation_for(item)
-    reservations.find_by(item_id: item.id)
+    reservations.find_by(item_id: item.id, status: :in_progress)
   end
    # item をお気に入り済みか
   def favorited?(item)

@@ -41,6 +41,11 @@ class Public::ReservationsController < ApplicationController
   end
 
   def history
+    @customer = current_customer
+    @items_count = current_customer.favorite_items.active.count
+    @following_farmers = current_customer.followed_farmers
+    @recent_items_count = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).count
+    @reservations = current_customer.reservations.includes(:item).order(created_at: :desc)
   end
 
 end
