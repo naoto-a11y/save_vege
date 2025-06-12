@@ -7,7 +7,7 @@ class Public::CustomersController < ApplicationController
     @customer = current_customer
     @items_count = current_customer.favorite_items.active.count
     @items = current_customer.favorite_items.active.page(params[:page]).per(8)
-    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true }).page(params[:page]).per(8)
+    @reservations = current_customer.reservations.joins(:item).where(items: { is_active: true }, status: :in_progress).page(params[:page]).per(8)
     @following_farmers = current_customer.followed_farmers.where(status: true)
     @recent_items_count = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).count
 

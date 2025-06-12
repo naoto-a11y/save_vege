@@ -15,7 +15,7 @@
                 <th>予約日</th>
                 <th>商品名</th>
                 <th>予約者</th>
-                <th></th>
+                <th>操作</th>
               </tr>
             </thead>
 
@@ -24,9 +24,43 @@
                   <td><%= reservation.reserved_date.strftime('%Y/%m/%d') %></td>
                   <td><%= reservation.item.name %></td>
                   <td><%= reservation.customer.last_name %> さん</td>
-                  <td style="width: 250px;">
+                  <td style="width: 300px;">
                     <%= link_to "DMする", dm_room_path(reservation.dm_room), class: "btn btn-outline-primary btn-sm" %>
-                    <%= link_to "予約キャンセル", reservation_path(reservation.id), method: :delete, data: { confirm: "本当にキャンセルしますか？" }, class: "btn btn-outline-primary btn-sm" %>
+                    <button class="btn btn-outline-warning btn-sm" type="button" data-toggle="collapse" data-target="#edit-reservation-<%= reservation.id %>">
+                      キャンセル
+                    </button>
+                    <%= link_to "受取完了", complete_reservation_path(reservation.id), method: :patch, data: { confirm: "取引を完了しますか？" }, class: "btn btn-outline-success btn-sm" %>
+                  </td>
+                </tr>
+                <!-- アコーディオンフォーム（編集） -->
+                <tr class="collapse" id="edit-reservation-<%= reservation.id %>">
+                  <td colspan="4">
+                    <%= form_with model: reservation, url: cancel_reservation_path(reservation), method: :patch do |f| %>
+                      <div class="d-flex justify-content-center">
+                        <div class="ml-2">
+                          <%= f.radio_button :cancellation_reason, Reservation.cancellation_reasons.key(10), id: "cancellation_reason_change_of_mind" %>
+                          <%= f.label :cancellation_reason, t("activerecord.attributes.reservation.cancellation_reason.customer_change_of_mind"), for: "cancellation_reason_change_of_mind" %>
+                        </div>
+
+                        <div class="ml-5">
+                          <%= f.radio_button :cancellation_reason, Reservation.cancellation_reasons.key(11), id: "ordered_by_mistake" %>
+                          <%= f.label :cancellation_reason, t("activerecord.attributes.reservation.cancellation_reason.ordered_by_mistake"), for: "ordered_by_mistake" %>
+                        </div>
+
+                        <div class="ml-5">
+                          <%= f.radio_button :cancellation_reason, Reservation.cancellation_reasons.key(98), id: "schedule_conflict" %>
+                          <%= f.label :cancellation_reason, t("activerecord.attributes.reservation.cancellation_reason.schedule_conflict"), for: "schedule_conflict" %>
+                        </div>
+
+                        <div class="ml-5">
+                          <%= f.radio_button :cancellation_reason, Reservation.cancellation_reasons.key(99), id: "other" %>
+                          <%= f.label :cancellation_reason, t("activerecord.attributes.reservation.cancellation_reason.other"), for: "other" %>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-end mt-3 mr-5">
+                        <%= f.submit "キャンセルする", class: "btn btn-danger" %>
+                      </div>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
