@@ -31,7 +31,7 @@
       <!-- 予約一覧ボタン -->
       <%= link_to reservations_path,
           class: "btn btn-outline-success d-flex flex-column justify-content-center align-items-center text-center mb-2 ", style: "width: 200px;" do %>
-        <span class="small">予約一覧(<%= reservations.count %>)</span>
+        <span class="small">予約一覧(<%= current_customer.reservations.in_progress.count %>)</span>
       <% end %>
 
       <%= link_to reservation_history_path,
