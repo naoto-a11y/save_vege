@@ -3,24 +3,19 @@ class Farmer::CommentsController < ApplicationController
 
   def create
     @item = Item.find(params[:item_id])
+    @comments = @item.comments
     @comment = @item.comments.new(comment_params)
     @comment.sender = current_farmer
-    if @comment.save
-      redirect_to farmer_item_path(@item), notice: "コメントを投稿しました"
-    else
-      redirect_to farmer_item_path(@item), alert: "コメント投稿に失敗しました"
-    end
+    @comment.save
   end
 
   def destroy
     @item = Item.find(params[:item_id])
+    @comments = @item.comments
     @comment = @item.comments.find(params[:id])
   
     if @comment.sender == current_farmer || @item.farmer == current_farmer
       @comment.destroy
-      redirect_to farmer_item_path(@item), notice: "コメントを削除しました"
-    else
-      redirect_to farmer_item_path(@item), alert: "コメント削除に失敗しました"
     end
   end
 

@@ -34,7 +34,7 @@ class Customer < ApplicationRecord
   end
   #予約されているかどうか
   def reserved_item?(item)
-    reservations.exists?(item_id: item.id)
+    item.reservations.exists?(customer_id: id, status: :in_progress)
   end
   #予約されているitemを取得
   def reservation_for(item)

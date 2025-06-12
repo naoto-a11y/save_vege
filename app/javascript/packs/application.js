@@ -18,23 +18,3 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
-
-document.addEventListener("turbolinks:load", function () {
-  const showBtn = document.getElementById("show-more-comments");
-  const hideBtn = document.getElementById("hide-comments");
-  const hiddenComments = document.querySelectorAll(".comment-entry.d-none");
-
-  if (showBtn && hideBtn) {
-    showBtn.addEventListener("click", function () {
-      hiddenComments.forEach(el => el.classList.remove("d-none"));
-      showBtn.classList.add("d-none");
-      hideBtn.classList.remove("d-none");
-    });
-
-    hideBtn.addEventListener("click", function () {
-      hiddenComments.forEach(el => el.classList.add("d-none"));
-      hideBtn.classList.add("d-none");
-      showBtn.classList.remove("d-none");
-    });
-  }
-});

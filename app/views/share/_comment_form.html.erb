@@ -1,0 +1,15 @@
+<% if customer_signed_in? %>
+  <%= form_with model: [item, comment], url: item_comments_path(item), method: :post, local: false do |f| %>
+    <div class="mb-3">
+      <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
+    </div>
+    <%= f.submit "投稿", class: "btn btn-outline-dark" %>
+  <% end %> 
+<% elsif farmer_signed_in? %>
+  <%= form_with model: [item, comment], url: farmer_item_comments_path(item), method: :post, local: false do |f| %>
+    <div class="mb-3">
+      <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントを入力してください" %>
+    </div>
+    <%= f.submit "投稿", class: "btn btn-outline-dark" %>
+  <% end %> 
+<% end %>

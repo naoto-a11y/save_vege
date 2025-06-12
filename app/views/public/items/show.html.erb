@@ -63,7 +63,22 @@
           </div>
 
           <div class="col mb-3">
-            <%= render 'public/comments/index', comments: @comments, item: @item, comment: @comment %>
+            <div class="mt-5 ml-5">
+              <div id="comments_index">
+                <%= render 'share/comment_index', comments: @comments, item: @item, comment: @comment %>
+              </div>
+              <div class="mr-5  mt-4">
+                <% if customer_signed_in? || farmer_signed_in? %>
+                  <div id="comment_form">
+                    <%= render 'share/comment_form', item: @item, comment: @comment %>
+                  </div>
+                <% else %>
+                  <div class="text-center mt-3">
+                    <%= link_to "ログインしてコメントする", new_customer_session_path, class: "btn btn-primary" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
     </div>

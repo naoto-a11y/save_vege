@@ -1,37 +1,5 @@
 Rails.application.routes.draw do
  
-  namespace :admin do
-    namespace :farmers do
-      namespace :items do
-        get 'comments/destroy'
-      end
-    end
-  end
-  namespace :admin do
-    namespace :farmers do
-      namespace :items do
-        get 'comments/index'
-        get 'comments/destroy'
-      end
-    end
-  end
-  namespace :admin do
-    namespace :farmers do
-      get 'comments/index'
-      get 'comments/destroy'
-    end
-  end
-  get 'index/destroy'
-  namespace :admin do
-    get 'categories/index'
-    get 'categories/new'
-    get 'categories/edit'
-    get 'categories/update'
-    get 'categories/destroy'
-  end
-  namespace :admin do
-    get 'tags/index'
-  end
   devise_for :customers,skip: [:password], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -49,8 +17,9 @@ Rails.application.routes.draw do
     
     resources :reservations, only: [:index, :destroy]
 
-    post 'reservations/confirm',          to: "reservations#confirm"
-    get  'reservations/thanks',           to: "reservations#thanks"
+    patch 'reservations/:id/complete', to: "reservations#complete", as: :complete_reservation
+    patch 'reservations/:id/cancel',   to: "reservations#cancel",   as: :cancel_reservation
+    get 'reservations/history',        to: 'reservations#history',  as: :reservation_history
 
     get    'customers/my_page',          to: "customers#show"
     get    'customers/information/edit', to: "customers#edit"
@@ -86,6 +55,10 @@ Rails.application.routes.draw do
     patch 'items/:id/deactivate', to: "items#deactivate", as: 'deactivate_farmer_item'
     patch 'items/:id/activate', to: "items#activate", as: 'activate_farmer_item'
     resources :reservations, only: [:index, :destroy]
+
+    patch 'reservations/:id/complete', to: "reservations#complete", as: :complete_reservation
+    patch 'reservations/:id/cancel',   to: "reservations#cancel",   as: :cancel_reservation
+    get 'reservations/history',        to: 'reservations#history',  as: :reservation_history
 
     get    'farmers/mypage',           to: "farmers#show"
     get    'farmers/information/edit', to: "farmers#edit"
