@@ -50,20 +50,28 @@
           </div>
         </div>
 
-        <div class="available-slot mb-3">
-          <div class="form-group row mb-3">
-            <label class="col-sm-3 col-form-label text-sm-right">
-              <%= f.label :available_date, "受取可能日" %>
-            </label>
-            <div class="col-sm-9">
-              <%= f.date_field :available_date, class: "form-control form-control-sm" %>
-            </div>
-          </div>
+        <div id="available-slots">
+          <%= f.fields_for :available_slots do |slot_f| %>
+            <div class="available-slot mb-3">
+              <div class="row">
+                <div class="col-sm-3 col-form-label text-sm-right">
+                  <%= slot_f.label :available_date, "受取可能日" %>
+                </div>
+                <div class="col-sm-9">
+                  <%= slot_f.date_field :available_date, class: "form-control form-control-sm" %>
+                </div>
+              </div>
 
-          <button type="button" class="btn btn-danger btn-sm remove-slot " >🗑</button>
+              <div class="text-right">
+                <button type="button" class="btn btn-danger btn-sm remove-slot">🗑</button>
+              </div>
+            </div>
+          <% end %>
         </div>
 
-        <button type="button" class="btn btn-outline-success mb-3" id="add-slot">＋ 時間帯を追加</button>   
+        <div class="text-right">
+          <button type="button" class="btn btn-outline-success mb-3" id="add-slot">＋ 時間帯を追加</button>   
+        </div>
            
 
         <div class="text-center">
@@ -74,32 +82,57 @@
   </div>
 </div>
 
+<template id="slot-template">
+  <div class="available-slot mb-3">
+    <div class="row">
+      <div class="col-sm-3 col-form-label text-sm-right">
+        <label for="">受取可能日</label>
+      </div>
+      <div class="col-sm-9">
+        <input type="date"
+               name="item[available_slots_attributes][0][available_date]"
+               id="item_available_slots_attributes_0_available_date"
+               class="form-control form-control-sm">
+      </div>
+    </div>
+
+    <div class="text-right">
+      <button type="button" class="btn btn-danger btn-sm remove-slot">🗑</button>
+    </div>
+  </div>
+</template>
+
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const addBtn = document.getElementById("add-slot");
-  const container = document.getElementById("available-slots");
-  const template = document.getElementById("slot-template").innerHTML;
+  document.addEventListener("DOMContentLoaded", () => {
+    const addBtn = document.getElementById("add-slot");
+    const container = document.getElementById("available-slots");
+    const template = document.getElementById("slot-template").innerHTML;
 
-  // フォーム追加
-  addBtn.addEventListener("click", () => {
-    const currentCount = container.querySelectorAll(".available-slot").length;
-    if (currentCount >= 10) {
-      alert("これ以上は追加できません");
-      return;
-    }
+    // フォーム追加
+    addBtn.addEventListener("click", () => {
+      const currentCount = container.querySelectorAll(".available-slot").length;
+      if (currentCount >= 10) {
+        alert("これ以上は追加できません");
+        return;
+      }
 
-    const newIndex = Date.now();
-    const newField = template.replace(/\[available_slots_attributes\]\[\d*\]/g, `[available_slots_attributes][${newIndex}]`)
-                             .replace(/_available_slots_attributes_\d*_/g, `_available_slots_attributes_${newIndex}_`);
+      const newIndex = Date.now();
+      const newField = template.replace(/\[available_slots_attributes\]\[\d*\]/g, `[available_slots_attributes][${newIndex}]`)
+                              .replace(/_available_slots_attributes_\d*_/g, `_available_slots_attributes_${newIndex}_`);
 
-    container.insertAdjacentHTML("beforeend", newField);
+      container.insertAdjacentHTML("beforeend", newField);
+    });
+
+    // フォーム削除
+    container.addEventListener("click", function (e) {
+      if (e.target.classList.contains("remove-slot")) {
+        const slots = container.querySelectorAll(".available-slot");
+        if (slots.length <= 1) {
+          alert("最低1件は必要です");
+          return;
+        }
+        e.target.closest(".available-slot").remove();
+      }
+    });
   });
-
-  // フォーム削除（イベント委任）
-  container.addEventListener("click", function (e) {
-    if (e.target.classList.contains("remove-slot")) {
-      e.target.closest(".available-slot").remove();
-    }
-  });
-});
 </script>
