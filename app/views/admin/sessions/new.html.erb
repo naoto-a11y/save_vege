@@ -3,13 +3,6 @@
     <div class="w-100" style="max-width: 650px;">
       <h4 class="admin-title mb-5 text-center">管理者ログイン</h4>
 
-      <!-- エラーメッセージ -->
-      <% if flash[:alert] %>
-        <div class="alert alert-danger text-center">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
-
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="row mb-3">
           <div class="col-md-3 text-end">
