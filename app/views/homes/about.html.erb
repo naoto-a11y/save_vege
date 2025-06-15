@@ -1,15 +1,37 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
+<!-- Swiper コンテナ -->
+<div class="swiper mb-2 " style="width: auto; max-height: 500px; margin: auto;">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><%= image_tag "1.jpg", class: "d-block w-100", style: "object-fit: cover; height: 550px; object-position: bottom;" %></div>
+    <div class="swiper-slide"><%= image_tag "2.jpg", class: "d-block w-100", style: "object-fit: cover;" %></div>
+    <div class="swiper-slide"><%= image_tag "3.jpg", class: "d-block w-100", style: "height: 550px; object-position: bottom;" %></div>
+    <div class="swiper-slide"><%= image_tag "5.jpg", class: "d-block w-100", style: "height: 550px; object-position: bottom;" %></div>
+  </div>
+
+  <!-- ナビゲーションボタン -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+
+  <!-- ページネーション -->
+  <div class="swiper-pagination"></div>
+</div>
+
+
+
+
 <div class="about-page">
-  <div class="container my-5">
+  <div class="container mb-5">
     <!-- サイト紹介 -->
     <div class=" text-center  ">
-      <h1 class="display-4 mb-3">🥕 SAVE VEGE とは？</h1>
+      <h1 class="display-4 mb-3"> SAVE VEGE とは？</h1>
       <p class="lead mb-5">フードロスを減らしたい農家と、お得に野菜を手に入れたい消費者をつなぐSNS型マッチングサイトです。</p>
     </div>
 
     <!-- サービス概要 -->
     <div class="mb-5 ">
       <div class="text-center">
-        <h3 class=" mb-3">🔍 サイトの特徴</h3>
+        <h3 class=" mb-3"> サイトの特徴</h3>
         <ul class="list-unstyled">
           <li>訳アリ・余剰野菜を気軽に出品＆閲覧</li>
           <li>地域・カテゴリ・キーワードで検索可能</li>
@@ -22,7 +44,7 @@
     <!-- 規約説明 -->
     <div class="">
       <div class="text-center">
-        <h3 class=" mb-4">📋 ご利用にあたって</h3>
+        <h3 class=" mb-4"> ご利用にあたって</h3>
         <p>
           SAVE VEGEは、地域の農家さんと消費者をつなげることを目的としています。<br>
           ご利用にあたっては、以下の点をご確認ください。
@@ -39,3 +61,24 @@
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      autoplay: {
+        delay: 6000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    });
+  });
+</script>
