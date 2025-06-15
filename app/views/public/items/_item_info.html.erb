@@ -38,14 +38,12 @@
   </p>
 
   <!-- タグ -->
-  <% if item.tags.present? %>
-    <div class="mb-4">
-      <span class="fw-bold">タグ：</span>
-      <% item.tags.each do |tag| %>
-        <span class="badge bg-light text-dark border me-1">#<%= tag.tag_name %></span>
-      <% end %>
-    </div>
-  <% end %>
+  <p>タグ：<% item.tags.each do |tag| %>
+            <%= link_to items_path(tag_ids: [tag.id]), class: "badge badge-light border text-decoration-none" do %>
+              #<%= tag.tag_name %>
+            <% end %>
+          <% end %>
+  </p><br>
 
   <!-- ボタン類 -->
   <% if customer_signed_in? %>
