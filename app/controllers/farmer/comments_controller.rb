@@ -7,6 +7,7 @@ class Farmer::CommentsController < ApplicationController
     @comment = @item.comments.new(comment_params)
     @comment.sender = current_farmer
     @comment.save
+
   end
 
   def destroy
