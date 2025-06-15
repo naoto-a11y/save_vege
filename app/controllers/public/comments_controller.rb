@@ -6,7 +6,6 @@ class Public::CommentsController < ApplicationController
     @comments = @item.comments
     @comment = @item.comments.new(comment_params)
     @comment.sender = current_customer
-
     @comment.save
   end
 

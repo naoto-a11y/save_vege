@@ -34,7 +34,7 @@
       <!-- 予約一覧ボタン -->
       <%= link_to farmer_reservations_path,
           class: "btn btn-outline-success d-flex flex-column justify-content-center align-items-center text-center mb-2", style: "width: 200px;" do %>
-        <span class="small">予約一覧(<%= reservations.count %>)</span>
+        <span class="small">予約一覧(<%= current_farmer.reservations.in_progress.count %>)</span>
       <% end %>
 
       <!-- 最終受取可能日間近 -->

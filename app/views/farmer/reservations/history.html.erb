@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      
+      <%= render 'farmer/farmers/info', farmer: @farmer, reservations: @reservations,
+      items: @items, items_count: @items_count, items_upcoming_slots_count: @items_upcoming_slots_count,
+      recent_items_count: @recent_items_count, favorites_items_count: @favorites_items_count %>
+      
+      <div class="col ">
+        <h3 class="mb-4">取引履歴</h3>
+        <% if @reservations_index.any? %>
+          <table class="table table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th>予約日</th>
+                <th>商品名</th>
+                <th>金額</th>
+                <th>取引相手</th>
+                <th>予約状況</th>
+                <th>キャンセル理由</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @reservations_index.each do |reservation| %>
+                <tr>
+                  <td><%= reservation.created_at.strftime("%Y年%m月%d日 %H:%M") %></td>
+                  <td><%= reservation.item.name %></td>
+                  <td>¥<%= number_with_delimiter(reservation.item.price) %></td>
+                  <td><%= reservation.customer.last_name %>さん</td>
+                  <td><%= t("activerecord.attributes.reservation.status.#{reservation.status}") %></td>
+                  <td>
+                    <% if reservation.status == "canceled" %>
+                      <%= t("activerecord.attributes.reservation.cancellation_reason.#{reservation.cancellation_reason}") %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p>まだ一度も取引していません。</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+

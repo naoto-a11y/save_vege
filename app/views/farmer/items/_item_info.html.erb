@@ -1,26 +1,51 @@
+<div class="container my-4">
 
-  <h1 class="mb-3 fw-bold"><%= item.name %></h1>
-  <h5 class="mb-3">カテゴリ：<%= item.category.name %></h5>
-  <p class="text-muted fs-5 mb-2">生産者：<strong><%= item.farmer.last_name %>さん</strong></p>
-  <p class="text-muted fs-5 mb-3 text-wrap" style="word-break: break-all; max-width: 500px;">紹介文：<%= item.introduction %></p>
-  <p class="h4 text-right mb-3 mr-5">￥<%= number_with_delimiter(item.price) %></p>
-  <p class="fs-5 text-danger mb-3 ">
-    ❤️ <%= item.favorites.count %> 💬<%= item.comments.count %>
+  <!-- 商品名 -->
+  <h1 class="fw-bold mb-3"><%= item.name %></h1>
+
+  <!-- カテゴリ -->
+  <h5 class="text-secondary mb-2">カテゴリ：<%= item.category.name %></h5>
+
+  <!-- 生産者 -->
+  <p class="text-muted fs-5 mb-1">
+    生産者：<strong><%= item.farmer.last_name %>さん</strong>
   </p>
-  
-<a>
-  タグ：<% item.tags.each do |tag| %>
-    <div class="badge badge-light border text-decoration-none">
-      #<%= tag.tag_name %>
+
+  <!-- 紹介文 -->
+  <p class="text-muted fs-5 mb-3" style="word-break: break-word; max-width: 600px;">
+    紹介文：<%= item.introduction %>
+  </p>
+
+  <!-- 価格 -->
+  <p class="h3 text-right text-primary mb-3">
+    ￥<%= number_with_delimiter(item.price) %>
+  </p>
+
+  <!-- お気に入り・コメント -->
+  <p class="fs-5 text-danger mb-3">
+    ❤️ <%= item.favorites.count %>　💬 <%= item.comments.count %>
+  </p>
+
+  <!-- タグ -->
+  <% if item.tags.present? %>
+    <div class="mb-4">
+      <span class="fw-bold">タグ：</span>
+      <% item.tags.each do |tag| %>
+        <span class="badge bg-light text-dark border me-1">#<%= tag.tag_name %></span>
+      <% end %>
     </div>
   <% end %>
-</a><br>
-<div class="mt-4">
-  <%= link_to "商品情報を編集", edit_farmer_item_path(item), class: "btn btn-outline-primary mt-2" %>
-  <%= link_to "商品を削除", farmer_item_path(item), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger mt-2" %>
-  <% if item.is_active %>
-    <%= link_to "商品情報を非公開にする", farmer_deactivate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を非公開にしますか？" }, class: "btn btn-outline-dark mt-2" %>
-  <% else %>
-    <%= link_to "商品情報を公開する", farmer_activate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を公開しますか？" }, class: "btn btn-outline-success mt-2" %>
-  <% end %>
+
+  <!-- ボタン類 -->
+  <div class="d-flex flex-wrap  mt-4">
+    <%= link_to "商品情報を編集", edit_farmer_item_path(item), class: "btn btn-outline-primary mr-1" %>
+    <%= link_to "商品を削除", farmer_item_path(item), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger mr-1" %>
+
+    <% if item.is_active %>
+      <%= link_to "商品情報を非公開にする", farmer_deactivate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を非公開にしますか？" }, class: "btn btn-outline-dark" %>
+    <% else %>
+      <%= link_to "商品情報を公開する", farmer_activate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を公開しますか？" }, class: "btn btn-outline-success" %>
+    <% end %>
+  </div>
+
 </div>

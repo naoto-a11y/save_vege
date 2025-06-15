@@ -3,7 +3,7 @@ class Farmer::ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    3.times { @item.available_slots.build }
+    @item.available_slots.build
   end
 
   def create
@@ -31,7 +31,7 @@ class Farmer::ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
-    (3 - @item.available_slots.size).times { @item.available_slots.build }
+    @item.available_slots.build
   end
 
   def update
