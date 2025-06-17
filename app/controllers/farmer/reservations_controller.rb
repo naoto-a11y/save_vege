@@ -7,7 +7,7 @@ class Farmer::ReservationsController < ApplicationController
     @items = current_farmer.items
     @items_count = current_farmer.items.count
     @farmer = current_farmer
-    @reservations = current_farmer.reservations.where(status: :in_progress)
+    @reservations = current_farmer.reservations.where(status: :in_progress).page(params[:page]).per(8)
     @items_upcoming_slots_count = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).length
     @recent_items_count = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.count
     @favorites_items_count = @items.joins(:favorites).distinct.count
@@ -35,7 +35,7 @@ class Farmer::ReservationsController < ApplicationController
     @items_upcoming_slots_count = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).length
     @recent_items_count = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.count
     @favorites_items_count = @items.joins(:favorites).distinct.count
-    @reservations_index = current_farmer.reservations.includes(:item).order(created_at: :desc)
+    @reservations_index = current_farmer.reservations.includes(:item).order(created_at: :desc).page(params[:page]).per(8)
   end
   
 end

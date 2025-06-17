@@ -38,13 +38,13 @@ class Farmer::ItemsController < ApplicationController
     @item = current_farmer.items.find(params[:id])
     tag_names = []
     if @item.update(item_params)
-      # ① チェックされた既存タグの名前を取得
+      # チェックされた既存タグの名前を取得
       if params[:item][:tag_ids].present?
         existing_tag_ids = params[:item][:tag_ids].reject(&:blank?)
         existing_tags = Tag.where(id: existing_tag_ids)
         tag_names += existing_tags.pluck(:tag_name)
       end
-      # ② カンマ区切りの新規タグ名を追加
+      # カンマ区切りの新規タグ名を追加
       if params[:item][:tag_names].present?
         new_names = params[:item][:tag_names].split(",").map(&:strip).reject(&:blank?)
         tag_names += new_names
