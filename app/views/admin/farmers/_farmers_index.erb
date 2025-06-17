@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th>ID</th>
+      <th>名前</th>
+      <th>メールアドレス</th>
+      <th>ステータス</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @farmers.each do |farmer| %>
+      <tr>
+        <td><%= farmer.id %></td>
+        <td><%= "#{farmer.last_name} #{farmer.first_name}" %></td>
+        <td><%= farmer.email %></td>
+        <td><%= farmer.status ? "有効" : "退会" %></td>
+        <td class="text-center">
+          <%= link_to "プロフィール編集", edit_admin_farmer_path(farmer), class: "btn btn-outline-primary btn-sm me-2" %>
+          <%= link_to "投稿一覧", admin_farmer_items_path(farmer) , class: "btn btn-outline-secondary btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- ページネーション -->
+<div class="d-flex justify-content-center mt-3">
+  <%= paginate @farmers, param_name: :farmer_page, remote: true %>
+</div>
