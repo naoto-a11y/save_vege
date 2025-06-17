@@ -10,39 +10,28 @@
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :name, "商品名" %></label>
           <div class="col-sm-9"><%= f.text_field :name, class: "form-control form-control-sm" %></div>
         </div>
-
-     
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :image, "画像" %></label>
           <div class="col-sm-9"><%= f.file_field :image, class: "form-control form-control-sm" %></div>
         </div>
-
-       
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :price, "値段（円）" %></label>
           <div class="col-sm-9"><%= f.number_field :price, class: "form-control form-control-sm", min: 0 %></div>
         </div>
-
-    
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :introduction, "紹介文" %></label>
           <div class="col-sm-9"><%= f.text_area :introduction, class: "form-control form-control-sm", rows: 3 %></div>
         </div>
-
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :harvest_date, "収穫日" %></label>
           <div class="col-sm-9"><%= f.date_field :harvest_date, class: "form-control form-control-sm" %></div>
         </div>
-
-     
         <div class="form-group row mb-2">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :category_id, "カテゴリ" %></label>
           <div class="col-sm-9">
             <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "カテゴリを選択", class: "form-control form-control-sm" %>
           </div>
         </div>
-
-      
         <div class="form-group row mb-3">
           <label class="col-sm-3 col-form-label text-sm-right"><%= f.label :tag_names, "タグ" %></label>
           <div class="col-sm-9">
@@ -72,7 +61,6 @@
         <div class="text-right">
           <button type="button" class="btn btn-outline-success mb-3" id="add-slot">＋ 時間帯を追加</button>   
         </div>
-           
 
         <div class="text-center">
           <%= f.submit "投稿する", class: "btn btn-success btn-sm px-4" %>
