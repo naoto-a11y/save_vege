@@ -1,0 +1,28 @@
+<table class="table table-bordered">
+<thead class="thead-light">
+  <tr>
+    <th>ID</th>
+    <th>名前</th>
+    <th>メールアドレス</th>
+    <th>ステータス</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <% @customers.each do |customer| %>
+    <tr>
+      <td><%= customer.id %></td>
+      <td><%= "#{customer.last_name} #{customer.first_name}" %></td>
+      <td><%= customer.email %></td>
+      <td><%= customer.status ? "有効" : "退会" %></td>
+      <td class="text-center">
+        <%= link_to "プロフィール編集", edit_admin_customer_path(customer), class: "btn btn-outline-primary btn-sm me-2" %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+<!-- ページネーション -->
+<div class="d-flex justify-content-center mt-3">
+<%= paginate @customers, param_name: :customer_page, remote: true  %>
+</div>
