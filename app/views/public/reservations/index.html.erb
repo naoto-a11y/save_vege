@@ -68,6 +68,9 @@
         <% else %>
           <p>現在、予約はありません。</p>
         <% end %>
+        <div class="row d-flex justify-content-center">
+          <%= paginate @reservations %>
+        </div>
       </div>
     </div>
   </div>

@@ -43,6 +43,9 @@
         <% else %>
           <p>まだ一度も取引していません。</p>
         <% end %>
+        <div class="row d-flex justify-content-center">
+          <%= paginate @reservations_index %>
+        </div>
       </div>
     </div>
   </div>

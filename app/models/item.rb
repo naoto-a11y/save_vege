@@ -12,7 +12,7 @@ class Item < ApplicationRecord
   has_many :available_slots, dependent: :destroy
 
   attr_accessor :tag_names
-  accepts_nested_attributes_for :available_slots, allow_destroy: true
+  accepts_nested_attributes_for :available_slots, allow_destroy: true, reject_if: :reject_available_slot
 
   scope :active, -> { where(is_active: true) }
 
@@ -21,7 +21,6 @@ class Item < ApplicationRecord
   validates :price, presence: true
   validates :category_id, presence: true
   validates :introduction, length: { maximum: 200 }
-
 
   def save_tags(tag_names)
     tag_names.each do |new_name|
@@ -50,5 +49,11 @@ class Item < ApplicationRecord
     end
   end
 
-  
+  private
+
+  def reject_available_slot(attributes)
+    id = attributes[:id].present?
+    available_date = attributes[:available_date].present?
+    attributes.merge!(_destroy: 1) if id && !available_date
+  end
 end
