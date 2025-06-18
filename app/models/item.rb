@@ -22,6 +22,9 @@ class Item < ApplicationRecord
   validates :category_id, presence: true
   validates :introduction, length: { maximum: 200 }
 
+  validates_associated :available_slots
+  validates :available_slots, presence: true
+
 
   def save_tags(tag_names)
     tag_names.each do |new_name|
