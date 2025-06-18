@@ -22,6 +22,7 @@ class Item < ApplicationRecord
   validates :category_id, presence: true
   validates :introduction, length: { maximum: 200 }
 
+
   def save_tags(tag_names)
     tag_names.each do |new_name|
       tag = Tag.find_or_create_by(tag_name: new_name)
@@ -55,5 +56,6 @@ class Item < ApplicationRecord
     id = attributes[:id].present?
     available_date = attributes[:available_date].present?
     attributes.merge!(_destroy: 1) if id && !available_date
+    !id && !available_date
   end
 end
