@@ -38,18 +38,6 @@ class Farmer::ItemsController < ApplicationController
     @item = current_farmer.items.find(params[:id])
     tag_names = []
 
-
-    # どんなスロットでもavailable_dateが空ならエラー
-  if params[:item][:available_slots_attributes].present?
-    has_blank_date = params[:item][:available_slots_attributes].values.any? do |slot|
-      slot["available_date"].blank?
-    end
-
-    if has_blank_date
-      flash[:alert] = "受取日時が空のスロットがあります。"
-      return redirect_to edit_farmer_item_path(@item)
-    end
-  end
   
     if @item.update(item_params)
       # チェックされた既存タグの名前を取得
