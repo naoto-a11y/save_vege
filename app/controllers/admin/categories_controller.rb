@@ -9,6 +9,7 @@ class Admin::CategoriesController < ApplicationController
     if @category.save
       redirect_to admin_categories_path, notice: 'カテゴリを作成しました'
     else
+      flash[:alert] = @category.errors.full_messages.join("、")
       @categories = Category.all.page(params[:page]).per(10)
       render :index
     end
@@ -19,6 +20,7 @@ class Admin::CategoriesController < ApplicationController
     if @category.update(category_params)
       redirect_to admin_categories_path, notice: 'カテゴリを更新しました'
     else
+      flash[:alert] = @category.errors.full_messages.join("、")
       @categories = Category.all.page(params[:page])
       render :index
     end
