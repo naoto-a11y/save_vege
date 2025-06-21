@@ -33,7 +33,7 @@
       <% end %>
     </div>
     <div class="mt-auto">
-      <% if item.is_active == true %>
+      <% if item.public? %>
         <p class="text-success small">● 公開中</p>
       <% else %>
         <p class="text-secondary small">● 非公開</p>
