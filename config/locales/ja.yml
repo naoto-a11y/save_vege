@@ -9,7 +9,10 @@ ja:
       dm_message:  メッセージ
       reservation: 予約
     attributes:
+      category: 
+        name: カテゴリ名
       item:
+        available_slots: 受渡可能日
         name:             商品名
         price:            値段
         introduction:     紹介文

@@ -1,11 +1,20 @@
 class Public::ItemsController < ApplicationController
  
   def index
+
     @categories = Category.all
     @areas = Farmer.distinct.pluck(:prefecture)
     @tags = Tag.all
-  
-    @items = Item.includes(:farmer).order(created_at: :desc).distinct.page(params[:page]).per(8)
+    
+    @items = Item.joins(:available_slots)
+                 .includes(:farmer)
+                 .active
+                 .group('items.id')
+                 .having('MAX(available_slots.available_date) > ?', Date.today)
+                 .order(created_at: :desc)
+                 .distinct
+                 .page(params[:page])
+                 .per(8)
   
     # カテゴリ
     if params[:category_ids].present?

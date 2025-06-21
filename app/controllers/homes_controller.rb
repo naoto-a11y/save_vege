@@ -1,8 +1,12 @@
 class HomesController < ApplicationController
   def top
-    #受取日が過ぎていたら販売ステータスをfalseに
-    Item.all.each { |item| item.deactivate_if_expired }
-    @items = Item.active.order(created_at: :desc).page(params[:page]).per(8)
+    @items = Item.joins(:available_slots)
+             .active
+             .group('items.id')
+             .having('MAX(available_slots.available_date) > ?', Date.today)
+             .order(created_at: :desc)
+             .page(params[:page])
+             .per(8)
     @tags = Tag.all
     @categories = Category.all
     @areas = Farmer.distinct.pluck(:prefecture)

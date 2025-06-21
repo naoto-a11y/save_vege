@@ -34,14 +34,15 @@
         <span class="badge bg-light text-dark border me-1">#<%= tag.tag_name %></span>
       <% end %>
     </div>
-  <% end %>
+  <% end %>im
+  <%= item.is_active %>
 
   <!-- ボタン類 -->
   <div class="d-flex flex-wrap  mt-4">
     <%= link_to "商品情報を編集", edit_farmer_item_path(item), class: "btn btn-outline-primary mr-1" %>
     <%= link_to "商品を削除", farmer_item_path(item), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-outline-danger mr-1" %>
 
-    <% if item.is_active %>
+    <% if item.public? %>
       <%= link_to "商品情報を非公開にする", farmer_deactivate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を非公開にしますか？" }, class: "btn btn-outline-dark" %>
     <% else %>
       <%= link_to "商品情報を公開する", farmer_activate_farmer_item_path(item), method: :patch, data: { confirm: "本当にこの商品を公開しますか？" }, class: "btn btn-outline-success" %>

@@ -23,7 +23,7 @@ class Farmer::ItemsController < ApplicationController
   def show
     @farmer = current_farmer
     @tags = Tag.all
-    @item = Item.find(params[:id]).order(created_at: :desc)
+    @item = Item.find(params[:id])
     @comments = @item.comments
     @comment = Comment.new
     @reservation_count = current_farmer.reservations.count
@@ -71,7 +71,7 @@ class Farmer::ItemsController < ApplicationController
 
   def deactivate
     @item = Item.find(params[:id])
-    if @item.update(is_active: false)
+    if @item.update!(is_active: false)
       flash[:notice] = "商品を非公開にしました"
     else
       flash[:alert] = "非公開にできませんでした"
@@ -81,7 +81,9 @@ class Farmer::ItemsController < ApplicationController
 
   def activate
     @item = Item.find(params[:id])
-    if @item.update(is_active: true)
+    if @item.available_slots.maximum(:available_date) < Time.current
+      flash[:alert] = "受取可能日を今日以降に設定してください"
+    elsif @item.update(is_active: true)
       flash[:notice] = "商品を公開しました"
     else
       flash[:alert] = "商品を公開にできませんでした"
