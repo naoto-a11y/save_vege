@@ -34,7 +34,18 @@
 
   <!-- お気に入り・コメント -->
   <p class="fs-5 text-danger mb-3">
-    ❤️ <%= item.favorites.count %>　💬 <%= item.comments.count %>
+    <% if customer_signed_in? %>
+      <div class="d-flex">
+        <div id="favorite_btn_<%= item.id %>">
+          <%= render "share/favorite", item: item %>
+        </div>
+        　💬 <%= item.comments.count %>
+      </div>
+    <% else %>
+      <div class="text-danger">
+        ♥ <%= item.favorites.count %>
+      </div>
+    <% end %>
   </p>
 
   <!-- タグ -->
