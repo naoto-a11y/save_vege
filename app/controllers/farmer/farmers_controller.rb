@@ -15,15 +15,15 @@ class Farmer::FarmersController < ApplicationController
 
     @filtered_items = case params[:filter]
     when "upcoming"
-      @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).page(params[:page]).per(8)
+      @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', 1.week.from_now).order(created_at: :desc).page(params[:page]).per(8)
     when "expire"
-      @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', Time.current).page(params[:page]).per(8)
+      @items = @items.joins(:available_slots).group('items.id').having('MAX(available_slots.available_date) <= ?', Time.current).order(created_at: :desc).page(params[:page]).per(8)
     when "commented"
-      @items = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).distinct.page(params[:page]).per(8)
+      @items = @items.joins(:comments).where(comments: { sender_type: 'Customer' }).where('comments.created_at >= ?', 1.week.ago).order(created_at: :desc).distinct.page(params[:page]).per(8)
     when "liked"
-      @items = @items.joins(:favorites).distinct.page(params[:page]).per(8)
+      @items = @items.joins(:favorites).order(created_at: :desc).distinct.page(params[:page]).per(8)
     else
-      @items = current_farmer.items.page(params[:page]).per(8)
+      @items = current_farmer.items.order(created_at: :desc).page(params[:page]).per(8)
     end
   end
 

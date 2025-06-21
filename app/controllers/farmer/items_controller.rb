@@ -23,7 +23,7 @@ class Farmer::ItemsController < ApplicationController
   def show
     @farmer = current_farmer
     @tags = Tag.all
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:id]).order(created_at: :desc)
     @comments = @item.comments
     @comment = Comment.new
     @reservation_count = current_farmer.reservations.count

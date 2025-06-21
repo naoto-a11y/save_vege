@@ -5,7 +5,7 @@ class Public::ItemsController < ApplicationController
     @areas = Farmer.distinct.pluck(:prefecture)
     @tags = Tag.all
   
-    @items = Item.includes(:farmer).distinct.page(params[:page]).per(8)
+    @items = Item.includes(:farmer).order(created_at: :desc).distinct.page(params[:page]).per(8)
   
     # カテゴリ
     if params[:category_ids].present?
