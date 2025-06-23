@@ -19,7 +19,7 @@
 無駄な野菜を少しでもお金に変えたいとき<br>
 ​
 ## 設計書
-後ほど作成予定
+UIFlows https://app.diagrams.net/#G14fRGSMzWCs64_Xy05vafR8pk-028lL5Z#%7B%22pageId%22%3A%224YlbIiD63GHYzDRPhZzJ%22%7D
 ​
 ## 開発環境
 - OS：Linux(CentOS)
