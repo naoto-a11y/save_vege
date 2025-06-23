@@ -2,8 +2,6 @@ class Public::CustomersController < ApplicationController
   before_action :authenticate_customer!, only: [:create, :edit, :update, :withdraw, :unsubscribe]
 
   def show
-    #受取日が過ぎていたら販売ステータスをfalseに
-    Item.all.each { |item| item.deactivate_if_expired }
     @customer = current_customer
     @items_count = current_customer.favorite_items.active.count
     @items = current_customer.favorite_items.active.page(params[:page]).per(8)
@@ -13,7 +11,7 @@ class Public::CustomersController < ApplicationController
 
     @filtered_items = case params[:filter]
     when "commented"
-      @items = Item.active.where(id: Comment.where(sender: current_customer).where("created_at >= ?", 1.week.ago).select(:item_id).distinct).page(params[:page]).per(8)
+      @items = Item.active.where(id: Comment.where(sender: current_customer).where('created_at >= ?', 1.week.ago).select(:item_id).distinct).order(created_at: :desc).page(params[:page]).per(8)
     when "liked"
       @items = current_customer.favorite_items.active.page(params[:page]).per(8)
     else
