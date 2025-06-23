@@ -20,6 +20,8 @@
 ​
 ## 設計書
 UIFlows https://app.diagrams.net/#G14fRGSMzWCs64_Xy05vafR8pk-028lL5Z#%7B%22pageId%22%3A%224YlbIiD63GHYzDRPhZzJ%22%7D
+テーブル定義書　https://docs.google.com/spreadsheets/d/1UCqjZal6vqBMDeNpxtCvSUn6w4swjguID2IZlbKMmh8/edit?gid=1044500859#gid=1044500859
+アプリケーション詳細設計書　https://docs.google.com/spreadsheets/d/1dnBzBn8eeT0DtysFlFYEQc3W_3NFLKpWqBn7Qwr95ag/edit?gid=549108681#gid=549108681
 ​
 ## 開発環境
 - OS：Linux(CentOS)
